@@ -7,3 +7,5 @@ C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Serv
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csproj.CoreCompileInputs.cache
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.exe
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.pdb
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csproj.ResolveComReference.cache
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.Form1.resources
