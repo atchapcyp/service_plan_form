@@ -19,8 +19,6 @@ namespace Service_plan_form
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-            
-
             // START CONSOLE SECTION 
             String[] str1 = { "xxxx", "YYY" };
 
@@ -50,11 +48,11 @@ namespace Service_plan_form
             //add demand to be time frame demand
 
             TF_Demand passeng_demand = new TF_Demand(720, 5);
-            Station station = new Station(passeng_demand);
+            /*Station station = new Station(passeng_demand);
             for (int i = 0; i < passeng_demand.dimension; i++)
             {
                 Service_algo.showarray(station.demand_station[i]);
-            }
+            }*/
             TF_Demand outbound_demand = passeng_demand.Gen_Outbound_demand();
             TF_Demand inbound_demand = passeng_demand.Gen_Inbound_demand();
             for (int i = 0; i < passeng_demand.getTF_amount(); i++)
