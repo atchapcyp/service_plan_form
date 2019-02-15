@@ -19,6 +19,9 @@ namespace Service_plan_form
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
+            
+
+            // START CONSOLE SECTION 
             String[] str1 = { "xxxx", "YYY" };
 
             List<Service> outbound_services = new List<Service>();
@@ -78,6 +81,7 @@ namespace Service_plan_form
 
 
             LogWriter log = new LogWriter(str1[0] + str1[1]);
+            // END CONSOLE SECTION
         }
     }
 }
