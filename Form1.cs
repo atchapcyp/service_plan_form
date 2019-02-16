@@ -24,45 +24,53 @@ namespace Service_plan_form
             InitializeComponent();
         }
         List<Demand_blueprint> dm = new List<Demand_blueprint>();
-
+        DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
+        List<Station> stations = new List<Station>();
+        DataSet result;
         private void Form1_Load(object sender, EventArgs e)
         {
             var filePath = @"C:\Users\ATCHAPCYP\Downloads\demand_format\demand_format\demandTFtestXLSX_new.xlsx";
-            //OpenFile();
+           
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    var result = reader.AsDataSet();                  
-                                 
-                    DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
-                    dm = mapper.Map(result.Tables[0]).ToList();
-                    dm.AddRange(mapper.Map(result.Tables[1]));
-                    dm.AddRange(mapper.Map(result.Tables[2]));
-                    dm.AddRange(mapper.Map(result.Tables[3]));
-                    dm.AddRange(mapper.Map(result.Tables[4]));
-                    List<Station> stations = new List<Station>();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        stations.Add(new Station(dm, i, 5));                       
-                    }
-
+                    result = reader.AsDataSet();
+                    for (int i = 0; i < result.Tables.Count; i++) {
+                        dm.AddRange(mapper.Map(result.Tables[i]));
+                        stations.Add(new Station(dm, i, result.Tables.Count));
+                    }          
                     Console.WriteLine(stations[4].station_name);
                    
-                    //foreach (var demand in dm)
-                    //{
-                    //  Console.WriteLine("START : " + demand.StartTime + ", STOP: " + demand.EndTime+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
-                    //}
+                    foreach (var demand in dm)
+                    {
+                      Console.WriteLine("START : " + demand.StartTime.ToShortTimeString() + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
+                    }
 
                     // The result of each spreadsheet is in result.Tables
                 } 
             }
-        }
+            // for (int i=0; i < 50; i++)
+            //  {
+            //    CheckBox chb = new CheckBox();
+            //    chb.Text = i.ToString();
+            //    chb.Location = new Point(10, panel3.Controls.Count * 20);
+            //    panel3.Controls.Add(chb);
+            //  }
+            
+            from_demand_box.Items.Add("ALL station");
+            to_demand_box.Items.Add("ALL station");
+           
+            foreach (Station _S in stations)
+            {
+                from_demand_box.Items.Add(_S.station_name);
+                to_demand_box.Items.Add(_S.station_name);
+               
+            }
+            from_demand_box.SelectedIndex = 0;
+            to_demand_box.SelectedIndex = 0;
+            
 
-        public void OpenFile()
-        {
-            Excel excel = new Excel(@"C:\Users\ATCHAPCYP\Downloads\demand_format\demand_format\demandTFtestXLSX.xlsx", 1);
-            MessageBox.Show(excel.ReadCell(0, 1));
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -96,8 +104,128 @@ namespace Service_plan_form
             Station1.Series["Station1"].Points.AddXY("ST4", 30);
             Station1.Series["Station1"].Points.AddXY("ST5", 30);
             Station1.Titles.Add("STATION 1 to ALL");
-           
+            
         }
 
+        private void metroComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (from_demand_box.SelectedIndex < 0 || to_demand_box.SelectedIndex < 0)
+            {
+                MessageBox.Show("please select station");
+                return;
+            }
+
+            if (from_demand_box.SelectedIndex != 0 && from_demand_box.SelectedIndex == to_demand_box.SelectedIndex)
+            {
+                MessageBox.Show("invalid station : same station");
+                return;
+            }
+
+
+            output_panel_graph.Controls.Clear();
+            output_panel_graph.AutoScroll = false;
+
+            List<int> _origin = new List<int>();
+            List<int> _destination = new List<int>();
+
+            if (from_demand_box.SelectedIndex == 0)
+            {
+                _origin = new int[] { 0, 1, 2, 3, 4 }.ToList();
+            }
+            else
+            {
+                _origin.Add(from_demand_box.SelectedIndex - 1);
+            }
+            if (to_demand_box.SelectedIndex == 0)
+            {   // add index form station count
+                _destination = new int[] { 0, 1, 2, 3, 4 }.ToList();
+            }
+            else
+            {
+                _destination.Add(to_demand_box.SelectedIndex - 1);
+            }
+
+            int chart_cnt = 0;
+            int _x_size = output_panel.Size.Width - 33;
+
+            foreach (int _o in _origin)
+            {
+                foreach (int _d in _destination)
+                {
+
+                    if (_o != _d)
+                    {
+                        Chart _chart = new Chart();
+
+                        output_panel_graph.Controls.Add(_chart);
+                        _chart.Location = new Point(3, 10 + 160 * chart_cnt);
+                        _chart.Size = new Size(_x_size, 150);
+                        _chart.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+                        _chart.BackColor = SystemColors.WindowFrame;
+                        _chart.ChartAreas.Add("area");
+                        _chart.ChartAreas[0].BackColor = Color.DimGray;
+                        _chart.ChartAreas[0].AxisX.LineColor = Color.White;
+                        _chart.ChartAreas[0].AxisX.LabelStyle.Format = "HH:00";
+                        _chart.ChartAreas[0].AxisX.MajorGrid.LineColor = SystemColors.ControlDark;
+                        _chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.White;
+                        _chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
+                        //_chart.ChartAreas[0].AxisX.Interval = 1;
+                        _chart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+                        _chart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                        _chart.ChartAreas[0].AxisY.LineColor = Color.White;
+                        _chart.ChartAreas[0].AxisY.MajorGrid.LineColor = SystemColors.ControlDark;
+                        _chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
+                        _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+
+                        _chart.Series.Add("demand");
+                        _chart.Series[0].ChartType = SeriesChartType.SplineArea;
+
+                       // foreach (passenger_data _p in passenger_demand[_o, _d])
+                       // {
+                         //   _chart.Series[0].Points.AddXY(_p.time, _p.count);
+                        //}
+
+                        _chart.Series.Add("supply");
+                        _chart.Series[1].ChartType = SeriesChartType.BoxPlot;
+                        _chart.Series[1].IsValueShownAsLabel = true;
+                        _chart.Series[1].LabelForeColor = Color.Orange;
+
+                        //foreach (passenger_data _p in passenger_supply[_o, _d])
+                       // {
+                       //     _chart.Series[1].Points.AddXY(_p.time, _p.count);
+                      //  }
+
+                        _chart.Series.Add("remaining demand");
+                        _chart.Series[2].ChartType = SeriesChartType.SplineArea;
+
+                     //   foreach (passenger_data _p in cal_pass_demand[_o, _d])
+                      //  {
+                      //      _chart.Series[2].Points.AddXY(_p.time, _p.count);
+                      //  }
+
+                        _chart.Titles.Add("name");
+                        _chart.Titles[0].ForeColor = Color.White;
+                     //   _chart.Titles[0].Text = planning_sch[_o].station_name + " -> " + planning_sch[_d].station_name;
+                        _chart.Titles[0].Alignment = ContentAlignment.TopLeft;
+                        _chart.Legends.Add("legend");
+                        _chart.Legends[0].BackColor = SystemColors.WindowFrame;
+                        _chart.Legends[0].ForeColor = Color.White;
+
+                        chart_cnt++;
+                    }
+                }
+            }
+                        output_panel_graph.AutoScroll = true;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

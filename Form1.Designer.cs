@@ -34,24 +34,31 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.output_panel = new System.Windows.Forms.Panel();
+            this.to_demand_box = new MetroFramework.Controls.MetroComboBox();
+            this.from_demand_box = new MetroFramework.Controls.MetroComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.Station1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.panel2.SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.input_groupbox = new System.Windows.Forms.GroupBox();
+            this.output_panel_graph = new System.Windows.Forms.Panel();
+            this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Station1)).BeginInit();
+            this.input_groupbox.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(880, 24);
+            this.button1.Font = new System.Drawing.Font("Varela Round", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(880, 278);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 44);
+            this.button1.Size = new System.Drawing.Size(109, 44);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "Show Demand";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -60,13 +67,44 @@
             this.panel1.Size = new System.Drawing.Size(150, 634);
             this.panel1.TabIndex = 1;
             // 
-            // panel2
+            // output_panel
             // 
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Location = new System.Drawing.Point(153, 328);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(839, 308);
-            this.panel2.TabIndex = 2;
+            this.output_panel.Controls.Add(this.output_panel_graph);
+            this.output_panel.Controls.Add(this.to_demand_box);
+            this.output_panel.Controls.Add(this.from_demand_box);
+            this.output_panel.Controls.Add(this.label2);
+            this.output_panel.ForeColor = System.Drawing.SystemColors.Info;
+            this.output_panel.Location = new System.Drawing.Point(153, 328);
+            this.output_panel.Name = "output_panel";
+            this.output_panel.Size = new System.Drawing.Size(839, 308);
+            this.output_panel.TabIndex = 2;
+            // 
+            // to_demand_box
+            // 
+            this.to_demand_box.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.to_demand_box.ForeColor = System.Drawing.SystemColors.Info;
+            this.to_demand_box.FormattingEnabled = true;
+            this.to_demand_box.ItemHeight = 23;
+            this.to_demand_box.Location = new System.Drawing.Point(609, 21);
+            this.to_demand_box.Name = "to_demand_box";
+            this.to_demand_box.Size = new System.Drawing.Size(183, 29);
+            this.to_demand_box.TabIndex = 3;
+            this.to_demand_box.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.to_demand_box.UseSelectable = true;
+            // 
+            // from_demand_box
+            // 
+            this.from_demand_box.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.from_demand_box.ForeColor = System.Drawing.SystemColors.Info;
+            this.from_demand_box.FormattingEnabled = true;
+            this.from_demand_box.ItemHeight = 23;
+            this.from_demand_box.Location = new System.Drawing.Point(383, 21);
+            this.from_demand_box.Name = "from_demand_box";
+            this.from_demand_box.Size = new System.Drawing.Size(183, 29);
+            this.from_demand_box.TabIndex = 2;
+            this.from_demand_box.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.from_demand_box.UseSelectable = true;
+            this.from_demand_box.SelectedIndexChanged += new System.EventHandler(this.metroComboBox1_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -83,13 +121,32 @@
             // 
             // panel3
             // 
+            this.panel3.AutoScroll = true;
             this.panel3.Controls.Add(this.Station1);
             this.panel3.Controls.Add(this.label1);
-            this.panel3.Location = new System.Drawing.Point(152, 0);
+            this.panel3.Font = new System.Drawing.Font("Varela", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel3.Location = new System.Drawing.Point(6, 21);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(720, 320);
+            this.panel3.Size = new System.Drawing.Size(685, 289);
             this.panel3.TabIndex = 3;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            // 
+            // Station1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.Station1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.Station1.Legends.Add(legend1);
+            this.Station1.Location = new System.Drawing.Point(157, 65);
+            this.Station1.Name = "Station1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Station1";
+            this.Station1.Series.Add(series1);
+            this.Station1.Size = new System.Drawing.Size(285, 115);
+            this.Station1.TabIndex = 1;
+            this.Station1.Text = "chart1";
+            this.Station1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // label1
             // 
@@ -104,30 +161,35 @@
             this.label1.Text = "INPUT SHOW HERE";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // Station1
+            // input_groupbox
             // 
-            chartArea1.Name = "ChartArea1";
-            this.Station1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.Station1.Legends.Add(legend1);
-            this.Station1.Location = new System.Drawing.Point(15, 54);
-            this.Station1.Name = "Station1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Station1";
-            this.Station1.Series.Add(series1);
-            this.Station1.Size = new System.Drawing.Size(677, 250);
-            this.Station1.TabIndex = 1;
-            this.Station1.Text = "chart1";
-            this.Station1.Click += new System.EventHandler(this.chart1_Click);
+            this.input_groupbox.Controls.Add(this.panel3);
+            this.input_groupbox.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.input_groupbox.ForeColor = System.Drawing.SystemColors.Info;
+            this.input_groupbox.Location = new System.Drawing.Point(167, 0);
+            this.input_groupbox.Name = "input_groupbox";
+            this.input_groupbox.Size = new System.Drawing.Size(707, 322);
+            this.input_groupbox.TabIndex = 4;
+            this.input_groupbox.TabStop = false;
+            this.input_groupbox.Text = "Input GroupBox";
+            // 
+            // output_panel_graph
+            // 
+            this.output_panel_graph.AutoScroll = true;
+            this.output_panel_graph.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.output_panel_graph.Location = new System.Drawing.Point(14, 54);
+            this.output_panel_graph.Name = "output_panel_graph";
+            this.output_panel_graph.Size = new System.Drawing.Size(806, 242);
+            this.output_panel_graph.TabIndex = 4;
+            this.output_panel_graph.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(1001, 636);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.input_groupbox);
+            this.Controls.Add(this.output_panel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -137,11 +199,12 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.output_panel.ResumeLayout(false);
+            this.output_panel.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Station1)).EndInit();
+            this.input_groupbox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -150,11 +213,15 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel output_panel;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataVisualization.Charting.Chart Station1;
+        private System.Windows.Forms.GroupBox input_groupbox;
+        private MetroFramework.Controls.MetroComboBox from_demand_box;
+        private MetroFramework.Controls.MetroComboBox to_demand_box;
+        private System.Windows.Forms.Panel output_panel_graph;
     }
 }
 
