@@ -45,8 +45,8 @@ namespace Service_plan_form
                     { 
                         stations.Add(new Station(dm, i, result.Tables.Count));
                     }
-                    Console.WriteLine(stations[4].station_name);
-                    Console.WriteLine(stations[4].demand_station[0][0]);
+                    Console.WriteLine(stations[2].station_name);
+                    Console.WriteLine(stations[2].demand_station[0][0]);
                     foreach (var demand in dm)
                     {
                       Console.WriteLine("START : " + demand.StartTime.ToShortTimeString() + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
@@ -188,11 +188,11 @@ namespace Service_plan_form
                         _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
 
                         _chart.Series.Add("demand");
-                        _chart.Series[0].ChartType = SeriesChartType.Column;
+                        _chart.Series[0].ChartType = SeriesChartType.SplineArea;
 
-                        for (int i=0; i<6;i++)
+                        for (int i=0; i<stations[_o].tf_count-1;i++)
                         {
-                            _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][2]);
+                            _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
                         }
 
                         //_chart.Series.Add("supply");
@@ -213,14 +213,15 @@ namespace Service_plan_form
                       //      _chart.Series[2].Points.AddXY(_p.time, _p.count);
                       //  }
 
-                        _chart.Titles.Add("name");
+                        _chart.Titles.Add("From "+stations[_o].station_name+" to "+stations[_d].station_name);
                         _chart.Titles[0].ForeColor = Color.White;
                      //   _chart.Titles[0].Text = planning_sch[_o].station_name + " -> " + planning_sch[_d].station_name;
                         _chart.Titles[0].Alignment = ContentAlignment.TopLeft;
                         _chart.Legends.Add("legend");
                         _chart.Legends[0].BackColor = SystemColors.WindowFrame;
                         _chart.Legends[0].ForeColor = Color.White;
-
+                        _chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+                        
                         chart_cnt++;
                     }
                 }

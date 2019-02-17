@@ -17,6 +17,7 @@ namespace Service_plan_form
         public int tf_size_min=-1;
         public List<DateTime> start_time = new List<DateTime>();
         public string station_name;
+        public int tf_count;
         
         /*public Station(TF_Demand tf_demand)
         {
@@ -43,6 +44,7 @@ namespace Service_plan_form
         {
            // Console.WriteLine("dm.count " + dm.Count + "number of station " + numberOfStation);
             var tf_amount = (dm.Count / numberOfStation);
+            tf_count = tf_amount;
             var offset = tf_amount * formStation;
             for (int i =offset+1; i < tf_amount+offset; i++)
             {
