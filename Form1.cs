@@ -38,10 +38,15 @@ namespace Service_plan_form
                     result = reader.AsDataSet();
                     for (int i = 0; i < result.Tables.Count; i++) {
                         dm.AddRange(mapper.Map(result.Tables[i]));
+                        
+                    }
+                    
+                    for (int i = 0; i < result.Tables.Count; i++)
+                    { 
                         stations.Add(new Station(dm, i, result.Tables.Count));
-                    }          
+                    }
                     Console.WriteLine(stations[4].station_name);
-                   
+                    Console.WriteLine(stations[4].demand_station[0][0]);
                     foreach (var demand in dm)
                     {
                       Console.WriteLine("START : " + demand.StartTime.ToShortTimeString() + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
@@ -174,7 +179,7 @@ namespace Service_plan_form
                         _chart.ChartAreas[0].AxisX.MajorGrid.LineColor = SystemColors.ControlDark;
                         _chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.White;
                         _chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
-                        //_chart.ChartAreas[0].AxisX.Interval = 1;
+                        _chart.ChartAreas[0].AxisX.Interval = 1;
                         _chart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
                         _chart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                         _chart.ChartAreas[0].AxisY.LineColor = Color.White;
@@ -183,25 +188,25 @@ namespace Service_plan_form
                         _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
 
                         _chart.Series.Add("demand");
-                        _chart.Series[0].ChartType = SeriesChartType.SplineArea;
+                        _chart.Series[0].ChartType = SeriesChartType.Column;
 
-                       // foreach (passenger_data _p in passenger_demand[_o, _d])
-                       // {
-                         //   _chart.Series[0].Points.AddXY(_p.time, _p.count);
-                        //}
+                        for (int i=0; i<6;i++)
+                        {
+                            _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][2]);
+                        }
 
-                        _chart.Series.Add("supply");
-                        _chart.Series[1].ChartType = SeriesChartType.BoxPlot;
-                        _chart.Series[1].IsValueShownAsLabel = true;
-                        _chart.Series[1].LabelForeColor = Color.Orange;
+                        //_chart.Series.Add("supply");
+                        //_chart.Series[1].ChartType = SeriesChartType.BoxPlot;
+                       // _chart.Series[1].IsValueShownAsLabel = true;
+                       // _chart.Series[1].LabelForeColor = Color.Orange;
 
                         //foreach (passenger_data _p in passenger_supply[_o, _d])
                        // {
                        //     _chart.Series[1].Points.AddXY(_p.time, _p.count);
                       //  }
 
-                        _chart.Series.Add("remaining demand");
-                        _chart.Series[2].ChartType = SeriesChartType.SplineArea;
+                       // _chart.Series.Add("remaining demand");
+                       // _chart.Series[2].ChartType = SeriesChartType.SplineArea;
 
                      //   foreach (passenger_data _p in cal_pass_demand[_o, _d])
                       //  {
