@@ -28,24 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.output_panel = new System.Windows.Forms.Panel();
+            this.output_panel_graph = new System.Windows.Forms.Panel();
             this.to_demand_box = new MetroFramework.Controls.MetroComboBox();
             this.from_demand_box = new MetroFramework.Controls.MetroComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.Station1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new System.Windows.Forms.Label();
             this.input_groupbox = new System.Windows.Forms.GroupBox();
-            this.output_panel_graph = new System.Windows.Forms.Panel();
+            this.barChart = new System.Windows.Forms.CheckBox();
+            this.Spl = new System.Windows.Forms.CheckBox();
+            this.stationcheckBox = new System.Windows.Forms.CheckBox();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Station1)).BeginInit();
             this.input_groupbox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +62,7 @@
             // 
             this.panel1.Location = new System.Drawing.Point(1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(150, 634);
+            this.panel1.Size = new System.Drawing.Size(26, 634);
             this.panel1.TabIndex = 1;
             // 
             // output_panel
@@ -74,10 +72,20 @@
             this.output_panel.Controls.Add(this.from_demand_box);
             this.output_panel.Controls.Add(this.label2);
             this.output_panel.ForeColor = System.Drawing.SystemColors.Info;
-            this.output_panel.Location = new System.Drawing.Point(153, 328);
+            this.output_panel.Location = new System.Drawing.Point(48, 328);
             this.output_panel.Name = "output_panel";
-            this.output_panel.Size = new System.Drawing.Size(839, 308);
+            this.output_panel.Size = new System.Drawing.Size(944, 308);
             this.output_panel.TabIndex = 2;
+            // 
+            // output_panel_graph
+            // 
+            this.output_panel_graph.AutoScroll = true;
+            this.output_panel_graph.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.output_panel_graph.Location = new System.Drawing.Point(14, 54);
+            this.output_panel_graph.Name = "output_panel_graph";
+            this.output_panel_graph.Size = new System.Drawing.Size(905, 242);
+            this.output_panel_graph.TabIndex = 4;
+            this.output_panel_graph.Click += new System.EventHandler(this.button1_Click);
             // 
             // to_demand_box
             // 
@@ -122,7 +130,6 @@
             // panel3
             // 
             this.panel3.AutoScroll = true;
-            this.panel3.Controls.Add(this.Station1);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Font = new System.Drawing.Font("Varela", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel3.Location = new System.Drawing.Point(6, 21);
@@ -130,23 +137,6 @@
             this.panel3.Size = new System.Drawing.Size(685, 289);
             this.panel3.TabIndex = 3;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
-            // 
-            // Station1
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.Station1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.Station1.Legends.Add(legend1);
-            this.Station1.Location = new System.Drawing.Point(157, 65);
-            this.Station1.Name = "Station1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Station1";
-            this.Station1.Series.Add(series1);
-            this.Station1.Size = new System.Drawing.Size(285, 115);
-            this.Station1.TabIndex = 1;
-            this.Station1.Text = "chart1";
-            this.Station1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // label1
             // 
@@ -166,28 +156,57 @@
             this.input_groupbox.Controls.Add(this.panel3);
             this.input_groupbox.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.input_groupbox.ForeColor = System.Drawing.SystemColors.Info;
-            this.input_groupbox.Location = new System.Drawing.Point(167, 0);
+            this.input_groupbox.Location = new System.Drawing.Point(42, 0);
             this.input_groupbox.Name = "input_groupbox";
-            this.input_groupbox.Size = new System.Drawing.Size(707, 322);
+            this.input_groupbox.Size = new System.Drawing.Size(832, 322);
             this.input_groupbox.TabIndex = 4;
             this.input_groupbox.TabStop = false;
             this.input_groupbox.Text = "Input GroupBox";
             // 
-            // output_panel_graph
+            // barChart
             // 
-            this.output_panel_graph.AutoScroll = true;
-            this.output_panel_graph.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.output_panel_graph.Location = new System.Drawing.Point(14, 54);
-            this.output_panel_graph.Name = "output_panel_graph";
-            this.output_panel_graph.Size = new System.Drawing.Size(806, 242);
-            this.output_panel_graph.TabIndex = 4;
-            this.output_panel_graph.Click += new System.EventHandler(this.button1_Click);
+            this.barChart.AutoSize = true;
+            this.barChart.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.barChart.ForeColor = System.Drawing.SystemColors.Info;
+            this.barChart.Location = new System.Drawing.Point(881, 229);
+            this.barChart.Name = "barChart";
+            this.barChart.Size = new System.Drawing.Size(76, 18);
+            this.barChart.TabIndex = 5;
+            this.barChart.Text = "Bar Chart";
+            this.barChart.UseVisualStyleBackColor = true;
+            this.barChart.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // Spl
+            // 
+            this.Spl.AutoSize = true;
+            this.Spl.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Spl.ForeColor = System.Drawing.SystemColors.Info;
+            this.Spl.Location = new System.Drawing.Point(881, 255);
+            this.Spl.Name = "Spl";
+            this.Spl.Size = new System.Drawing.Size(86, 18);
+            this.Spl.TabIndex = 6;
+            this.Spl.Text = "Spline Area";
+            this.Spl.UseVisualStyleBackColor = true;
+            // 
+            // stationcheckBox
+            // 
+            this.stationcheckBox.AutoSize = true;
+            this.stationcheckBox.ForeColor = System.Drawing.SystemColors.Info;
+            this.stationcheckBox.Location = new System.Drawing.Point(881, 206);
+            this.stationcheckBox.Name = "stationcheckBox";
+            this.stationcheckBox.Size = new System.Drawing.Size(85, 20);
+            this.stationcheckBox.TabIndex = 7;
+            this.stationcheckBox.Text = "Time frame";
+            this.stationcheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(1001, 636);
+            this.Controls.Add(this.stationcheckBox);
+            this.Controls.Add(this.Spl);
+            this.Controls.Add(this.barChart);
             this.Controls.Add(this.input_groupbox);
             this.Controls.Add(this.output_panel);
             this.Controls.Add(this.panel1);
@@ -203,9 +222,9 @@
             this.output_panel.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Station1)).EndInit();
             this.input_groupbox.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -217,11 +236,13 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart Station1;
         private System.Windows.Forms.GroupBox input_groupbox;
         private MetroFramework.Controls.MetroComboBox from_demand_box;
         private MetroFramework.Controls.MetroComboBox to_demand_box;
         private System.Windows.Forms.Panel output_panel_graph;
+        private System.Windows.Forms.CheckBox barChart;
+        private System.Windows.Forms.CheckBox Spl;
+        private System.Windows.Forms.CheckBox stationcheckBox;
     }
 }
 

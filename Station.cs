@@ -16,6 +16,7 @@ namespace Service_plan_form
         public List<double[]> demand_station = new List<double[]>();
         public int tf_size_min=-1;
         public List<DateTime> start_time = new List<DateTime>();
+        public List<DateTime> stop_time = new List<DateTime>();
         public string station_name;
         public int tf_count;
         
@@ -51,6 +52,7 @@ namespace Service_plan_form
                 //Console.WriteLine("tf_amount " + tf_amount + " offset" + offset + " formstation " + formStation);
                 demand_station.Add(dm[i].ToArray());
                 start_time.Add(dm[i].StartTime);
+                stop_time.Add(dm[i].EndTime);
                // Console.WriteLine(demand_station.Count);
                 //Console.WriteLine("INSERT COMPLETE"+i);
 

@@ -1,7 +1,6 @@
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\Service_plan_form.exe.config
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\Service_plan_form.exe
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\Service_plan_form.pdb
-C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csprojAssemblyReference.cache
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.Properties.Resources.resources
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csproj.GenerateResource.cache
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csproj.CoreCompileInputs.cache
@@ -17,3 +16,4 @@ C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Serv
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\MetroFramework.Design.dll
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\MetroFramework.dll
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csprojAssemblyReference.cache
