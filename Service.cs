@@ -1,13 +1,13 @@
 ﻿using System;
 namespace Service_plan_form
 {
-    public class Service
+    public class Service 
 
     {
-        public string service_id;
-        public int[] stop_station;
-        public int service_quantity;
-        public int max_util;
+        public string service_id { get; set; }
+        public int[] stop_station { get; set; }
+        public int service_quantity { get; set; }
+        public int max_util { get; set; }
         const int train_cap = 200;
 
         public Service(string id,int[] stop_station)
@@ -54,6 +54,6 @@ namespace Service_plan_form
             return -1;
         }
 
-
+       
     }
 }

@@ -13,6 +13,7 @@ using Service_plan_form.Demands;
 using Service_plan_form.DataSets;
 using Service_plan_form.Mapping;
 using System.Windows.Forms.DataVisualization.Charting;
+using CsvHelper;
 
 namespace Service_plan_form
 {
@@ -345,6 +346,63 @@ namespace Service_plan_form
 
         }
 
-       
+        private void exitbutton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+       /* public DataTable readCSV(string filePath)
+        {
+            var dt = new DataTable();
+
+            var csv = new CsvReader(new StreamReader(filePath));
+            // Creating the columns
+            typeof(Service).GetProperties().Select(p => p.Name).ToList().ForEach(x => dt.Columns.Add(x));
+
+            // Adding the rows
+            csv.GetRecords<Service>().ToList.ForEach(line => dt.Rows.Add(line.Name, line.Age, line.Birthdate, line.Working));
+              
+            return dt;
+        }*/
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void import_csv_service_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            textfilepath.Text = openFileDialog1.FileName;
+            BindDataCSV(textfilepath.Text);
+        }
+        private void BindDataCSV(string filePath)
+        { DataTable dt = new DataTable();
+            string[] lines = System.IO.File.ReadAllLines(filePath);
+            if (lines.Length > 0)
+            {
+                string firstline = lines[0];
+                string[] headerLabels = firstline.Split(',');
+                foreach(string headerWord in headerLabels)
+                {
+                    dt.Columns.Add(new DataColumn(headerWord));
+                }
+                for(int r = 1; r < lines.Length; r++)
+                {
+                    string[] dataWords = lines[r].Split(',');
+                    DataRow dr = dt.NewRow();
+                    int columnIndex = 0;
+                    foreach (string headerWord in headerLabels)
+                    {
+                        dr[headerWord] = dataWords[columnIndex++];
+                    }
+                    dt.Rows.Add(dr);
+                } 
+            }
+            if (dt.Rows.Count > 0)
+            {
+                dgvService.DataSource = dt;
+            }
+        }
     }
 }

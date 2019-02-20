@@ -17,3 +17,8 @@ C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\Metr
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\MetroFramework.dll
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\MetroFramework.Fonts.dll
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csprojAssemblyReference.cache
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\CsvHelper.dll
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\System.ValueTuple.dll
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\CsvHelper.xml
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\bin\Debug\System.ValueTuple.xml
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.Service_editor.resources
