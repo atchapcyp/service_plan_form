@@ -42,20 +42,31 @@
             this.from_demand_box = new MetroFramework.Controls.MetroComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.dgvService = new System.Windows.Forms.DataGridView();
+            this.textfilepath = new System.Windows.Forms.TextBox();
             this.import_csv_service = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.service_name_textbox = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.input_groupbox = new System.Windows.Forms.GroupBox();
             this.exitbutton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.textfilepath = new System.Windows.Forms.TextBox();
-            this.dgvService = new System.Windows.Forms.DataGridView();
+            this.service_type = new System.Windows.Forms.Label();
+            this.outbound_checkbox = new System.Windows.Forms.CheckBox();
+            this.inbound_checkbox = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.stopstation_label = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.input_groupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvService)).BeginInit();
+            this.input_groupbox.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -182,11 +193,15 @@
             // panel3
             // 
             this.panel3.AutoScroll = true;
+            this.panel3.Controls.Add(this.panel2);
+            this.panel3.Controls.Add(this.inbound_checkbox);
+            this.panel3.Controls.Add(this.outbound_checkbox);
+            this.panel3.Controls.Add(this.service_type);
             this.panel3.Controls.Add(this.dgvService);
             this.panel3.Controls.Add(this.textfilepath);
             this.panel3.Controls.Add(this.import_csv_service);
             this.panel3.Controls.Add(this.label3);
-            this.panel3.Controls.Add(this.textBox1);
+            this.panel3.Controls.Add(this.service_name_textbox);
             this.panel3.Controls.Add(this.button2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Font = new System.Drawing.Font("Varela", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -196,11 +211,41 @@
             this.panel3.TabIndex = 3;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
+            // dgvService
+            // 
+            this.dgvService.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.dgvService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvService.Location = new System.Drawing.Point(338, 63);
+            this.dgvService.Name = "dgvService";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Varela", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvService.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(212)))), ((int)(((byte)(53)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.dgvService.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvService.Size = new System.Drawing.Size(615, 244);
+            this.dgvService.TabIndex = 7;
+            // 
+            // textfilepath
+            // 
+            this.textfilepath.Location = new System.Drawing.Point(3, 272);
+            this.textfilepath.Name = "textfilepath";
+            this.textfilepath.Size = new System.Drawing.Size(102, 28);
+            this.textfilepath.TabIndex = 6;
+            this.textfilepath.Visible = false;
+            // 
             // import_csv_service
             // 
             this.import_csv_service.Font = new System.Drawing.Font("Varela Round", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.import_csv_service.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.import_csv_service.Location = new System.Drawing.Point(35, 290);
+            this.import_csv_service.Location = new System.Drawing.Point(3, 306);
             this.import_csv_service.Name = "import_csv_service";
             this.import_csv_service.Size = new System.Drawing.Size(99, 31);
             this.import_csv_service.TabIndex = 4;
@@ -212,30 +257,31 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Varela", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(31, 81);
+            this.label3.Location = new System.Drawing.Point(31, 63);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 17);
+            this.label3.Size = new System.Drawing.Size(93, 17);
             this.label3.TabIndex = 3;
-            this.label3.Text = "service name";
+            this.label3.Text = "service name :";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // textBox1
+            // service_name_textbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(124, 75);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(175, 28);
-            this.textBox1.TabIndex = 2;
+            this.service_name_textbox.Location = new System.Drawing.Point(124, 57);
+            this.service_name_textbox.Name = "service_name_textbox";
+            this.service_name_textbox.Size = new System.Drawing.Size(175, 28);
+            this.service_name_textbox.TabIndex = 2;
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Location = new System.Drawing.Point(169, 290);
+            this.button2.Location = new System.Drawing.Point(124, 306);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(84, 31);
             this.button2.TabIndex = 1;
             this.button2.Text = "Add Service";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -279,34 +325,117 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // textfilepath
+            // service_type
             // 
-            this.textfilepath.Location = new System.Drawing.Point(34, 256);
-            this.textfilepath.Name = "textfilepath";
-            this.textfilepath.Size = new System.Drawing.Size(219, 28);
-            this.textfilepath.TabIndex = 6;
+            this.service_type.AutoSize = true;
+            this.service_type.Font = new System.Drawing.Font("Varela", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.service_type.Location = new System.Drawing.Point(31, 97);
+            this.service_type.Name = "service_type";
+            this.service_type.Size = new System.Drawing.Size(86, 17);
+            this.service_type.TabIndex = 8;
+            this.service_type.Text = "service type :";
             // 
-            // dgvService
+            // outbound_checkbox
             // 
-            this.dgvService.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.dgvService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvService.Location = new System.Drawing.Point(338, 63);
-            this.dgvService.Name = "dgvService";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Varela", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvService.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(212)))), ((int)(((byte)(53)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.dgvService.RowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvService.Size = new System.Drawing.Size(615, 244);
-            this.dgvService.TabIndex = 7;
+            this.outbound_checkbox.AutoSize = true;
+            this.outbound_checkbox.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outbound_checkbox.Location = new System.Drawing.Point(123, 98);
+            this.outbound_checkbox.Name = "outbound_checkbox";
+            this.outbound_checkbox.Size = new System.Drawing.Size(79, 18);
+            this.outbound_checkbox.TabIndex = 9;
+            this.outbound_checkbox.Text = "outbound";
+            this.outbound_checkbox.UseVisualStyleBackColor = true;
+            this.outbound_checkbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            // 
+            // inbound_checkbox
+            // 
+            this.inbound_checkbox.AutoSize = true;
+            this.inbound_checkbox.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inbound_checkbox.Location = new System.Drawing.Point(208, 98);
+            this.inbound_checkbox.Name = "inbound_checkbox";
+            this.inbound_checkbox.Size = new System.Drawing.Size(71, 18);
+            this.inbound_checkbox.TabIndex = 10;
+            this.inbound_checkbox.Text = "inbound";
+            this.inbound_checkbox.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.checkBox5);
+            this.panel2.Controls.Add(this.checkBox4);
+            this.panel2.Controls.Add(this.checkBox3);
+            this.panel2.Controls.Add(this.checkBox2);
+            this.panel2.Controls.Add(this.checkBox1);
+            this.panel2.Controls.Add(this.stopstation_label);
+            this.panel2.Location = new System.Drawing.Point(14, 122);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(316, 144);
+            this.panel2.TabIndex = 11;
+            // 
+            // stopstation_label
+            // 
+            this.stopstation_label.AutoSize = true;
+            this.stopstation_label.Font = new System.Drawing.Font("Varela", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stopstation_label.Location = new System.Drawing.Point(4, 7);
+            this.stopstation_label.Name = "stopstation_label";
+            this.stopstation_label.Size = new System.Drawing.Size(41, 17);
+            this.stopstation_label.TabIndex = 0;
+            this.stopstation_label.Text = "stop :";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.Location = new System.Drawing.Point(51, 8);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(74, 18);
+            this.checkBox1.TabIndex = 1;
+            this.checkBox1.Text = "Station 1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox2.Location = new System.Drawing.Point(51, 32);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(74, 18);
+            this.checkBox2.TabIndex = 2;
+            this.checkBox2.Text = "Station 2";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox3.Location = new System.Drawing.Point(51, 54);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(74, 18);
+            this.checkBox3.TabIndex = 3;
+            this.checkBox3.Text = "Station 3";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox4.Location = new System.Drawing.Point(51, 76);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(74, 18);
+            this.checkBox4.TabIndex = 4;
+            this.checkBox4.Text = "Station 4";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox5.Location = new System.Drawing.Point(51, 97);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(74, 18);
+            this.checkBox5.TabIndex = 5;
+            this.checkBox5.Text = "Station 5";
+            this.checkBox5.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -330,8 +459,10 @@
             this.output_panel.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.input_groupbox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvService)).EndInit();
+            this.input_groupbox.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -354,11 +485,21 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button exitbutton;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox service_name_textbox;
         private System.Windows.Forms.Button import_csv_service;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox textfilepath;
         private System.Windows.Forms.DataGridView dgvService;
+        private System.Windows.Forms.CheckBox outbound_checkbox;
+        private System.Windows.Forms.Label service_type;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label stopstation_label;
+        private System.Windows.Forms.CheckBox inbound_checkbox;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }
 

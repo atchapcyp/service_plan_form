@@ -28,6 +28,7 @@ namespace Service_plan_form
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
         List<Station> stations = new List<Station>();
         DataSet result;
+        DataTable dt = new DataTable();
         private void Form1_Load(object sender, EventArgs e)
         {
             var filePath = @"C:\Users\ATCHAPCYP\Downloads\demand_format\demand_format\demandTFtestXLSX_new_30min.xlsx";
@@ -377,7 +378,7 @@ namespace Service_plan_form
             BindDataCSV(textfilepath.Text);
         }
         private void BindDataCSV(string filePath)
-        { DataTable dt = new DataTable();
+        { 
             string[] lines = System.IO.File.ReadAllLines(filePath);
             if (lines.Length > 0)
             {
@@ -403,6 +404,37 @@ namespace Service_plan_form
             {
                 dgvService.DataSource = dt;
             }
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            DataRow dr = dt.NewRow();
+            dr[0] = service_name_textbox.Text;
+            if (outbound_checkbox.Checked && !inbound_checkbox.Checked)
+            {
+                dr[1] = "OUTBOUND";
+            }
+            else if (outbound_checkbox.Checked && inbound_checkbox.Checked)
+            {
+
+            }
+            else
+            {
+                dr[1] = "INBOUND";
+            }
+            dt.Rows.Add(dr);
+            
         }
     }
 }
