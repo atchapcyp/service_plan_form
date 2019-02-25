@@ -4,7 +4,7 @@ using Service_plan_form;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Service_plan_form_test_Framework
+namespace Service_plan_form_test
 {
     [TestClass]
     public class UnitTest1
@@ -217,7 +217,7 @@ namespace Service_plan_form_test_Framework
             Assert.IsTrue(actual);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Train_service_3_station()
         {
             TF_Demand tfd = new TF_Demand(1440, 5);
@@ -255,7 +255,7 @@ namespace Service_plan_form_test_Framework
 
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Train_service_3_station_no_overcap()
         {
             TF_Demand tfd = new TF_Demand(1440, 5, "TEST");
@@ -290,7 +290,7 @@ namespace Service_plan_form_test_Framework
                 }
             }
         }
-        [TestMethod]
+        //[TestMethod]
         public void Train_service_4_station()
         {
             TF_Demand tfd = new TF_Demand(1440, 5);
@@ -327,7 +327,7 @@ namespace Service_plan_form_test_Framework
             }
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Train_service_4_station_no_overcap()
         {
             TF_Demand tfd = new TF_Demand(1440, 5, "TEST");
@@ -367,7 +367,7 @@ namespace Service_plan_form_test_Framework
         }
 
 
-        [TestMethod]
+        //[TestMethod]
         public void Train_service_all_station()
         {
             TF_Demand tfd = new TF_Demand(1440, 5, "TEST");

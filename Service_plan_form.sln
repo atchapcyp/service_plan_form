@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_plan_form", "Service_plan_form\Service_plan_form.csproj", "{978E8205-DD13-4B58-9D0E-3BE2A9A58859}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_plan_form_test_Framework", "Service_plan_form_test_Framework\Service_plan_form_test_Framework.csproj", "{8E582269-07D1-4EB0-A902-D9105081A8EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_plan_form_test", "Service_plan_form_test_Framework\Service_plan_form_test.csproj", "{8E582269-07D1-4EB0-A902-D9105081A8EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
