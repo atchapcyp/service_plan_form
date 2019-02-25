@@ -19,3 +19,4 @@ C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form_test_Framework
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form_test_Framework\obj\Debug\Service_plan_form_test.csproj.CopyComplete
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form_test_Framework\obj\Debug\Service_plan_form_test_Framework.dll
 C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form_test_Framework\obj\Debug\Service_plan_form_test_Framework.pdb
+C:\Users\ATCHAPCYP\Repository\Service_plan_form\Service_plan_form_test_Framework\obj\Debug\Service_plan_form_test.csprojAssemblyReference.cache
