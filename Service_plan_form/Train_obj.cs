@@ -16,6 +16,12 @@ namespace Service_plan_form
             cap = c;
             remain_cap = cap;
         }
+        public Train_obj(string name,int c)
+        {
+            cap = c;
+            remain_cap = cap;
+        }
+
         public void getOn(int amount, int i){
             this.remain_cap -= amount;
             passenger[i] += amount;

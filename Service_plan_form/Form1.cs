@@ -29,9 +29,11 @@ namespace Service_plan_form
         List<Station> stations = new List<Station>();
         DataSet result;
         DataTable dt = new DataTable();
+        string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+        string xlsx_path = @"demand_format\demandTFtestXLSX_new_30min.xlsx";
         private void Form1_Load(object sender, EventArgs e)
         {
-            var filePath = @"C:\Users\ATCHAPCYP\Downloads\demand_format\demand_format\demandTFtestXLSX_new_30min.xlsx";
+            var filePath = Path.Combine(project_path,xlsx_path);
            
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {

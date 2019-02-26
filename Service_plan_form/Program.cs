@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 namespace Service_plan_form
 {
     static class Program
@@ -15,6 +16,10 @@ namespace Service_plan_form
         [STAThread]
         static void Main()
         {
+            string path =Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+            string xlsx_path = @"demand_format\demandTFtestXLSX_new_30min.xlsx";
+
+            Console.WriteLine(Path.Combine(path,xlsx_path));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -29,7 +34,7 @@ namespace Service_plan_form
             int[] service2 = { 1, 0, 1, 1, 1 };
             //int[] service3 = { 1, 0, 0, 0, 1 };
             int[] service4 = { 0, 1, 1, 0, 1 };
-
+            
             Service aService;
 
 
@@ -43,6 +48,12 @@ namespace Service_plan_form
             aService = new Service("4_station_outbound_start_at_1", service4);
             outbound_services.Add(aService);
             outbound_services[2].show();
+            Service testService =new Service("TEST_ALL_STATION",service);
+            testService.addDatePeriod(22, 26);
+
+            Console.WriteLine(testService.depart_time[0]);
+            Console.WriteLine(testService.depart_time[4]);
+            
 
 
               // eiei
