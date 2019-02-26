@@ -467,5 +467,35 @@ namespace Service_plan_form
            
             return train_util;
         }
+
+        public static string PrettyPrintArrayOfArrays(int[][] arrayOfArrays)
+        {
+            if (arrayOfArrays == null)
+                return "";
+
+            var prettyArrays = new string[arrayOfArrays.Length];
+
+            for (int i = 0; i < arrayOfArrays.Length; i++)
+            {
+                prettyArrays[i] = "[" + String.Join(",", arrayOfArrays[i]) + "]";
+            }
+
+            return "[" + String.Join(",", prettyArrays) + "]";
+        }
+
+        public static string PrettyPrintArrays(double[] arrayOfArrays)
+        {
+            if (arrayOfArrays == null)
+                return "";
+
+            var prettyArrays = new string[arrayOfArrays.Length];
+
+            for (int i = 0; i < arrayOfArrays.Length; i++)
+            {
+                prettyArrays[i] = "[" + String.Join(",", arrayOfArrays[i]) + "]";
+            }
+
+            return "[" + String.Join(",", prettyArrays) + "]";
+        }
     }
 }

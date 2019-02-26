@@ -26,11 +26,12 @@ namespace Service_plan_form
         }
         List<Demand_blueprint> dm = new List<Demand_blueprint>();
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
-        List<Station> stations = new List<Station>();
+        public static List<Station> stations = new List<Station>();
         DataSet result;
         DataTable dt = new DataTable();
         string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
         string xlsx_path = @"demand_format\demandTFtestXLSX_new_30min.xlsx";
+
         private void Form1_Load(object sender, EventArgs e)
         {
             var filePath = Path.Combine(project_path,xlsx_path);
