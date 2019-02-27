@@ -30,7 +30,7 @@ namespace Service_plan_form
         DataSet result;
         DataTable dt = new DataTable();
         string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-        string xlsx_path = @"demand_format\demandTFtestXLSX_new_30min.xlsx";
+        string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -60,13 +60,7 @@ namespace Service_plan_form
                     // The result of each spreadsheet is in result.Tables
                 } 
             }
-            // for (int i=0; i < 50; i++)
-            //  {
-            //    CheckBox chb = new CheckBox();
-            //    chb.Text = i.ToString();
-            //    chb.Location = new Point(10, panel3.Controls.Count * 20);
-            //    panel3.Controls.Add(chb);
-            //  }
+           
             
             from_demand_box.Items.Add("ALL station");
             to_demand_box.Items.Add("ALL station");

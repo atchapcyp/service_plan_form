@@ -405,5 +405,25 @@ namespace Service_plan_form_test
 
 
         }
+        [TestMethod]
+        public void test_get_distant_meter_0_to_4()
+        {
+            int actual = Station.getDistan_Meter(0, 4);
+            Assert.AreEqual(251000, actual);
+        }
+
+        [TestMethod]
+        public void test_get_distant_meter_3_to_4()
+        {
+            int actual = Station.getDistan_Meter(3, 4);
+            Assert.AreEqual(78000, actual);
+        }
+
+        [TestMethod]
+        public void test_get_distant_meter_4_to_3()
+        {
+            int actual = Station.getDistan_Meter(4, 3);
+            Assert.AreEqual(78000, actual);
+        }
     }
 }

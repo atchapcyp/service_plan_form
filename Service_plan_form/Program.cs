@@ -25,15 +25,15 @@ namespace Service_plan_form
             String[] str1 = { "xxxx", "YYY" };
             Console.WriteLine(Service_algo.PrettyPrintArrays(Form1.stations[0].demand_station[0]));
             Console.WriteLine(Form1.stations[0].demand_station[0][3]);
+            Console.WriteLine(Form1.stations[0].tf_count);
 
             List<Service> outbound_services = new List<Service>();
             List<int[]> backward = new List<int[]>();
             Train_obj train = new Train_obj(100);
             int[] service = { 1, 1, 1, 1, 1 };
             int[] service2 = { 1, 0, 1, 1, 1 };
-            //int[] service3 = { 1, 0, 0, 0, 1 };
+            int[] service3 = { 1, 0, 0, 0, 1 };
             int[] service4 = { 0, 1, 1, 0, 1 };
-            
             Service aService;
 
 
@@ -47,23 +47,18 @@ namespace Service_plan_form
             aService = new Service("4_station_outbound_start_at_1", service4);
             outbound_services.Add(aService);
             outbound_services[2].show();
-            Service testService =new Service("TEST_ALL_STATION",service);
-            testService.addDatePeriod(22, 26);
-
-            Console.WriteLine(testService.depart_time[0]);
-            Console.WriteLine(testService.depart_time[4]);
+            Service testService =new Service("TEST_ALL_STATION", service3);
             
+            testService.addScheduleFromStart(8, 0);
 
-
-              // eiei
+            //Console.WriteLine(testService.depart_time[0]);
+            //Console.WriteLine(testService.depart_time[1]);
+            Console.WriteLine((int) (PhysicalData.distance_meter[1] - PhysicalData.distance_meter[0]) / PhysicalData.service_speed);
+            
             //add demand to be time frame demand
 
             TF_Demand passeng_demand = new TF_Demand(720, 5);
-            /*Station station = new Station(passeng_demand);
-            for (int i = 0; i < passeng_demand.dimension; i++)
-            {
-                Service_algo.showarray(station.demand_station[i]);
-            }*/
+            
             TF_Demand outbound_demand = passeng_demand.Gen_Outbound_demand();
             TF_Demand inbound_demand = passeng_demand.Gen_Inbound_demand();
             for (int i = 0; i < passeng_demand.getTF_amount(); i++)

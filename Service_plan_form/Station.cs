@@ -6,7 +6,7 @@ namespace Service_plan_form
 {
     public class Station : IEnumerable
     {
-
+        public static readonly int[] distance_meter = { 0, 62000, 106000, 173000, 251000 };
         public List<double[]> demand_station = new List<double[]>();
         public int tf_size_min=-1;
         public List<DateTime> start_time = new List<DateTime>();
@@ -55,6 +55,24 @@ namespace Service_plan_form
             this.tf_size_min =(int)diff.TotalMinutes;
             formStation += 1;
             station_name = "Station" + formStation;
+        }
+
+        public static int getDistan_Meter(int s,int d) {
+            int distance_result = 0;
+            if (s == d)
+            {
+                return distance_result;
+            }
+            if (s < d)
+            {
+                distance_result = distance_meter[d] - distance_meter[s];
+            }
+            else if (s > d)
+            {
+                distance_result = distance_meter[s] - distance_meter[d];
+            }
+            return distance_result;
+           
         }
 
         public IEnumerator GetEnumerator()
