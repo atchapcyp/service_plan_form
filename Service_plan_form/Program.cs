@@ -30,7 +30,7 @@ namespace Service_plan_form
             List<Service> outbound_services = new List<Service>();
             List<int[]> backward = new List<int[]>();
             Train_obj train = new Train_obj(100);
-            int[] service = { 1, 1, 1, 1, 1 };
+            int[] service = { 1, 1, 1, 0, 1 };
             int[] service2 = { 1, 0, 1, 1, 1 };
             int[] service3 = { 1, 0, 0, 0, 1 };
             int[] service4 = { 0, 1, 1, 0, 1 };
@@ -47,9 +47,9 @@ namespace Service_plan_form
             aService = new Service("4_station_outbound_start_at_1", service4);
             outbound_services.Add(aService);
             outbound_services[2].show();
-            Service testService =new Service("TEST_ALL_STATION", service3);
+            Service testService =new Service("TEST_ALL_STATION", service);
             
-            testService.addScheduleFromStart(8, 0);
+            testService.addScheduleFromStart(9, 0);
 
             //Console.WriteLine(testService.depart_time[0]);
             //Console.WriteLine(testService.depart_time[1]);

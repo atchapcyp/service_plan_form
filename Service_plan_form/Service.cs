@@ -15,6 +15,7 @@ namespace Service_plan_form
         public DateTime[] depart_time;
         public List<Train_obj> trains = new List<Train_obj>();
         public int last_stop_index;
+        public int first_stop_index;
         
 
 
@@ -25,6 +26,7 @@ namespace Service_plan_form
             this.stop_station= stop_station ;
             max_util = train_cap*Station.getDistance(getSourceStation(), getDestinationStation());
             last_stop_index = getDestinationStation();
+            first_stop_index = getSourceStation();
         }
 
         public void addSchedulePeriod(int first_depart,int last_arrive)
@@ -51,21 +53,26 @@ namespace Service_plan_form
 
         public void addScheduleFromStart(int depart_hour,int depart_min)
         {
-            DateTime time;
+            DateTime time=new DateTime();
             int counter = 0;
             float in_min = 60.0f;
-            time = new DateTime(1, 1, 1,depart_hour, depart_min, 0);
-            Console.WriteLine("LAST_STOP_INDEX : " + last_stop_index);
-            depart_time.SetValue(time, counter++);
             int sum_from_start = 0;
             //travel time in hour 
-            for (int i = 1; i < 5; i++)
+            for (int i = first_stop_index; i <= last_stop_index; i++)
             {
+                Console.WriteLine("DEPART_ STATION" + i);
+                if (i == first_stop_index)
+                {
+                    time = new DateTime(1, 1, 1, depart_hour, depart_min, 0);
+                    depart_time.SetValue(time, i);
+                    Console.WriteLine("DEPART_ " + time);
+                    continue;
+                }
                 float travel_time = (PhysicalData.distance_meter[i] - PhysicalData.distance_meter[i-1]) / PhysicalData.service_speed;
                 int travel_time_miniute = (int)(travel_time * in_min);
                 Console.WriteLine("TRAVEL_TIME : " + travel_time);
                 Console.WriteLine("TRAVEL_TIME in min : " + travel_time_miniute);
-                int travel_time_hour =(sum_from_start+ travel_time_miniute+depart_min )/ 60;  
+                int travel_time_hour =(sum_from_start+ travel_time_miniute+depart_min )/ 60;
                 
                 time.AddHours(travel_time_hour);
                 time.AddMinutes(travel_time_miniute);
@@ -85,7 +92,7 @@ namespace Service_plan_form
                     time = new DateTime(1, 1, 2, (depart_hour + travel_time_hour)%24, (depart_min + sum_from_start) % 60, 0);
                 }
                 Console.WriteLine("DEPART_ "+time);
-                depart_time.SetValue(time, counter++);
+                depart_time.SetValue(time, i);
             }
         }
 
