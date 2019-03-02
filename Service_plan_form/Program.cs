@@ -30,31 +30,28 @@ namespace Service_plan_form
             List<Service> outbound_services = new List<Service>();
             List<int[]> backward = new List<int[]>();
             Train_obj train = new Train_obj(100);
-            int[] service = { 1, 1, 1, 0, 1 };
+            int[] service = { 1, 1, 1, 1, 1 };
             int[] service2 = { 1, 0, 1, 1, 1 };
             int[] service3 = { 1, 0, 0, 0, 1 };
             int[] service4 = { 0, 1, 1, 0, 1 };
             Service aService;
+            int dep_hour = 9;int dep_min = 0;
 
-
-            aService = new Service("All_station", service);
+            aService = new Service("All_station", service,dep_hour,dep_min);
             //add service to list
             outbound_services.Add(aService);
             outbound_services[0].show();
-            aService = new Service("3_station_outbound", service2);
+            aService = new Service("4_station_outbound_ex_2", service2,dep_hour,dep_min);
             outbound_services.Add(aService);
             outbound_services[1].show();
-            aService = new Service("4_station_outbound_start_at_1", service4);
+            aService = new Service("3_station_outbound_start_at_1", service4,dep_hour,dep_min);
             outbound_services.Add(aService);
             outbound_services[2].show();
-            Service testService =new Service("TEST_ALL_STATION", service);
-            
-            testService.addScheduleFromStart(9, 0);
+            aService =new Service("1_to_5", service3,dep_hour,dep_min);
+            outbound_services.Add(aService);
+            outbound_services[3].show();
+            Service_algo.genService(outbound_services);
 
-            //Console.WriteLine(testService.depart_time[0]);
-            //Console.WriteLine(testService.depart_time[1]);
-            Console.WriteLine((int) (PhysicalData.distance_meter[1] - PhysicalData.distance_meter[0]) / PhysicalData.service_speed);
-            
             //add demand to be time frame demand
 
             TF_Demand passeng_demand = new TF_Demand(720, 5);

@@ -32,6 +32,8 @@ namespace Service_plan_form
         string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
         string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
 
+        
+
         private void Form1_Load(object sender, EventArgs e)
         {
             var filePath = Path.Combine(project_path,xlsx_path);
@@ -54,7 +56,7 @@ namespace Service_plan_form
                     Console.WriteLine(stations[2].demand_station[0][0]);
                     foreach (var demand in dm)
                     {
-                      Console.WriteLine("START : " + demand.StartTime.ToShortTimeString() + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
+                      Console.WriteLine("START : " + demand.StartTime + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
                     }
 
                     // The result of each spreadsheet is in result.Tables

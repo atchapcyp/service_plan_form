@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Service_plan_form.Demands;
 
 namespace Service_plan_form
 {
     public static class Service_algo
     {
-
-        public const int A = 0;
-        public const int B = 1;
-        public const int C = 2;
-        public const int D = 3;
-        public const int E = 4;
 
         public static void showarray(int[,] passeng_num)
         {
@@ -49,7 +44,7 @@ namespace Service_plan_form
                     }
                 }
 
-                int demand_at_station = 0; 
+                int demand_at_station = 0;
                 Console.WriteLine("Remainning Seat : " + train.remain_cap);
                 get_off_next_station = train.passenger[i];
                 Console.WriteLine("Number of getting off passenger at station " + i + " = " + get_off_next_station);
@@ -94,7 +89,7 @@ namespace Service_plan_form
                     {
                         if (aService.stop_station[j] == 0) { continue; }
                         Console.WriteLine("..............Debug train remainning seat  " + train.remain_cap);
-                        Console.WriteLine("..............Debug Demand at station      " + demands.cal_demand[i,j]);
+                        Console.WriteLine("..............Debug Demand at station      " + demands.cal_demand[i, j]);
                         Console.WriteLine("..............Debug ratio      " + ratio);
                         fill_demand = (int)(demands.cal_demand[i, j] * ratio);
 
@@ -122,17 +117,17 @@ namespace Service_plan_form
             }
         }
 
-        public static void update_remain_demand(TF_Demand demands,int timeframe,int fill_demand,int i,int j){
-            if( demands.carry_matrix[i,j]==-1){
+        public static void update_remain_demand(TF_Demand demands, int timeframe, int fill_demand, int i, int j) {
+            if (demands.carry_matrix[i, j] == -1) {
                 demands.demand[timeframe][i, j] -= fill_demand;
             }
             else {
-                for (int k = demands.carry_matrix[i, j]; k <= timeframe;k++){
+                for (int k = demands.carry_matrix[i, j]; k <= timeframe; k++) {
                     if (demands.demand[k][i, j] < fill_demand) {
                         fill_demand -= demands.demand[k][i, j];
                         demands.demand[k][i, j] = 0;
                     }
-                    else{
+                    else {
                         demands.demand[k][i, j] -= fill_demand;
                         return;
                     }
@@ -149,13 +144,13 @@ namespace Service_plan_form
             {
                 for (int k = demands.carry_matrix[i, j]; k <= timeframe; k++)
                 {
-                        demands.demand[k][i, j] = 0;
-                 
+                    demands.demand[k][i, j] = 0;
+
                 }
             }
         }
 
-        public static Boolean isDemandEmpty_with_service(int[,] demand,Service services)
+        public static Boolean isDemandEmpty_with_service(int[,] demand, Service services)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -164,7 +159,7 @@ namespace Service_plan_form
                 else
                 {
                     for (int j = i + 1; j < 5; j++)
-                    {   if (services.stop_station[j] == 0)
+                    { if (services.stop_station[j] == 0)
                             continue;
                         if (demand[i, j] != 0)
                             return false;
@@ -186,7 +181,7 @@ namespace Service_plan_form
             return true;
         }
 
-        static public void fixedValue_5x5(int[,] passeng_num,int num)
+        static public void fixedValue_5x5(int[,] passeng_num, int num)
         {
 
             for (int i = 0; i < 5; i++)
@@ -203,15 +198,15 @@ namespace Service_plan_form
 
             }
         }
-        static public void all_service_n_time(int[,] outbound_demand,Train_obj train,List<Service> services){
+        static public void all_service_n_time(int[,] outbound_demand, Train_obj train, List<Service> services) {
             int indexOfMaxUtilize;
-            float most_utilize=0;
-            while (!isDemandEmpty(outbound_demand)){
-                for (int i = 0; i < services.Count;i++){
+            float most_utilize = 0;
+            while (!isDemandEmpty(outbound_demand)) {
+                for (int i = 0; i < services.Count; i++) {
                     float service_util = Utilize_service(outbound_demand, train, services[i]);
                     float max_util = max_utilize_of_service(train.cap, services[i]);
                     float util_percent = service_util / max_util * 100;
-                    if (util_percent > most_utilize){
+                    if (util_percent > most_utilize) {
                         indexOfMaxUtilize = i;
                     }
                 }
@@ -219,39 +214,39 @@ namespace Service_plan_form
             }
         }
 
-        static public (int,float) index_of_most_utilize_service(int[,] outbound_demand,Train_obj train,List<Service> services)
+        static public (int, float) index_of_most_utilize_service(int[,] outbound_demand, Train_obj train, List<Service> services)
         {
             int counter = 0;
-            int index_of_max_util=0;
-            float util_percent=0;
+            int index_of_max_util = 0;
+            float util_percent = 0;
             for (int i = 0; i < services.Count; i++)
             {
                 services[i].show();
-                    Console.WriteLine("----- ROUND " + ++counter + " ----- ");
-                    showarray(outbound_demand);
-                    float service_util = Utilize_service(outbound_demand, train, services[i]);
-                    float max_util = max_utilize_of_service(train.cap, services[i]);
-                    float new_util_percent = service_util / max_util * 100;
-                    Console.WriteLine("This service utilize : " + service_util);
-                    Console.WriteLine("MAX service utilize : " + max_util);
-                    Console.WriteLine("Percent service utilize : " + new_util_percent);
-                if (Math.Abs(100-new_util_percent)<=float.Epsilon) {//float compare
+                Console.WriteLine("----- ROUND " + ++counter + " ----- ");
+                showarray(outbound_demand);
+                float service_util = Utilize_service(outbound_demand, train, services[i]);
+                float max_util = max_utilize_of_service(train.cap, services[i]);
+                float new_util_percent = service_util / max_util * 100;
+                Console.WriteLine("This service utilize : " + service_util);
+                Console.WriteLine("MAX service utilize : " + max_util);
+                Console.WriteLine("Percent service utilize : " + new_util_percent);
+                if (Math.Abs(100 - new_util_percent) <= float.Epsilon) {//float compare
                     Console.WriteLine("FLOAT CHECK EQUAL 100");
-                    return (i,100); 
+                    return (i, 100);
                 }
-                if(new_util_percent>util_percent){
+                if (new_util_percent > util_percent) {
                     util_percent = new_util_percent;
                     index_of_max_util = i;
                 }
             }
 
-            return (index_of_max_util,util_percent);
+            return (index_of_max_util, util_percent);
         }
 
-        static public void actual_run(TF_Demand demands,Train_obj train,Service service,int timeframe){
+        static public void actual_run(TF_Demand demands, Train_obj train, Service service, int timeframe) {
             Console.WriteLine("ACTUAL_RUN . ");
             Console.WriteLine(service.service_id);
-            Train_a_b_c_d_e(demands, train, service,timeframe);
+            Train_a_b_c_d_e(demands, train, service, timeframe);
             Console.WriteLine("This is remainning demand . ");
             showarray(demands.cal_demand);
             Console.WriteLine("This is CURRENT demand . ");
@@ -259,7 +254,7 @@ namespace Service_plan_form
             Console.WriteLine("------------------ ");
         }
 
-        static public void orchestrator_of_service(TF_Demand outbound_demand,Train_obj train,List<Service> services){
+        static public void orchestrator_of_service(TF_Demand outbound_demand, Train_obj train, List<Service> services) {
             for (int i = 0; i < outbound_demand.demand.Count; i++)
             {
                 outbound_demand.get_demand(i);
@@ -274,9 +269,9 @@ namespace Service_plan_form
                     Console.WriteLine("this is PERCENT " + p);
                     if (p <= 60)
                     {
-                        for (int out_loop = 0; out_loop < outbound_demand.dimension;out_loop++){
-                            for (int in_loop = out_loop+1 ; in_loop <outbound_demand.dimension;in_loop++){
-                                if (outbound_demand.demand[i][out_loop,in_loop] > 0)
+                        for (int out_loop = 0; out_loop < outbound_demand.dimension; out_loop++) {
+                            for (int in_loop = out_loop + 1; in_loop < outbound_demand.dimension; in_loop++) {
+                                if (outbound_demand.demand[i][out_loop, in_loop] > 0)
                                 {
                                     outbound_demand.carry_matrix[out_loop, in_loop] = i;
                                 }
@@ -284,11 +279,11 @@ namespace Service_plan_form
                         }
                         break;
                     }
-                    Console.WriteLine("----IN ACTUAL ---- " +"\n\n");
-                    actual_run(outbound_demand, train, services[s],i);
+                    Console.WriteLine("----IN ACTUAL ---- " + "\n\n");
+                    actual_run(outbound_demand, train, services[s], i);
                     Console.WriteLine("----OUT ACTUAL ---- " + "\n\n");
                 }
-                Console.WriteLine("----END--OF--orchestrate----LOOP--- "+i+"\n\n\n\n\n");
+                Console.WriteLine("----END--OF--orchestrate----LOOP--- " + i + "\n\n\n\n\n");
             }
             Console.WriteLine("----END--OF--orchestrate-------- ");
         }
@@ -332,16 +327,16 @@ namespace Service_plan_form
         }
 
 
-        public static float cal_utilize_percent(int[,] demand,Train_obj train,Service service){
+        public static float cal_utilize_percent(int[,] demand, Train_obj train, Service service) {
             float a = Utilize_service(demand, train, service);
             float b = max_utilize_of_service(train.cap, service);
             return a / b * 100;
         }
 
-        public static int cal_all_service_util(int[,] demand,Train_obj train,List<Service> services){
-            int most_util_index=-1;
-            float most_percent=-1;
-            for (int i = 0; i < services.Count;i++){
+        public static int cal_all_service_util(int[,] demand, Train_obj train, List<Service> services) {
+            int most_util_index = -1;
+            float most_percent = -1;
+            for (int i = 0; i < services.Count; i++) {
                 float temp = cal_utilize_percent(demand, train, services[i]);
                 if (temp > most_percent) {
                     most_percent = temp;
@@ -351,22 +346,22 @@ namespace Service_plan_form
             return most_util_index;
         }
 
-        public static float max_utilize_of_service(int train_cap,Service service){
+        public static float max_utilize_of_service(int train_cap, Service service) {
 
-            int source=0,destination=0;
-            for (int i = 0; i < service.getLength();i++){
-                if(service.stop_station[i]==1){
+            int source = 0, destination = 0;
+            for (int i = 0; i < service.getLength(); i++) {
+                if (service.stop_station[i] == 1) {
                     source = i;
                     break;
                 }
             }
-            for (int i = service.getLength()-1; i > 0;i--){
-                if(service.stop_station[i]==1){
+            for (int i = service.getLength() - 1; i > 0; i--) {
+                if (service.stop_station[i] == 1) {
                     destination = i;
                     break;
                 }
             }
-            return train_cap*Station.getDistance(source,destination);
+            return train_cap * Station.getDistance(source, destination);
         }
 
         //Cal_remain_seat returns utilization (sum of passenger*distance)
@@ -374,17 +369,17 @@ namespace Service_plan_form
         {
             int[,] actual_getoff = new int[5, 5];
             int get_off_next_station = 0;
-            int i, j, k,next_station_index=0;
-            float train_util=0;
+            int i, j, k, next_station_index = 0;
+            float train_util = 0;
             int[,] cal_demand = (int[,])demand.Clone();
             for (i = 0; i < 5; i++)
             {
                 if (service.stop_station[i] == 0)
-                {   
+                {
                     continue;
                 }
-                for (int a = 4; a > i;a--){
-                    if (service.stop_station[a]==1){
+                for (int a = 4; a > i; a--) {
+                    if (service.stop_station[a] == 1) {
                         next_station_index = a;
                     }
                 }
@@ -405,7 +400,7 @@ namespace Service_plan_form
                 }
 
                 if (demand_at_station < train.remain_cap)
-                {   
+                {
                     train.remain_cap -= demand_at_station;
                     for (j = i + 1; j < 5; j++)
                     {
@@ -424,7 +419,7 @@ namespace Service_plan_form
                         if (service.stop_station[j] == 0) { continue; }
 
                         int fill_demand = (int)(cal_demand[i, j] * ratio);
-                    
+
                         actual_getoff[i, j] = fill_demand;
                         cal_demand[i, j] -= fill_demand;
                         demand_at_station += fill_demand;
@@ -434,16 +429,16 @@ namespace Service_plan_form
                     train.remain_cap -= demand_at_station;
 
                     int round_up_count = train.remain_cap;
-                    for (j = next_station_index ; j < round_up_count+next_station_index; j++)
+                    for (j = next_station_index; j < round_up_count + next_station_index; j++)
                     {
-                        actual_getoff[i, j]+=1;
+                        actual_getoff[i, j] += 1;
                         cal_demand[i, j] -= 1;
                         demand_at_station++;
                         train.remain_cap--;
                     }
 
                 }
-                Console.WriteLine("CALCULATE UTIL--- Traincap : "+train.cap );
+                Console.WriteLine("CALCULATE UTIL--- Traincap : " + train.cap);
                 Console.WriteLine("CALCULATE UTIL--- Remaincap : " + train.remain_cap);
                 Console.WriteLine("CALCULATE UTIL--- StationDistance : " + PhysicalData.distance[i, next_station_index]);
                 train_util += (train.cap - train.remain_cap) * PhysicalData.distance[i, next_station_index];
@@ -458,14 +453,77 @@ namespace Service_plan_form
                 int sum = 0;
                 for (l = 0; l < station; l++)
                 {
-                   
+
                     sum += actual_getoff[l, station];
-                    Console.WriteLine("in_sum get off At  station : " + station + " form station : " + l + " = "+ actual_getoff[l, station]);
+                    Console.WriteLine("in_sum get off At  station : " + station + " form station : " + l + " = " + actual_getoff[l, station]);
                 }
                 return sum;
             }
-           
+
             return train_util;
+        }
+
+
+        public static void genService(List<Service> _services)
+        {
+            List<Station> stations = new List<Station>();
+            stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
+            int start_hour = 8; int start_min = 0;
+            int[,] carry_demand = build_1st_carry_demand(stations);
+            int[,] tf_memo = build_current_tf_memo();
+            List<Service> services = new List<Service>();
+            services = _services;
+            showarray(demand_of_this_service(services[0].depart_time,stations));
+
+        }
+
+        public static int[,] demand_of_this_service(DateTime[] depart_time, List<Station> stations)
+        {   int counter = 0;
+            int[,] result = new int[stations.Count, stations.Count];
+            foreach (Station _station in stations)
+            {
+                int index_of_table=-1;
+                foreach (DateTime table in _station)
+                {
+                    index_of_table++;
+                    if (depart_time[counter].Hour == table.Hour)
+                    {
+                        for (int b = 0; b < stations.Count; b++)
+                        {
+                            result[counter, b] = (int)_station.demand_station[index_of_table][b];
+                        }
+                    }
+                }
+                counter++;
+            }
+            return result;
+        }
+
+        public static int[,] build_1st_carry_demand(List<Station> stations)
+        { int[,] result = new int[stations.Count, stations.Count];
+            int counter = 0;
+            foreach (Station a in stations)
+            {
+                
+                for (int b = 0; b < stations.Count; b++)
+                {
+                    result[counter, b] = (int)a.demand_station[0][b];
+                }
+                counter++;
+            }
+            return result;
+        }
+
+        public static int[,] build_current_tf_memo()
+        { int[,] result = new int[Form1.stations.Count, Form1.stations.Count];
+            for(int i = 0; i < Form1.stations.Count; i++)
+            {
+                for (int j = 0; j < Form1.stations.Count; j++)
+                {
+                    result[i, j] = 0;
+                }
+            }
+            return result;
         }
 
         public static string PrettyPrintArrayOfArrays(int[][] arrayOfArrays)
