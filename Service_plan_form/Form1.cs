@@ -28,16 +28,15 @@ namespace Service_plan_form
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
         public static List<Station> stations = new List<Station>();
         DataSet result;
+        static DataSet Test_result;
         DataTable dt = new DataTable();
-        string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+        static string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
         string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
-
-        
+        static string test_path = @"demand_format\TestData.xlsx";
 
         private void Form1_Load(object sender, EventArgs e)
         {
             var filePath = Path.Combine(project_path,xlsx_path);
-           
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
@@ -62,6 +61,7 @@ namespace Service_plan_form
                     // The result of each spreadsheet is in result.Tables
                 } 
             }
+            
            
             
             from_demand_box.Items.Add("ALL station");
@@ -77,6 +77,31 @@ namespace Service_plan_form
             to_demand_box.SelectedIndex = 0;
             
 
+        }
+
+        public static List<Station> readxlsx()
+        {   var Test_stations = new List<Station>();
+            var Test_dm = new List<Demand_blueprint>();
+           var Test_mapper = new DataNamesMapper<Demand_blueprint>();
+            var filePath = Path.Combine(project_path, test_path);
+            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    Test_result = reader.AsDataSet();
+                    for (int i = 0; i < Test_result.Tables.Count; i++)
+                    {
+                        Test_dm.AddRange(Test_mapper.Map(Test_result.Tables[i]));
+
+                    }
+
+                    for (int i = 0; i < Test_result.Tables.Count; i++)
+                    {
+                        Test_stations.Add(new Station(Test_dm, i, Test_result.Tables.Count));
+                    }
+                }
+            }
+            return Test_stations;
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)

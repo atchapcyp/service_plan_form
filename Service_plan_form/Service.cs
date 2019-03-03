@@ -6,8 +6,8 @@ namespace Service_plan_form
 
     {
 
-        public string service_id { get; set; }
-        public int[] stop_station { get; set; }
+        public string ServiceId { get; set; }
+        public int[] StopStation { get; set; }
         public int service_quantity { get; set; }
         public int max_util { get; set; }
         const int train_cap = 200;
@@ -22,8 +22,8 @@ namespace Service_plan_form
         public Service(string id,int[] stop_station)
         {
             depart_time = new DateTime[stop_station.Length];
-            service_id = id;
-            this.stop_station= stop_station ;
+            ServiceId = id;
+            this.StopStation= stop_station ;
             max_util = train_cap*Station.getDistance(getSourceStation(), getDestinationStation());
             last_stop_index = getDestinationStation();
             first_stop_index = getSourceStation();
@@ -31,17 +31,17 @@ namespace Service_plan_form
         public Service(string id, int[] stop_station,int depart_hour,int depart_min)
         {
             depart_time = new DateTime[stop_station.Length];
-            service_id = id;
-            this.stop_station = stop_station;
+            ServiceId = id;
+            this.StopStation = stop_station;
             max_util = train_cap * Station.getDistance(getSourceStation(), getDestinationStation());
             last_stop_index = getDestinationStation();
             first_stop_index = getSourceStation();
-            this.addScheduleFromStart(depart_hour, depart_min);
+            this.AddScheduleFromStart(depart_hour, depart_min);
         }
 
-        public void addSchedulePeriod(int first_depart,int last_arrive)
+        public void AddSchedulePeriod(int first_depart,int last_arrive)
         {   
-            if (last_arrive - first_depart != stop_station.Length-1)
+            if (last_arrive - first_depart != StopStation.Length-1)
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace Service_plan_form
             }
         }
 
-        public void addScheduleFromStart(int depart_hour,int depart_min)
+        public void AddScheduleFromStart(int depart_hour,int depart_min)
         {
             DateTime time=new DateTime();
             float in_min = 60.0f;
@@ -70,7 +70,7 @@ namespace Service_plan_form
             depart_time.SetValue(time, 0);
             Console.WriteLine("DEPART_ " + time);
             //travel time in hour 
-            for (int i = 1; i <= stop_station.Length-1; i++)
+            for (int i = 1; i <= StopStation.Length-1; i++)
             {
                 Console.WriteLine("DEPART_ STATION" + i);
                 float travel_time = (PhysicalData.distance_meter[i] - PhysicalData.distance_meter[i-1]) / PhysicalData.service_speed;
@@ -79,7 +79,7 @@ namespace Service_plan_form
                 Console.WriteLine("TRAVEL_TIME in min : " + travel_time_miniute);
                 int travel_time_hour =(sum_from_start+ travel_time_miniute+depart_min )/ 60;
                 
-                if (this.stop_station[i] == 1&&i!=last_stop_index)
+                if (this.StopStation[i] == 1&&i!=last_stop_index)
                 {
                     time.AddMinutes(PhysicalData.dwell_time);
                     sum_from_start += travel_time_miniute + PhysicalData.dwell_time;
@@ -100,7 +100,7 @@ namespace Service_plan_form
             }
                        
         }
-        public void addScheduleFromStart_MANUAL(int depart_hour, int depart_min) // set start time for 1st start station then trace back
+        public void AddScheduleFromStart_MANUAL(int depart_hour, int depart_min) // set start time for 1st start station then trace back
         {
             DateTime time = new DateTime();
             DateTime time2 = new DateTime(1, 1, 1, depart_hour, depart_min, 0);
@@ -124,7 +124,7 @@ namespace Service_plan_form
                 Console.WriteLine("TRAVEL_TIME in min : " + travel_time_miniute);
                 int travel_time_hour = (sum_from_start + travel_time_miniute + depart_min) / 60;
 
-                if (this.stop_station[i] == 1 && i != last_stop_index)
+                if (this.StopStation[i] == 1 && i != last_stop_index)
                 {
                     time.AddMinutes(PhysicalData.dwell_time);
                     sum_from_start += travel_time_miniute + PhysicalData.dwell_time;
@@ -160,7 +160,7 @@ namespace Service_plan_form
 
         }
 
-        public void addTrain(int capacity)
+        public void AddTrain(int capacity)
         {
             Train_obj _train = new Train_obj(capacity);
             trains.Add(_train);
@@ -168,23 +168,23 @@ namespace Service_plan_form
 
     
         public void show(){
-            Console.WriteLine(this.service_id);
+            Console.WriteLine(this.ServiceId);
 
-            foreach(int i in this.stop_station)
+            foreach(int i in this.StopStation)
                 Console.Write(string.Format("[{0}]\t ", i));
 
             Console.WriteLine();
         }
 
         public int getLength(){
-            return this.stop_station.Length;
+            return this.StopStation.Length;
         }
 
         public int getSourceStation()
         {
             for (int i = 0; i < this.getLength(); i++)
             {
-                if (this.stop_station[i] == 1) 
+                if (this.StopStation[i] == 1) 
 
                 {
                     return i;
@@ -197,7 +197,7 @@ namespace Service_plan_form
         {
             for (int i = this.getLength()-1; i >= 0; i--)
             {
-                if (this.stop_station[i] == 1)
+                if (this.StopStation[i] == 1)
                 {
                     return i;
                 }

@@ -37,7 +37,7 @@ namespace Service_plan_form
             Service aService;
             int dep_hour = 9;int dep_min = 0;
 
-            aService = new Service("All_station", service,dep_hour,dep_min);
+            aService = new Service("All_station", service,11,dep_min);
             //add service to list
             outbound_services.Add(aService);
             outbound_services[0].show();

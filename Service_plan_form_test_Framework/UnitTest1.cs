@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Service_plan_form;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Service_plan_form_test
 {
@@ -22,6 +24,25 @@ namespace Service_plan_form_test
         {
             return x + y;
         }
+
+        [TestMethod]
+        public void Test_read_xlsx_data()
+        { List<Station> listOfStation = new List<Station>();
+           listOfStation = Form1.readxlsx();
+            double[] expected_station2 = { 210, 0, 230, 240, 250 };
+            for (var i = 0; i < 5; i++)
+            {
+                Assert.AreEqual(expected_station2[i], listOfStation[1].demand_station[0][i]);
+            }
+        }
+
+        //[TestMethod]
+        //public void Test_retreive_demand_of_service()
+        //{
+        //    List<Station> stations = new List<Station>();
+        //    int[,] actual = Service_algo.demand_of_this_service();
+
+        //}
 
         [TestMethod]
         public void Test_Gen_outbound_TF_Demand_method()

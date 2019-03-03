@@ -32,13 +32,13 @@ namespace Service_plan_form
             int i, j, k, next_station_index = -1;
             for (i = 0; i < 5; i++)
             {
-                if (aService.stop_station[i] == 0)
+                if (aService.StopStation[i] == 0)
                 {
                     continue;
                 }
                 for (int a = 4; a > i; a--)
                 {
-                    if (aService.stop_station[a] == 1)
+                    if (aService.StopStation[a] == 1)
                     {
                         next_station_index = a;
                     }
@@ -52,7 +52,7 @@ namespace Service_plan_form
                 Console.WriteLine("Remainning Seat after get off : " + train.remain_cap);
                 for (k = i + 1; k < 5; k++) // sum of demand at station i
                 {
-                    if (aService.stop_station[k] == 0) { continue; }
+                    if (aService.StopStation[k] == 0) { continue; }
                     demand_at_station += demands.cal_demand[i, k];
                     Console.WriteLine("Demand at station " + i + " to station " + k + " is " + demands.cal_demand[i, k]);
                 }
@@ -61,7 +61,7 @@ namespace Service_plan_form
                 {
                     for (j = i + 1; j < 5; j++)
                     {
-                        if (aService.stop_station[j] == 0) { continue; }
+                        if (aService.StopStation[j] == 0) { continue; }
                         train.getOn(demands.cal_demand[i, j], j);
 
                         demands.cal_demand[i, j] = 0;
@@ -75,7 +75,7 @@ namespace Service_plan_form
                     int fill_demand;
                     for (j = i + 1; j < 5; j++)
                     {
-                        if (aService.stop_station[j] == 0) { continue; }
+                        if (aService.StopStation[j] == 0) { continue; }
 
                         fill_demand = (int)(demands.cal_demand[i, j] * ratio);
 
@@ -87,7 +87,7 @@ namespace Service_plan_form
                     remain_cap -= demand_at_station;
                     for (j = i + 1; j < 5; j++)
                     {
-                        if (aService.stop_station[j] == 0) { continue; }
+                        if (aService.StopStation[j] == 0) { continue; }
                         Console.WriteLine("..............Debug train remainning seat  " + train.remain_cap);
                         Console.WriteLine("..............Debug Demand at station      " + demands.cal_demand[i, j]);
                         Console.WriteLine("..............Debug ratio      " + ratio);
@@ -154,12 +154,12 @@ namespace Service_plan_form
         {
             for (int i = 0; i < 5; i++)
             {
-                if (services.stop_station[i] == 0)
+                if (services.StopStation[i] == 0)
                     continue;
                 else
                 {
                     for (int j = i + 1; j < 5; j++)
-                    { if (services.stop_station[j] == 0)
+                    { if (services.StopStation[j] == 0)
                             continue;
                         if (demand[i, j] != 0)
                             return false;
@@ -245,7 +245,7 @@ namespace Service_plan_form
 
         static public void actual_run(TF_Demand demands, Train_obj train, Service service, int timeframe) {
             Console.WriteLine("ACTUAL_RUN . ");
-            Console.WriteLine(service.service_id);
+            Console.WriteLine(service.ServiceId);
             Train_a_b_c_d_e(demands, train, service, timeframe);
             Console.WriteLine("This is remainning demand . ");
             showarray(demands.cal_demand);
@@ -350,13 +350,13 @@ namespace Service_plan_form
 
             int source = 0, destination = 0;
             for (int i = 0; i < service.getLength(); i++) {
-                if (service.stop_station[i] == 1) {
+                if (service.StopStation[i] == 1) {
                     source = i;
                     break;
                 }
             }
             for (int i = service.getLength() - 1; i > 0; i--) {
-                if (service.stop_station[i] == 1) {
+                if (service.StopStation[i] == 1) {
                     destination = i;
                     break;
                 }
@@ -374,12 +374,12 @@ namespace Service_plan_form
             int[,] cal_demand = (int[,])demand.Clone();
             for (i = 0; i < 5; i++)
             {
-                if (service.stop_station[i] == 0)
+                if (service.StopStation[i] == 0)
                 {
                     continue;
                 }
                 for (int a = 4; a > i; a--) {
-                    if (service.stop_station[a] == 1) {
+                    if (service.StopStation[a] == 1) {
                         next_station_index = a;
                     }
                 }
@@ -394,7 +394,7 @@ namespace Service_plan_form
                 get_off_next_station = 0;
                 for (k = i + 1; k < 5; k++) // sum of demand at station i
                 {
-                    if (service.stop_station[k] == 0) { continue; }
+                    if (service.StopStation[k] == 0) { continue; }
                     demand_at_station += cal_demand[i, k];
 
                 }
@@ -404,7 +404,7 @@ namespace Service_plan_form
                     train.remain_cap -= demand_at_station;
                     for (j = i + 1; j < 5; j++)
                     {
-                        if (service.stop_station[j] == 0) { continue; }
+                        if (service.StopStation[j] == 0) { continue; }
                         actual_getoff[i, j] = cal_demand[i, j];
                         cal_demand[i, j] = 0;
                     }
@@ -416,7 +416,7 @@ namespace Service_plan_form
                     demand_at_station = 0;
                     for (j = i + 1; j < 5; j++)
                     {
-                        if (service.stop_station[j] == 0) { continue; }
+                        if (service.StopStation[j] == 0) { continue; }
 
                         int fill_demand = (int)(cal_demand[i, j] * ratio);
 
@@ -468,7 +468,6 @@ namespace Service_plan_form
         {
             List<Station> stations = new List<Station>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
-            int start_hour = 8; int start_min = 0;
             int[,] carry_demand = build_1st_carry_demand(stations);
             int[,] tf_memo = build_current_tf_memo();
             List<Service> services = new List<Service>();
