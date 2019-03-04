@@ -35,9 +35,9 @@ namespace Service_plan_form
             int[] service3 = { 1, 0, 0, 0, 1 };
             int[] service4 = { 0, 1, 1, 0, 1 };
             Service aService;
-            int dep_hour = 9;int dep_min = 0;
+            int dep_hour = 9;int dep_min = 20;
 
-            aService = new Service("All_station", service,11,dep_min);
+            aService = new Service("All_station", service,dep_hour,dep_min);
             //add service to list
             outbound_services.Add(aService);
             outbound_services[0].show();
@@ -51,6 +51,7 @@ namespace Service_plan_form
             outbound_services.Add(aService);
             outbound_services[3].show();
             Service_algo.genService(outbound_services);
+
 
             //add demand to be time frame demand
 

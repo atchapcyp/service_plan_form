@@ -97,9 +97,9 @@ namespace Service_plan_form
                 }
                 Console.WriteLine("DEPART_ "+time);
                 depart_time.SetValue(time, i);
-            }
-                       
+            }             
         }
+
         public void AddScheduleFromStart_MANUAL(int depart_hour, int depart_min) // set start time for 1st start station then trace back
         {
             DateTime time = new DateTime();

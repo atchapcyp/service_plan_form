@@ -242,7 +242,36 @@ namespace Service_plan_form
 
             return (index_of_max_util, util_percent);
         }
+        static public (int, float) new_index_of_most_utilize_service(List<int[,]> outbound_demand, Train_obj train, List<Service> services)
+        {
+            int counter = 0;
+            int index_of_max_util = 0;
+            float util_percent = 0;
+            for (int i = 0; i < services.Count; i++)
+            {
+                Console.WriteLine("----- ROUND " + ++counter + " ----- ");
+                services[i].show();
+                showarray(outbound_demand[i]);
+                float service_util = Utilize_service(outbound_demand[i], train, services[i]);
+                float max_util = max_utilize_of_service(train.cap, services[i]);
+                float new_util_percent = service_util / max_util * 100;
+                Console.WriteLine("This service utilize : " + service_util);
+                Console.WriteLine("MAX service utilize : " + max_util);
+                Console.WriteLine("Percent service utilize : " + new_util_percent);
+                if (Math.Abs(100 - new_util_percent) <= float.Epsilon)
+                {//float compare
+                    Console.WriteLine("FLOAT CHECK EQUAL 100");
+                    return (i, 100);
+                }
+                if (new_util_percent > util_percent)
+                {
+                    util_percent = new_util_percent;
+                    index_of_max_util = i;
+                }
+            }
 
+            return (index_of_max_util, util_percent);
+        }
         static public void actual_run(TF_Demand demands, Train_obj train, Service service, int timeframe) {
             Console.WriteLine("ACTUAL_RUN . ");
             Console.WriteLine(service.ServiceId);
@@ -361,7 +390,7 @@ namespace Service_plan_form
                     break;
                 }
             }
-            return train_cap * Station.getDistance(source, destination);
+            return train_cap * Station.getDistan_Meter(source, destination);
         }
 
         //Cal_remain_seat returns utilization (sum of passenger*distance)
@@ -440,8 +469,8 @@ namespace Service_plan_form
                 }
                 Console.WriteLine("CALCULATE UTIL--- Traincap : " + train.cap);
                 Console.WriteLine("CALCULATE UTIL--- Remaincap : " + train.remain_cap);
-                Console.WriteLine("CALCULATE UTIL--- StationDistance : " + PhysicalData.distance[i, next_station_index]);
-                train_util += (train.cap - train.remain_cap) * PhysicalData.distance[i, next_station_index];
+                Console.WriteLine("CALCULATE UTIL--- StationDistance : (METER) " + Station.getDistan_Meter(i, next_station_index));
+                train_util += (train.cap - train.remain_cap) * Station.getDistan_Meter(i,next_station_index);
                 Console.WriteLine("Train_util : " + train_util);
 
             }
@@ -466,14 +495,23 @@ namespace Service_plan_form
 
         public static void genService(List<Service> _services)
         {
+            Train_obj train = new Train_obj(100);
             List<Station> stations = new List<Station>();
+            List<int[,]> demStation = new List<int[,]>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
             int[,] carry_demand = build_1st_carry_demand(stations);
             int[,] tf_memo = build_current_tf_memo();
             List<Service> services = new List<Service>();
             services = _services;
-            showarray(demand_of_this_service(services[0].depart_time,stations));
-
+            Console.WriteLine("demand_of_this_service");
+            for (var i = 0; i < services.Count; i++)
+            {
+                demStation.Insert(i,demand_of_this_service(services[i].depart_time,stations));
+                showarray(demStation[i]);
+                Console.WriteLine();
+            }
+            var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
+            Console.WriteLine("S and P index : "+s+" _ "+p);
         }
 
         public static int[,] demand_of_this_service(DateTime[] depart_time, List<Station> stations)
@@ -496,6 +534,39 @@ namespace Service_plan_form
                 counter++;
             }
             return result;
+        }
+
+        static public void new_orchestrator_of_service(TF_Demand outbound_demand, Train_obj train, List<Service> services) {
+            for (int i = 0; i < outbound_demand.demand.Count; i++)
+            {
+                outbound_demand.get_demand(i);
+                while (!isDemandEmpty(outbound_demand.demand[i]))
+                {
+                    float p;
+                    int s = 0;
+                    (s, p) = index_of_most_utilize_service(outbound_demand.cal_demand, train, services);
+                    Console.WriteLine("\n\nthis is CARRY_matrix \n\n\n");
+                    showarray(outbound_demand.carry_matrix);
+                    Console.WriteLine("this is PERCENT " + p);
+                    if (p <= 60)
+                    {
+                        for (int out_loop = 0; out_loop < outbound_demand.dimension; out_loop++) {
+                            for (int in_loop = out_loop + 1; in_loop < outbound_demand.dimension; in_loop++) {
+                                if (outbound_demand.demand[i][out_loop, in_loop] > 0)
+                                {
+                                    outbound_demand.carry_matrix[out_loop, in_loop] = i;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    Console.WriteLine("----IN ACTUAL ---- " + "\n\n");
+                    actual_run(outbound_demand, train, services[s], i);
+                    Console.WriteLine("----OUT ACTUAL ---- " + "\n\n");
+                }
+                Console.WriteLine("----END--OF--orchestrate----LOOP--- " + i + "\n\n\n\n\n");
+            }
+            Console.WriteLine("----END--OF--orchestrate-------- ");
         }
 
         public static int[,] build_1st_carry_demand(List<Station> stations)
