@@ -33,9 +33,9 @@ namespace Service_plan_form
             int[] service = { 1, 1, 1, 1, 1 };
             int[] service2 = { 1, 0, 1, 1, 1 };
             int[] service3 = { 1, 0, 0, 0, 1 };
-            int[] service4 = { 0, 1, 1, 0, 1 };
+            int[] service4 = { 0, 1, 1, 1, 1 };
             Service aService;
-            int dep_hour = 9;int dep_min = 20;
+            int dep_hour = 9;int dep_min = 0;
 
             aService = new Service("All_station", service,dep_hour,dep_min);
             //add service to list
@@ -44,42 +44,19 @@ namespace Service_plan_form
             aService = new Service("4_station_outbound_ex_2", service2,dep_hour,dep_min);
             outbound_services.Add(aService);
             outbound_services[1].show();
-            aService = new Service("3_station_outbound_start_at_1", service4,dep_hour,dep_min);
+            aService = new Service("4_station_outbound_start_at_2", service4,dep_hour,dep_min);
             outbound_services.Add(aService);
             outbound_services[2].show();
             aService =new Service("1_to_5", service3,dep_hour,dep_min);
             outbound_services.Add(aService);
             outbound_services[3].show();
             Service_algo.genService(outbound_services);
+
+
+
             Console.WriteLine("-----------------\n\n\n\n\n\n\n\n");
-
+            Console.ReadLine();
             //add demand to be time frame demand
-
-            TF_Demand passeng_demand = new TF_Demand(720, 5);
-            
-            TF_Demand outbound_demand = passeng_demand.Gen_Outbound_demand();
-            TF_Demand inbound_demand = passeng_demand.Gen_Inbound_demand();
-            for (int i = 0; i < passeng_demand.getTF_amount(); i++)
-            {
-                Console.WriteLine("This is all station demand . at : " + i);
-                Service_algo.showarray(passeng_demand.demand[i]);
-            }
-
-            Service_algo.orchestrator_of_service(outbound_demand, train, outbound_services);
-            Console.WriteLine("This is OUTBOUND demand . ");
-            Service_algo.showarray(outbound_demand.demand[0]);
-            Console.WriteLine("This is INBOUND demand . ");
-            Service_algo.showarray(inbound_demand.demand[0]);
-
-
-
-            Console.WriteLine("This is unserved demand in TF demand. ");
-            Service_algo.showarray(outbound_demand.unserve_demand[0]);
-            Console.WriteLine("This is LAST demand . ");
-            Service_algo.showarray(passeng_demand.getDemand(0));
-            Console.WriteLine("This is carry matrix . ");
-            Service_algo.showarray(outbound_demand.carry_matrix);
-            Console.WriteLine("Sum");
 
 
             LogWriter log = new LogWriter(str1[0] + str1[1]);

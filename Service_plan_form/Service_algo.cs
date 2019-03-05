@@ -504,27 +504,52 @@ namespace Service_plan_form
             int[,] tf_memo = build_current_tf_memo();
             List<Service> services = new List<Service>();
             services = _services;
-            Console.WriteLine("demand_of_this_service");
-            for (var i = 0; i < services.Count; i++)
+            int k=0;
+            Console.WriteLine("____demand_of_this_service");
+            while (k<5)
             {
-                demStation.Insert(i,demand_of_this_service(services[i].depart_time,stations));
-                showarray(demStation[i]);
-            }
-            var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
-            Console.WriteLine("S and P index : "+s+" _ "+p);
-            TF_Demand goDemand = new TF_Demand(demStation[s]);
-            TF_Demand outboundDemand = goDemand.Gen_Outbound_demand();
-            var served_demand=serve_demand_form_station(outboundDemand,train,services[s],0 );
-            Console.WriteLine("__ REMAINNING \n");
-            showarray(outboundDemand.demand[0]);
-            Console.WriteLine("__ REMAINNING 22222222\n");
-            
-            stations[1].update_demand(served_demand,services[s],1);
 
-          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[0]));
-          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[1]));
-          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[2]));
-          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[3]));
+                for (var i = 0; i < services.Count; i++)
+                {   Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[1].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[2].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[3].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[4].ToShortTimeString()+"\n");
+                    demStation.Insert(i, demand_of_this_service(services[i].depart_time, stations));
+                }
+
+                var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
+                Console.WriteLine("S and P index : " + s + " _ " + p);
+                if (p >= 60)
+                {
+                    TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
+                    var served_demand = serve_demand_form_station(outboundDemand, train, services[s], 0);
+                    Console.WriteLine("__ REMAINNING \n");
+                    showarray(outboundDemand.demand[0]);
+                    Console.WriteLine("__ REMAINNING 22222222\n");
+
+                    for (var i = 0; i < stations.Count; i++)
+                    {
+                        stations[i].update_demand(served_demand, services[s], i);
+                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[0]));
+                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[1]));
+                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[2]));
+                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[3]));
+                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[4]));
+                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[5]));
+                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[6]));
+                    } //show process of updating demand
+                }
+
+                Console.WriteLine("NEXT"+PhysicalData.headway+"  MINUTE\n");
+                foreach (var _service in services)
+                {
+                    _service.add_starttime(PhysicalData.headway);
+                }
+
+                k++;
+            }
+
         }
 
         public static int[,] serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)

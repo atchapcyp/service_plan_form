@@ -170,6 +170,14 @@ namespace Service_plan_form
             trains.Add(_train);
         }
 
+        public void add_starttime(int minute)
+        {
+            for (int i = 0; i < depart_time.Length; i++)
+            {
+               this.depart_time[i]=this.depart_time[i].AddMinutes(minute);
+            }
+
+        }
     
         public void show(){
             Console.WriteLine(this.ServiceId);
