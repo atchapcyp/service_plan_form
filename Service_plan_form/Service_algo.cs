@@ -514,15 +514,22 @@ namespace Service_plan_form
             Console.WriteLine("S and P index : "+s+" _ "+p);
             TF_Demand goDemand = new TF_Demand(demStation[s]);
             TF_Demand outboundDemand = goDemand.Gen_Outbound_demand();
-            serve_demand_form_station(outboundDemand,train,services[s],0 );
+            var served_demand=serve_demand_form_station(outboundDemand,train,services[s],0 );
             Console.WriteLine("__ REMAINNING \n");
             showarray(outboundDemand.demand[0]);
+            Console.WriteLine("__ REMAINNING 22222222\n");
+            
+            stations[1].update_demand(served_demand,services[s],1);
 
+          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[0]));
+          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[1]));
+          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[2]));
+          Console.WriteLine(PrettyPrintArrays(stations[1].demand_station[3]));
         }
 
-           public static int[,] serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)
+        public static int[,] serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)
         {
-            Console.WriteLine("ACTUAL_RUN __ serve_demand_form_station ");
+            Console.WriteLine("\n\nACTUAL_RUN __ serve_demand_form_station ");
             Console.WriteLine(aService.ServiceId);
             showarray(demands.demand[0]);
 
@@ -611,9 +618,10 @@ namespace Service_plan_form
                     }
                     Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
                 }
-                Console.WriteLine("ACTUAL GETOFF  ");
-               
+                
             }
+            Console.WriteLine("ACTUAL GETOFF  ");
+            showarray(actual_getoff); //served demand
             return actual_getoff;
         }
 

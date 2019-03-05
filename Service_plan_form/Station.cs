@@ -6,14 +6,14 @@ namespace Service_plan_form
 {
     public class Station : IEnumerable
     {
-        public static readonly int[] distance_meter = { 0, 62000, 106000, 173000, 251000 };
+        public static readonly int[] distance_meter = {0, 62000, 106000, 173000, 251000};
         public List<double[]> demand_station = new List<double[]>();
-        public int tf_size_min=-1;
+        public int tf_size_min = -1;
         public List<DateTime> start_time = new List<DateTime>();
         public List<DateTime> stop_time = new List<DateTime>();
         public string station_name;
         public int tf_count;
-        
+
         /*public Station(TF_Demand tf_demand)
         {
               for (int i = 0; i < tf_demand.dimension;i++){
@@ -21,7 +21,30 @@ namespace Service_plan_form
             }
         }*/
 
-        public static int getDistance(int s,int d){
+        // input remaining demand , Used service station index in that List
+        public void update_demand(int[,] served_demand,Service service,int station_index)
+        {
+            Console.WriteLine("IN UPDATE"+service.depart_time[station_index].ToShortTimeString());
+            int counter = 0;
+            foreach (var time in start_time)
+            {
+                if ( time.Hour.Equals(service.depart_time[station_index].Hour))
+                {
+                    Console.WriteLine("IN HERE UPDATE");
+                    for (var i = 0; i < 5; i++)
+                    {
+                        Console.WriteLine("IN HERE UPDATE "+counter);
+                        Console.WriteLine("before "+this.demand_station[counter][i]);
+                        this.demand_station[counter][i] -=  served_demand[station_index,i];
+                        Console.WriteLine("after " + this.demand_station[counter][i]);
+                    }
+                    }
+                counter++;
+            }
+            
+        }
+
+    public static int getDistance(int s,int d){
             int distance=0;
             if (s==d){
                 return distance;

@@ -67,9 +67,10 @@ namespace Service_plan_form
             DateTime time=new DateTime();
             float in_min = 60.0f;
             int sum_from_start = 0;
+            int travel_time_hour;
             time = new DateTime(1, 1, 1, depart_hour, depart_min, 0);
             depart_time.SetValue(time, 0);
-            Console.WriteLine("DEPART_ " + time);
+            Console.WriteLine("DEPART__ " + time);
             //travel time in hour 
             for (int i = 1; i <= StopStation.Length-1; i++)
             {
@@ -78,13 +79,15 @@ namespace Service_plan_form
                 int travel_time_miniute = (int)(travel_time * in_min);
                 Console.WriteLine("TRAVEL_TIME : " + travel_time);
                 Console.WriteLine("TRAVEL_TIME in min : " + travel_time_miniute);
-                int travel_time_hour =(sum_from_start+ travel_time_miniute+depart_min )/ 60;
+                
                 
                 if (this.StopStation[i] == 1&&i!=last_stop_index)
                 {
+                    travel_time_hour = (sum_from_start + travel_time_miniute + depart_min+PhysicalData.dwell_time) / 60;
                     time.AddMinutes(PhysicalData.dwell_time);
                     sum_from_start += travel_time_miniute + PhysicalData.dwell_time;
                 }else{
+                    travel_time_hour = (sum_from_start + travel_time_miniute + depart_min) / 60;
                     sum_from_start += travel_time_miniute;
                 }
 

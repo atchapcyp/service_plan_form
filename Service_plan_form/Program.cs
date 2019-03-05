@@ -51,9 +51,7 @@ namespace Service_plan_form
             outbound_services.Add(aService);
             outbound_services[3].show();
             Service_algo.genService(outbound_services);
-
-
-
+            Console.WriteLine("-----------------\n\n\n\n\n\n\n\n");
 
             //add demand to be time frame demand
 
