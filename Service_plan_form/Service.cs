@@ -16,6 +16,7 @@ namespace Service_plan_form
         public List<Train_obj> trains = new List<Train_obj>();
         public int last_stop_index;
         public int first_stop_index;
+        public int[,] actual_serve_demand;
         
 
 

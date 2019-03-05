@@ -23,6 +23,31 @@ namespace Service_plan_form
             {-1,-1,-1,-1,-1}};
 
         public TF_Demand() { }
+        public TF_Demand(int[,] composed_demand) // minute
+        {
+            this.dimension = composed_demand.GetLength(0);
+            
+                int[,] subdemand = new int[this.dimension, this.dimension];
+                int[,] unserve_subdemand = new int[this.dimension, this.dimension];
+                for (int i = 0; i < this.dimension; i++)
+                {
+                    for (int j = 0; j < this.dimension; j++)
+                    {
+
+                        subdemand[i, j] = composed_demand[i,j];
+                        unserve_subdemand[i, j] = 0;
+                        if (i == j)
+                        {
+                            subdemand[i, j] = 0;
+                            unserve_subdemand[i, j] = 0;
+                        }
+                    }
+
+                }
+                this.demand.Add(subdemand);
+                this.unserve_demand.Add(unserve_subdemand);
+        }
+
         public TF_Demand(int dimension){
             int[,] subdemand = new int[dimension,dimension];
             int[,] unserve_subdemand = new int[dimension, dimension];
@@ -175,24 +200,23 @@ namespace Service_plan_form
 
         public TF_Demand Gen_Outbound_demand()
         {
-            TF_Demand outbound = new TF_Demand(this.interval, this.dimension,"O","B");
+            TF_Demand outbound = new TF_Demand(1440, this.dimension,"O","B");
           
-            int[,] halfmatrix = new int[this.dimension, this.dimension];
-            for (int k = 0; k < this.demand.Count; k++)
-            {
+            
+            
                 for (int i = 0; i < this.dimension; i++)
                 {
                     for (int j = 0; j < this.dimension; j++)
                     {
                         if (i < j)
                         {
-                            outbound.demand[k][i, j] = this.demand[k][i, j];
+                            outbound.demand[0][i, j] = this.demand[0][i, j];
                         }else{
-                            outbound.demand[k][i, j ]= 0;
+                            outbound.demand[0][i, j]= 0;
                         }
                     }
                 }
-            }
+            
             return outbound;
         }
 
@@ -200,8 +224,9 @@ namespace Service_plan_form
         {
             TF_Demand inbound = new TF_Demand(this.interval, this.dimension,"I","B");
 
-            for (int k = 0; k < this.demand.Count; k++)
+            for (int k = 0; k < 1; k++)
             {
+
                 for (int i = 0; i < this.dimension; i++)
                 {
                     for (int j = 0; j < this.dimension; j++)
@@ -227,16 +252,13 @@ namespace Service_plan_form
         public TF_Demand(int timeframe_interval, int dimension,String a,String b) // minute
         {
             this.dimension = dimension;
-            this.interval = timeframe_interval;
-            int m = 24 * 60 / timeframe_interval;
-            for (int k = 0; k < m; k++)
-            {
+            
                 int[,] subdemand = new int[dimension, dimension];
                 int[,] unserve_subdemand = new int[dimension, dimension];
                 this.demand.Add(subdemand);
                 this.unserve_demand.Add(unserve_subdemand);
 
-            }
+            
         }
 
         public void get_demand(int i){

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using Service_plan_form.Demands;
 
@@ -113,7 +114,6 @@ namespace Service_plan_form
                     }
                     Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
                 }
-
             }
         }
 
@@ -495,7 +495,8 @@ namespace Service_plan_form
 
         public static void genService(List<Service> _services)
         {
-            Train_obj train = new Train_obj(100);
+            Train_obj train = new Train_obj(200);
+            
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
@@ -508,10 +509,112 @@ namespace Service_plan_form
             {
                 demStation.Insert(i,demand_of_this_service(services[i].depart_time,stations));
                 showarray(demStation[i]);
-                Console.WriteLine();
             }
             var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
             Console.WriteLine("S and P index : "+s+" _ "+p);
+            TF_Demand goDemand = new TF_Demand(demStation[s]);
+            TF_Demand outboundDemand = goDemand.Gen_Outbound_demand();
+            serve_demand_form_station(outboundDemand,train,services[s],0 );
+            Console.WriteLine("__ REMAINNING \n");
+            showarray(outboundDemand.demand[0]);
+
+        }
+
+           public static int[,] serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)
+        {
+            Console.WriteLine("ACTUAL_RUN __ serve_demand_form_station ");
+            Console.WriteLine(aService.ServiceId);
+            showarray(demands.demand[0]);
+
+            int[,] actual_getoff = new int[5, 5];
+            int get_off_next_station = 0;
+            int i, j, k, next_station_index = -1;
+            int fill_demand;
+            for (i = 0; i < 5; i++)
+            {
+                if (aService.StopStation[i] == 0)
+                {
+                    continue;
+                }
+                for (int a = 4; a > i; a--)
+                {
+                    if (aService.StopStation[a] == 1)
+                    {
+                        next_station_index = a;
+                    }
+                }
+
+                int demand_at_station = 0;
+                Console.WriteLine("Remainning Seat : " + train.remain_cap);
+                get_off_next_station = train.passenger[i];
+                Console.WriteLine("Number of getting off passenger at station " + i + " = " + get_off_next_station);
+                train.getOff(i);
+                Console.WriteLine("Remainning Seat after get off : " + train.remain_cap);
+                for (k = i + 1; k < 5; k++) // sum of demand at station i
+                {
+                    if (aService.StopStation[k] == 0) { continue; }
+                    demand_at_station += demands.demand[0][i, k];
+                    Console.WriteLine("Demand at station " + i + " to station " + k + " is " + demands.demand[0][i, k]);
+                }
+                Console.WriteLine("All of Demand at station " + i + " is " + demand_at_station);
+                if (demand_at_station < train.remain_cap)
+                {
+                    for (j = i + 1; j < 5; j++)
+                    {
+                        if (aService.StopStation[j] == 0) { continue; }
+                        train.getOn(demands.demand[0][i, j], j);
+                        actual_getoff[i, j] = demands.demand[0][i, j];
+                        demands.demand[0][i, j] = 0;
+                        clear_remain_demand(demands, timeframe, i, j);
+                    }
+                }
+                else
+                {
+                    double ratio = 1.0 * train.remain_cap / demand_at_station;
+                    demand_at_station = 0; //reset
+                    fill_demand = 0; //reset
+                    for (j = i + 1; j < 5; j++)
+                    {
+                        if (aService.StopStation[j] == 0) { continue; }
+                        fill_demand = (int)(demands.demand[0][i, j] * ratio);
+                        demand_at_station += fill_demand;
+                    }
+                    int remain_cap = train.remain_cap;
+                    Console.WriteLine("..............Debug demand at station  " + demand_at_station);
+                    remain_cap -= demand_at_station;
+                    for (j = i + 1; j < 5; j++)
+                    {
+                        if (aService.StopStation[j] == 0) { continue; }
+                        Console.WriteLine("..............Debug train remainning seat  " + train.remain_cap);
+                        Console.WriteLine("..............Debug train remainning seat  " + remain_cap);
+                        Console.WriteLine("..............Debug Demand at station      " + demands.demand[0][i, j]);
+                        Console.WriteLine("..............Debug ratio      " + ratio);
+                        fill_demand = (int)(demands.demand[0][i, j] * ratio);
+                        Console.WriteLine("..............Debug fill_demand  " + fill_demand);
+                        
+                        if (remain_cap > 0 && demands.demand[0][i, j] > fill_demand)
+                        {// ROUND UP IN CASE OF REMAINING a few demand
+                            Console.WriteLine("ROUND UP AT : " + i+"_"+j);
+                            train.getOn(fill_demand + 1, j);
+                            update_remain_demand(demands, timeframe, fill_demand + 1, i, j);
+                            remain_cap -= 1;
+                            actual_getoff[i, j] = fill_demand+1;
+                        }
+                        else
+                        {// NO FEW demand left
+                           train.getOn(fill_demand, j);
+                            update_remain_demand(demands, timeframe, fill_demand, i, j);
+                            actual_getoff[i, j] = fill_demand;
+                        }
+                        demand_at_station += fill_demand;
+
+                    }
+                    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
+                }
+                Console.WriteLine("ACTUAL GETOFF  ");
+               
+            }
+            return actual_getoff;
         }
 
         public static int[,] demand_of_this_service(DateTime[] depart_time, List<Station> stations)
