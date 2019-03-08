@@ -500,56 +500,72 @@ namespace Service_plan_form
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
-            int[,] carry_demand = build_1st_carry_demand(stations);
-            int[,] tf_memo = build_current_tf_memo();
+           
+            int[] tf_memo = init_memo(stations,0); // index of start(depart)_time
+            int[,] carry_demand = init_carry_demand(tf_memo, stations);
             List<Service> services = new List<Service>();
             services = _services;
-            int k=0;
             Console.WriteLine("____demand_of_this_service");
-            while (k<5)
+            showarray(carry_demand); 
+            
+            for (var i = 0; i < services.Count; i++)
             {
+                Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
+                Console.WriteLine(services[i].depart_time[1].ToShortTimeString());
+                Console.WriteLine(services[i].depart_time[2].ToShortTimeString());
+                Console.WriteLine(services[i].depart_time[3].ToShortTimeString());
+                Console.WriteLine(services[i].depart_time[4].ToShortTimeString() + "\n");
+                demStation.Insert(i, demand_of_this_service(services[i].depart_time, stations,carry_demand,tf_memo));
 
-                for (var i = 0; i < services.Count; i++)
-                {   Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
-                    Console.WriteLine(services[i].depart_time[1].ToShortTimeString());
-                    Console.WriteLine(services[i].depart_time[2].ToShortTimeString());
-                    Console.WriteLine(services[i].depart_time[3].ToShortTimeString());
-                    Console.WriteLine(services[i].depart_time[4].ToShortTimeString()+"\n");
-                    demStation.Insert(i, demand_of_this_service(services[i].depart_time, stations));
-                }
-
-                var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
-                Console.WriteLine("S and P index : " + s + " _ " + p);
-                if (p >= 60)
-                {
-                    TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
-                    var served_demand = serve_demand_form_station(outboundDemand, train, services[s], 0);
-                    Console.WriteLine("__ REMAINNING \n");
-                    showarray(outboundDemand.demand[0]);
-                    Console.WriteLine("__ REMAINNING 22222222\n");
-
-                    for (var i = 0; i < stations.Count; i++)
-                    {
-                        stations[i].update_demand(served_demand, services[s], i);
-                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[0]));
-                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[1]));
-                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[2]));
-                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[3]));
-                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[4]));
-                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[5]));
-                        Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[6]));
-                    } //show process of updating demand
-                }
-
-                Console.WriteLine("NEXT"+PhysicalData.headway+"  MINUTE\n");
-                foreach (var _service in services)
-                {
-                    _service.add_starttime(PhysicalData.headway);
-                }
-
-                k++;
+            }
+            for (var i = 0; i < services.Count; i++)
+            {
+                Console.WriteLine("SERVICE : " + services[i].ServiceId);
+                showarray(demStation[i]);
             }
 
+            //    var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
+            //    Console.WriteLine("S and P index : " + s + " _ " + p);
+            //    if (p >= 60)
+            //    {
+            //        TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
+            //        var served_demand = serve_demand_form_station(outboundDemand, train, services[s], 0);
+            //        Console.WriteLine("__ REMAINNING \n");
+            //        showarray(outboundDemand.demand[0]);
+            //        Console.WriteLine("__ REMAINNING 22222222\n");
+
+            for (var i = 0; i < stations.Count; i++)
+            {
+                //stations[i].update_demand(served_demand, services[s], i);
+                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[0]));
+                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[1]));
+                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[2]));
+                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[3]));
+                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[4]));
+                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[5]));
+                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[6]));
+            } //show process of updating demand
+            //    }
+
+            //    Console.WriteLine("NEXT"+PhysicalData.headway+"  MINUTE\n");
+            //    foreach (var _service in services)
+            //    {
+            //        _service.add_starttime(PhysicalData.headway);
+            //    }
+
+            //    k++;
+            //}
+
+        }
+
+        public static int[] init_memo(List<Station> stations,int index)
+        { int[] memo = new int[stations.Count];
+            for (var i = 0; i < stations.Count; i++)
+            {
+                memo[i] = index;
+            }
+
+            return memo;
         }
 
         public static int[,] serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)
@@ -650,9 +666,11 @@ namespace Service_plan_form
             return actual_getoff;
         }
 
-        public static int[,] demand_of_this_service(DateTime[] depart_time, List<Station> stations)
-        {   int counter = 0;
-            int[,] result = new int[stations.Count, stations.Count];
+        public static int[,] demand_of_this_service(DateTime[] depart_time, List<Station> stations,int[,] carry_demand,int[] tf_memo)
+        {
+            int[,] result = carry_demand.Clone() as int[,];
+            int counter = 0;
+            int count_memo = 0;
             foreach (Station _station in stations)
             {
                 int index_of_table=-1;
@@ -661,9 +679,24 @@ namespace Service_plan_form
                     index_of_table++;
                     if (depart_time[counter].Hour == table.Hour)
                     {
-                        for (int b = 0; b < stations.Count; b++)
+                        if (tf_memo[count_memo] == index_of_table)
                         {
-                            result[counter, b] = (int)_station.demand_station[index_of_table][b];
+                            Console.WriteLine("count MEMO ++" +index_of_table);
+                            count_memo++;
+                            continue;
+                        }
+                        else
+                        {
+                            var dif_index = index_of_table - tf_memo[count_memo];
+                            for (var c = 0; c <dif_index; c++)
+                            {
+                                for (int b = 0; b < stations.Count; b++)
+                                {
+                                    Console.WriteLine("index of table" + (index_of_table-c) + " increase  " +
+                                                      (int) _station.demand_station[index_of_table-c][b]);
+                                    result[counter, b] += (int) _station.demand_station[index_of_table-c][b];
+                                }
+                            }
                         }
                     }
                 }
@@ -705,7 +738,7 @@ namespace Service_plan_form
             Console.WriteLine("----END--OF--orchestrate-------- ");
         }
 
-        public static int[,] build_1st_carry_demand(List<Station> stations)
+        public static int[,] init_carry_demand(int[] memo,List<Station> stations)
         { int[,] result = new int[stations.Count, stations.Count];
             int counter = 0;
             foreach (Station a in stations)
@@ -713,24 +746,14 @@ namespace Service_plan_form
                 
                 for (int b = 0; b < stations.Count; b++)
                 {
-                    result[counter, b] = (int)a.demand_station[0][b];
+                    result[counter, b] = (int)a.demand_station[memo[b]][b];
                 }
                 counter++;
             }
             return result;
         }
 
-        public static int[,] build_current_tf_memo()
-        { int[,] result = new int[Form1.stations.Count, Form1.stations.Count];
-            for(int i = 0; i < Form1.stations.Count; i++)
-            {
-                for (int j = 0; j < Form1.stations.Count; j++)
-                {
-                    result[i, j] = 0;
-                }
-            }
-            return result;
-        }
+        
 
         public static string PrettyPrintArrayOfArrays(int[][] arrayOfArrays)
         {
@@ -748,6 +771,21 @@ namespace Service_plan_form
         }
 
         public static string PrettyPrintArrays(double[] arrayOfArrays)
+        {
+            if (arrayOfArrays == null)
+                return "";
+
+            var prettyArrays = new string[arrayOfArrays.Length];
+
+            for (int i = 0; i < arrayOfArrays.Length; i++)
+            {
+                prettyArrays[i] = "[" + String.Join(",", arrayOfArrays[i]) + "]";
+            }
+
+            return "[" + String.Join(",", prettyArrays) + "]";
+        }
+
+        public static string PrettyPrintArrays(int[] arrayOfArrays)
         {
             if (arrayOfArrays == null)
                 return "";

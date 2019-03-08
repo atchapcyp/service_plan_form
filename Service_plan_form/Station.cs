@@ -38,9 +38,8 @@ namespace Service_plan_form
                         this.demand_station[counter][i] -=  served_demand[station_index,i];
                         Console.WriteLine("after " + this.demand_station[counter][i]);
                     }
-                    }
+                 }
                 counter++;
-
             }
             
         }
