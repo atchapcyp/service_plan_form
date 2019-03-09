@@ -495,7 +495,7 @@ namespace Service_plan_form
 
         public static void genService(List<Service> _services)
         {
-            Train_obj train = new Train_obj(200);
+            Train_obj train = new Train_obj(500);
             
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
@@ -505,57 +505,75 @@ namespace Service_plan_form
             int[,] carry_demand = init_carry_demand(tf_memo, stations);
             List<Service> services = new List<Service>();
             services = _services;
+
+
             Console.WriteLine("____demand_of_this_service");
-            showarray(carry_demand); 
-            
-            for (var i = 0; i < services.Count; i++)
+            showarray(carry_demand);
+            var k = 0;
+            while (k < 5)
             {
-                Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
-                Console.WriteLine(services[i].depart_time[1].ToShortTimeString());
-                Console.WriteLine(services[i].depart_time[2].ToShortTimeString());
-                Console.WriteLine(services[i].depart_time[3].ToShortTimeString());
-                Console.WriteLine(services[i].depart_time[4].ToShortTimeString() + "\n");
-                demStation.Insert(i, demand_of_this_service(services[i].depart_time, stations,carry_demand,tf_memo));
 
+
+                for (var i = 0; i < services.Count; i++)
+                {   
+                    Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[1].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[2].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[3].ToShortTimeString());
+                    Console.WriteLine(services[i].depart_time[4].ToShortTimeString() + "\n");
+                    demStation.Insert(i,
+                        demand_of_this_service(services[i].depart_time, stations, carry_demand, tf_memo));
+                }
+
+                for (var i = 0; i < services.Count; i++)
+                {
+                    Console.WriteLine("SERVICE : " + services[i].ServiceId);
+                    showarray(demStation[i]);
+                }
+
+                var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
+                Console.WriteLine("S and P index : " + s + " _ " + p);
+                if (p >= 60)
+                {
+                    TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
+                    var served_demand = serve_demand_form_station(outboundDemand, train, services[s], 0);
+                    Console.WriteLine("__ REMAINNING \n");
+                    showarray(outboundDemand.demand[0]);
+                    Console.WriteLine("__ REMAINNING 22222222\n");
+                    update_memo(services[s].depart_time, stations, tf_memo); //set memo
+                    
+                    Console.WriteLine("UPDATED_ MEMO "+PrettyPrintArrays(tf_memo));
+                    Console.WriteLine("REMAIN CARRY DEMAND");
+                    carry_demand = outboundDemand.demand[0]; //set carry demand
+                    showarray(carry_demand);
+                }
+
+
+
+
+
+                //for (var i = 0; i < stations.Count; i++)
+                //{
+                //    //stations[i].update_demand(served_demand, services[s], i);
+                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[0]));
+                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[1]));
+                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[2]));
+                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[3]));
+                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[4]));
+                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[5]));
+                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[6]));
+                //} //show process of updating demand
+                //    }
+
+                Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
+                foreach (var _service in services)
+                {
+                    _service.add_starttime(PhysicalData.headway);
+                }
+
+                //}
+                k++;
             }
-            for (var i = 0; i < services.Count; i++)
-            {
-                Console.WriteLine("SERVICE : " + services[i].ServiceId);
-                showarray(demStation[i]);
-            }
-
-            //    var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
-            //    Console.WriteLine("S and P index : " + s + " _ " + p);
-            //    if (p >= 60)
-            //    {
-            //        TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
-            //        var served_demand = serve_demand_form_station(outboundDemand, train, services[s], 0);
-            //        Console.WriteLine("__ REMAINNING \n");
-            //        showarray(outboundDemand.demand[0]);
-            //        Console.WriteLine("__ REMAINNING 22222222\n");
-
-            for (var i = 0; i < stations.Count; i++)
-            {
-                //stations[i].update_demand(served_demand, services[s], i);
-                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[0]));
-                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[1]));
-                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[2]));
-                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[3]));
-                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[4]));
-                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[5]));
-                Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[6]));
-            } //show process of updating demand
-            //    }
-
-            //    Console.WriteLine("NEXT"+PhysicalData.headway+"  MINUTE\n");
-            //    foreach (var _service in services)
-            //    {
-            //        _service.add_starttime(PhysicalData.headway);
-            //    }
-
-            //    k++;
-            //}
-
         }
 
         public static int[] init_memo(List<Station> stations,int index)
@@ -568,6 +586,44 @@ namespace Service_plan_form
             return memo;
         }
 
+        public static void update_memo(DateTime[] depart_time, List<Station> stations, int[] tf_memo)
+        {
+            int counter = 0;
+            int count_memo = 0;
+            foreach (Station _station in stations)
+            {
+                int index_of_table = -1;
+                foreach (DateTime table in _station)
+                {
+                    index_of_table++;
+                    if (depart_time[counter].Hour == table.Hour)
+                    {
+                        if (tf_memo[count_memo] == index_of_table)
+                        {
+                            count_memo++;
+                            continue;
+                        }
+                        else
+                        {
+                            tf_memo[count_memo] = index_of_table;
+                            count_memo++;
+                        }
+                    }
+                }
+                counter++;
+            }
+        }
+
+        public static void update_carry_demand(int[,] carry_demand,int[,] served_demand)
+        {
+            for (var i = 0; i < 5; i++)
+            {
+                for (var j = 0; j < 5; j++)
+                {
+                    carry_demand[i, j] -= served_demand[i, j];
+                }
+            }
+        }
         public static int[,] serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)
         {
             Console.WriteLine("\n\nACTUAL_RUN __ serve_demand_form_station ");
@@ -678,25 +734,38 @@ namespace Service_plan_form
                 {
                     index_of_table++;
                     if (depart_time[counter].Hour == table.Hour)
-                    {
+                    {   Console.WriteLine("this service index : "+index_of_table+" memo "+tf_memo[count_memo]);
                         if (tf_memo[count_memo] == index_of_table)
                         {
-                            Console.WriteLine("count MEMO ++" +index_of_table);
                             count_memo++;
                             continue;
                         }
                         else
-                        {
+                        {   
                             var dif_index = index_of_table - tf_memo[count_memo];
-                            for (var c = 0; c <dif_index; c++)
+                            if (dif_index < 0)
                             {
-                                for (int b = 0; b < stations.Count; b++)
+                                Console.WriteLine("DIFF INDEX"+dif_index);
+                               for(var c = 0; c > dif_index; c--)
                                 {
-                                    Console.WriteLine("index of table" + (index_of_table-c) + " increase  " +
-                                                      (int) _station.demand_station[index_of_table-c][b]);
-                                    result[counter, b] += (int) _station.demand_station[index_of_table-c][b];
+                                    for (int b = 0; b < stations.Count; b++)
+                                    {
+                                        result[counter, b] -= (int)_station.demand_station[tf_memo[count_memo] + c][b];
+                                    }
                                 }
                             }
+                            else
+                            {
+                                for (var c = 0; c < dif_index; c++)
+                                {
+                                    for (int b = 0; b < stations.Count; b++)
+                                    {
+                                        result[counter, b] += (int) _station.demand_station[index_of_table - c][b];
+                                    }
+                                }
+                            }
+
+                            count_memo++;
                         }
                     }
                 }
