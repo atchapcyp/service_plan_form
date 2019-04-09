@@ -401,10 +401,15 @@ namespace Service_plan_form
             openFileDialog1.ShowDialog();
             textfilepath.Text = openFileDialog1.FileName;
             BindDataCSV(textfilepath.Text);
+            
         }
         private void BindDataCSV(string filePath)
-        { 
-            string[] lines = System.IO.File.ReadAllLines(filePath);
+        {
+            try
+            {
+                // Read in nonexistent file.
+                string[] lines = System.IO.File.ReadAllLines(filePath);
+            
             if (lines.Length > 0)
             {
                 string firstline = lines[0];
@@ -428,6 +433,12 @@ namespace Service_plan_form
             if (dt.Rows.Count > 0)
             {
                 dgvService.DataSource = dt;
+            }
+            }
+            catch (FileNotFoundException ex)
+            {
+                // Write error.
+                Console.WriteLine(ex);
             }
         }
 

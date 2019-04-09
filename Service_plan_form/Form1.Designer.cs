@@ -63,7 +63,7 @@
             this.exitbutton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.summary_label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.output_panel.SuspendLayout();
@@ -91,7 +91,7 @@
             // 
             this.panel1.Location = new System.Drawing.Point(1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(26, 889);
+            this.panel1.Size = new System.Drawing.Size(26, 916);
             this.panel1.TabIndex = 1;
             // 
             // output_panel
@@ -448,7 +448,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.summary_label);
             this.groupBox1.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.groupBox1.Location = new System.Drawing.Point(1355, 37);
@@ -458,18 +458,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Summary";
             // 
-            // label4
+            // summary_label
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.label4.Font = new System.Drawing.Font("Varela Round", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Cornsilk;
-            this.label4.Location = new System.Drawing.Point(6, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(162, 42);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Summary";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.summary_label.AutoSize = true;
+            this.summary_label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.summary_label.Font = new System.Drawing.Font("Varela Round", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.summary_label.ForeColor = System.Drawing.Color.Cornsilk;
+            this.summary_label.Location = new System.Drawing.Point(6, 18);
+            this.summary_label.Name = "summary_label";
+            this.summary_label.Size = new System.Drawing.Size(280, 42);
+            this.summary_label.TabIndex = 1;
+            this.summary_label.Text = "Service Summary";
+            this.summary_label.Click += new System.EventHandler(this.label4_Click);
             // 
             // groupBox2
             // 
@@ -500,7 +500,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
-            this.ClientSize = new System.Drawing.Size(1656, 934);
+            this.ClientSize = new System.Drawing.Size(1685, 928);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.exitbutton);
@@ -566,7 +566,7 @@
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label summary_label;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label5;
     }
