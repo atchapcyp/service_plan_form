@@ -282,7 +282,7 @@ namespace Service_plan_form
                             for (int i = 0; i < stations[_o].tf_count - 1; i++)
                             {
                                 _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
-                                _chart.Series[0].Points[i].Color =Color.AliceBlue;
+                                _chart.Series[0].Points[i].Color =Color.Orange;
                             } 
 
                             _chart.Titles.Add("From " + stations[_o].station_name + " to " + stations[_d].station_name);
@@ -291,9 +291,10 @@ namespace Service_plan_form
                             _chart.Titles[0].Alignment = ContentAlignment.TopLeft;
                             _chart.Legends.Add("legend");
                             _chart.Legends[0].BackColor = SystemColors.WindowFrame;
-                            _chart.Legends[0].ForeColor = Color.White;
+                            _chart.Legends[0].ForeColor = Color.AliceBlue;
                             _chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
 
+                            _chart.Series[0].Color = Color.Orange;
                             chart_cnt++;
                         }
                     }
@@ -459,6 +460,21 @@ namespace Service_plan_form
             }
             dt.Rows.Add(dr);
             
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

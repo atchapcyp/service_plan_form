@@ -62,11 +62,17 @@
             this.input_groupbox = new System.Windows.Forms.GroupBox();
             this.exitbutton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvService)).BeginInit();
             this.input_groupbox.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -85,7 +91,7 @@
             // 
             this.panel1.Location = new System.Drawing.Point(1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(26, 808);
+            this.panel1.Size = new System.Drawing.Size(26, 889);
             this.panel1.TabIndex = 1;
             // 
             // output_panel
@@ -101,7 +107,7 @@
             this.output_panel.ForeColor = System.Drawing.SystemColors.Info;
             this.output_panel.Location = new System.Drawing.Point(48, 373);
             this.output_panel.Name = "output_panel";
-            this.output_panel.Size = new System.Drawing.Size(1103, 435);
+            this.output_panel.Size = new System.Drawing.Size(1301, 541);
             this.output_panel.TabIndex = 2;
             // 
             // output_panel_graph
@@ -110,7 +116,7 @@
             this.output_panel_graph.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.output_panel_graph.Location = new System.Drawing.Point(14, 71);
             this.output_panel_graph.Name = "output_panel_graph";
-            this.output_panel_graph.Size = new System.Drawing.Size(1073, 352);
+            this.output_panel_graph.Size = new System.Drawing.Size(1253, 467);
             this.output_panel_graph.TabIndex = 4;
             this.output_panel_graph.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -185,9 +191,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.Info;
             this.label2.Location = new System.Drawing.Point(7, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(358, 41);
+            this.label2.Size = new System.Drawing.Size(319, 41);
             this.label2.TabIndex = 0;
-            this.label2.Text = "OUTPUT SHOW HERE";
+            this.label2.Text = "DEMAND - SUPPLY";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // panel3
@@ -207,7 +213,7 @@
             this.panel3.Font = new System.Drawing.Font("Varela", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel3.Location = new System.Drawing.Point(6, 21);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(966, 340);
+            this.panel3.Size = new System.Drawing.Size(1267, 340);
             this.panel3.TabIndex = 3;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
@@ -228,12 +234,13 @@
             // 
             this.checkBox5.AutoSize = true;
             this.checkBox5.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(51, 97);
+            this.checkBox5.Location = new System.Drawing.Point(51, 100);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(74, 18);
             this.checkBox5.TabIndex = 5;
             this.checkBox5.Text = "Station 5";
             this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // checkBox4
             // 
@@ -325,7 +332,7 @@
             // 
             // dgvService
             // 
-            this.dgvService.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.dgvService.BackgroundColor = System.Drawing.Color.Tan;
             this.dgvService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvService.Location = new System.Drawing.Point(338, 63);
             this.dgvService.Name = "dgvService";
@@ -338,11 +345,13 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvService.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(212)))), ((int)(((byte)(53)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Orange;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Varela Round", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LightPink;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvService.RowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvService.Size = new System.Drawing.Size(615, 244);
+            this.dgvService.Size = new System.Drawing.Size(900, 251);
             this.dgvService.TabIndex = 7;
             // 
             // textfilepath
@@ -403,9 +412,9 @@
             this.label1.ForeColor = System.Drawing.Color.Cornsilk;
             this.label1.Location = new System.Drawing.Point(8, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(323, 42);
+            this.label1.Size = new System.Drawing.Size(245, 42);
             this.label1.TabIndex = 0;
-            this.label1.Text = "INPUT SHOW HERE";
+            this.label1.Text = "SERVICE VIEW";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // input_groupbox
@@ -415,7 +424,7 @@
             this.input_groupbox.ForeColor = System.Drawing.SystemColors.Info;
             this.input_groupbox.Location = new System.Drawing.Point(42, 0);
             this.input_groupbox.Name = "input_groupbox";
-            this.input_groupbox.Size = new System.Drawing.Size(1109, 367);
+            this.input_groupbox.Size = new System.Drawing.Size(1307, 367);
             this.input_groupbox.TabIndex = 4;
             this.input_groupbox.TabStop = false;
             this.input_groupbox.Text = "Input GroupBox";
@@ -425,7 +434,7 @@
             this.exitbutton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(57)))), ((int)(((byte)(53)))));
             this.exitbutton.Font = new System.Drawing.Font("Varela Round", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitbutton.ForeColor = System.Drawing.Color.DarkRed;
-            this.exitbutton.Location = new System.Drawing.Point(1244, 0);
+            this.exitbutton.Location = new System.Drawing.Point(1591, 0);
             this.exitbutton.Name = "exitbutton";
             this.exitbutton.Size = new System.Drawing.Size(44, 28);
             this.exitbutton.TabIndex = 8;
@@ -437,11 +446,63 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox1.Location = new System.Drawing.Point(1355, 37);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(289, 330);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Summary";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.label4.Font = new System.Drawing.Font("Varela Round", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Cornsilk;
+            this.label4.Location = new System.Drawing.Point(6, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(162, 42);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Summary";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox2.Location = new System.Drawing.Point(1355, 383);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(289, 528);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Suggestion";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.label5.Font = new System.Drawing.Font("Varela Round", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Cornsilk;
+            this.label5.Location = new System.Drawing.Point(6, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(188, 42);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Suggestion";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
-            this.ClientSize = new System.Drawing.Size(1284, 781);
+            this.ClientSize = new System.Drawing.Size(1656, 934);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.exitbutton);
             this.Controls.Add(this.input_groupbox);
             this.Controls.Add(this.output_panel);
@@ -463,6 +524,10 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvService)).EndInit();
             this.input_groupbox.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -500,6 +565,10 @@
         private System.Windows.Forms.CheckBox inbound_checkbox;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label5;
     }
 }
 
