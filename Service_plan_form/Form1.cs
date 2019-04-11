@@ -405,6 +405,8 @@ namespace Service_plan_form
         }
         private void BindDataCSV(string filePath)
         {
+            dgvService.DataSource = null;
+            dt.Clear();
             try
             {
                 // Read in nonexistent file.
@@ -416,7 +418,13 @@ namespace Service_plan_form
                 string[] headerLabels = firstline.Split(',');
                 foreach(string headerWord in headerLabels)
                 {
+                    if (dt.Columns.Contains(headerWord))
+                    {
+                        break;
+                    }
+
                     dt.Columns.Add(new DataColumn(headerWord));
+                    
                 }
                 for(int r = 1; r < lines.Length; r++)
                 {
@@ -431,9 +439,12 @@ namespace Service_plan_form
                 } 
             }
             if (dt.Rows.Count > 0)
-            {
+            {   
+               // dt.Columns[0].Unique=true;
                 dgvService.DataSource = dt;
+              
             }
+        
             }
             catch (FileNotFoundException ex)
             {
@@ -443,31 +454,33 @@ namespace Service_plan_form
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
-
+            if (outbound_checkbox.Checked)
+            {
+                inbound_checkbox.Checked = false;
+            }
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (inbound_checkbox.Checked)
+            {
+                outbound_checkbox.Checked = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
-        {
-            
+        {   
             DataRow dr = dt.NewRow();
-            dr[0] = service_name_textbox.Text;
+           dr[0] = service_name_textbox.Text;
             if (outbound_checkbox.Checked && !inbound_checkbox.Checked)
             {
                 dr[1] = "OUTBOUND";
             }
-            else if (outbound_checkbox.Checked && inbound_checkbox.Checked)
-            {
-
-            }
-            else
+            else if (!outbound_checkbox.Checked && inbound_checkbox.Checked)
             {
                 dr[1] = "INBOUND";
             }
+            
             dt.Rows.Add(dr);
             
         }

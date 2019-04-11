@@ -307,6 +307,7 @@
             this.inbound_checkbox.TabIndex = 10;
             this.inbound_checkbox.Text = "inbound";
             this.inbound_checkbox.UseVisualStyleBackColor = true;
+            this.inbound_checkbox.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // outbound_checkbox
             // 
