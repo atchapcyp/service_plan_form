@@ -57,7 +57,7 @@
             this.import_csv_service = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.service_name_textbox = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.add_service = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.input_groupbox = new System.Windows.Forms.GroupBox();
             this.exitbutton = new System.Windows.Forms.Button();
@@ -208,7 +208,7 @@
             this.panel3.Controls.Add(this.import_csv_service);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.service_name_textbox);
-            this.panel3.Controls.Add(this.button2);
+            this.panel3.Controls.Add(this.add_service);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Font = new System.Drawing.Font("Varela", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel3.Location = new System.Drawing.Point(6, 21);
@@ -392,17 +392,17 @@
             this.service_name_textbox.Size = new System.Drawing.Size(175, 28);
             this.service_name_textbox.TabIndex = 2;
             // 
-            // button2
+            // add_service
             // 
-            this.button2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Location = new System.Drawing.Point(124, 306);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(84, 31);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Add Service";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.add_service.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.add_service.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.add_service.Location = new System.Drawing.Point(124, 306);
+            this.add_service.Name = "add_service";
+            this.add_service.Size = new System.Drawing.Size(84, 31);
+            this.add_service.TabIndex = 1;
+            this.add_service.Text = "Add Service";
+            this.add_service.UseVisualStyleBackColor = true;
+            this.add_service.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -547,7 +547,7 @@
         private System.Windows.Forms.CheckBox barChart;
         private System.Windows.Forms.CheckBox Spl;
         private System.Windows.Forms.CheckBox stationcheckBox;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button add_service;
         private System.Windows.Forms.Button exitbutton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox service_name_textbox;
