@@ -43,11 +43,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.stopstation_label = new System.Windows.Forms.Label();
             this.inbound_checkbox = new System.Windows.Forms.CheckBox();
             this.outbound_checkbox = new System.Windows.Forms.CheckBox();
@@ -66,6 +61,7 @@
             this.summary_label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.checkedListBox_station = new System.Windows.Forms.CheckedListBox();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -219,73 +215,12 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.checkBox5);
-            this.panel2.Controls.Add(this.checkBox4);
-            this.panel2.Controls.Add(this.checkBox3);
-            this.panel2.Controls.Add(this.checkBox2);
-            this.panel2.Controls.Add(this.checkBox1);
+            this.panel2.Controls.Add(this.checkedListBox_station);
             this.panel2.Controls.Add(this.stopstation_label);
             this.panel2.Location = new System.Drawing.Point(14, 122);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(316, 144);
             this.panel2.TabIndex = 11;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(51, 100);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(74, 18);
-            this.checkBox5.TabIndex = 5;
-            this.checkBox5.Text = "Station 5";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.Location = new System.Drawing.Point(51, 76);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(74, 18);
-            this.checkBox4.TabIndex = 4;
-            this.checkBox4.Text = "Station 4";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(51, 54);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(74, 18);
-            this.checkBox3.TabIndex = 3;
-            this.checkBox3.Text = "Station 3";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(51, 32);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(74, 18);
-            this.checkBox2.TabIndex = 2;
-            this.checkBox2.Text = "Station 2";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(51, 8);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(74, 18);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Station 1";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // stopstation_label
             // 
@@ -497,6 +432,18 @@
             this.label5.Text = "Suggestion";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
+            // checkedListBox_station
+            // 
+            this.checkedListBox_station.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
+            this.checkedListBox_station.CheckOnClick = true;
+            this.checkedListBox_station.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkedListBox_station.ForeColor = System.Drawing.SystemColors.Info;
+            this.checkedListBox_station.FormattingEnabled = true;
+            this.checkedListBox_station.Location = new System.Drawing.Point(51, 5);
+            this.checkedListBox_station.Name = "checkedListBox_station";
+            this.checkedListBox_station.Size = new System.Drawing.Size(143, 123);
+            this.checkedListBox_station.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -559,17 +506,13 @@
         private System.Windows.Forms.CheckBox outbound_checkbox;
         private System.Windows.Forms.Label service_type;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label stopstation_label;
         private System.Windows.Forms.CheckBox inbound_checkbox;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label summary_label;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckedListBox checkedListBox_station;
     }
 }
 

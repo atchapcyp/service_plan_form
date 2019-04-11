@@ -44,17 +44,19 @@ namespace Service_plan_form
                     result = reader.AsDataSet();
                     for (int i = 0; i < result.Tables.Count; i++) {
                         dm.AddRange(mapper.Map(result.Tables[i]));
-                        
                     }
                     
                     for (int i = 0; i < result.Tables.Count; i++)
                     { 
                         stations.Add(new Station(dm, i, result.Tables.Count));
+                        checkedListBox_station.Items.Add(stations[i].station_name);
+
                     }
                     Console.WriteLine(stations[2].station_name);
                     Console.WriteLine(stations[2].demand_station[0][0]);
                     foreach (var demand in dm)
                     {
+                        
                       Console.WriteLine("START : " + demand.StartTime + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
                     }
 
