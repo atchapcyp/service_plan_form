@@ -29,7 +29,7 @@ namespace Service_plan_form
         public static List<Station> stations = new List<Station>();
         DataSet result;
         static DataSet Test_result;
-        DataTable dt = new DataTable();
+        public static DataTable dt = new DataTable();
         static string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
         string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
         static string test_path = @"demand_format\TestData.xlsx";
@@ -79,6 +79,28 @@ namespace Service_plan_form
             to_demand_box.SelectedIndex = 0;
             
 
+        }
+
+        public void getService_dgv()
+        {
+            List<Service> services = new List<Service>();
+            int[] service = { 1, 1, 1, 1, 1 };
+            int[] service2 = { 1, 0, 1, 1, 1 };
+            int[] service3 = { 1, 0, 0, 0, 1 };
+            int[] service4 = { 0, 1, 1, 1, 1 };
+            Service temp_service;
+            int dep_hour = 8; int dep_min = 20;
+            temp_service =new Service(dgvService.Rows[0].Cells[0].Value.ToString(),service,dep_hour,dep_min);
+            services.Add(temp_service);
+            temp_service = new Service(dgvService.Rows[1].Cells[0].Value.ToString(), service2, dep_hour, dep_min);
+            services.Add(temp_service);
+            temp_service = new Service(dgvService.Rows[2].Cells[0].Value.ToString(), service4, dep_hour, dep_min);
+            services.Add(temp_service);
+            temp_service = new Service(dgvService.Rows[3].Cells[0].Value.ToString(), service3, dep_hour, dep_min);
+            services.Add(temp_service);
+
+            Service_algo.genService(services);
+         
         }
 
         public static List<Station> readxlsx()
@@ -418,6 +440,12 @@ namespace Service_plan_form
             {
                 string firstline = lines[0];
                 string[] headerLabels = firstline.Split(',');
+                if (checkedListBox_station.Items.Count != headerLabels.Length - 2
+                    
+                    )
+                {
+                    MessageBox.Show("Invalid Service format Please re-select service input\n Only "+(headerLabels.Length-2)+" Stations required");
+                }
                 foreach(string headerWord in headerLabels)
                 {
                     if (dt.Columns.Contains(headerWord))
@@ -473,7 +501,7 @@ namespace Service_plan_form
         private void button2_Click(object sender, EventArgs e)
         {   
             DataRow dr = dt.NewRow();
-           dr[0] = service_name_textbox.Text;
+            dr[0] = service_name_textbox.Text;
             if (outbound_checkbox.Checked && !inbound_checkbox.Checked)
             {
                 dr[1] = "OUTBOUND";
@@ -484,6 +512,7 @@ namespace Service_plan_form
             }
             
             dt.Rows.Add(dr);
+            this.getService_dgv();
             
         }
 

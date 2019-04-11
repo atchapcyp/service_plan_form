@@ -23,7 +23,7 @@ namespace Service_plan_form
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
             }
-            Console.ReadLine();
+            
         }
 
         public static void Train_a_b_c_d_e(TF_Demand demands, Train_obj train, Service aService, int timeframe)
@@ -496,7 +496,6 @@ namespace Service_plan_form
         public static void genService(List<Service> _services)
         {
             Train_obj train = new Train_obj(500);
-            
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
@@ -506,14 +505,12 @@ namespace Service_plan_form
             List<Service> services = new List<Service>();
             services = _services;
 
-
             Console.WriteLine("____demand_of_this_service");
             showarray(carry_demand);
             var k = 0;
             while (k < 5)
             {
-
-
+                Console.WriteLine("-------------NEWLOOP------------ : " +k);
                 for (var i = 0; i < services.Count; i++)
                 {   
                     Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
@@ -548,30 +545,12 @@ namespace Service_plan_form
                     showarray(carry_demand);
                 }
 
-
-
-
-
-                //for (var i = 0; i < stations.Count; i++)
-                //{
-                //    //stations[i].update_demand(served_demand, services[s], i);
-                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[0]));
-                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[1]));
-                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[2]));
-                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[3]));
-                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[4]));
-                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[5]));
-                //    Console.WriteLine(PrettyPrintArrays(stations[i].demand_station[6]));
-                //} //show process of updating demand
-                //    }
-
                 Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
                 foreach (var _service in services)
                 {
                     _service.add_starttime(PhysicalData.headway);
                 }
-
-                //}
+                
                 k++;
             }
         }

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Service_plan_form;
 
 namespace Service_plan_form
 {
@@ -19,7 +20,8 @@ namespace Service_plan_form
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Form1 a =new Form1();
+            Application.Run(a);
 
             // START CONSOLE SECTION 
             String[] str1 = { "xxxx", "YYY" };
@@ -37,6 +39,7 @@ namespace Service_plan_form
             Service aService;
             int dep_hour = 8;int dep_min = 20;
 
+
             aService = new Service("All_station", service,dep_hour,dep_min);
             //add service to list
             outbound_services.Add(aService);
@@ -51,6 +54,11 @@ namespace Service_plan_form
             outbound_services.Add(aService);
             outbound_services[3].show();
             Service_algo.genService(outbound_services);
+            
+           // List<Service> list_gui_service = new List<Service>();
+           // list_gui_service = a.getService_dgv();
+           //Service_algo.genService(list_gui_service);
+            //Service gui_servises = new Service(,);
 
 
 

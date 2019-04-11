@@ -43,6 +43,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.checkedListBox_station = new System.Windows.Forms.CheckedListBox();
             this.stopstation_label = new System.Windows.Forms.Label();
             this.inbound_checkbox = new System.Windows.Forms.CheckBox();
             this.outbound_checkbox = new System.Windows.Forms.CheckBox();
@@ -61,7 +62,6 @@
             this.summary_label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.checkedListBox_station = new System.Windows.Forms.CheckedListBox();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -221,6 +221,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(316, 144);
             this.panel2.TabIndex = 11;
+            // 
+            // checkedListBox_station
+            // 
+            this.checkedListBox_station.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
+            this.checkedListBox_station.CheckOnClick = true;
+            this.checkedListBox_station.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkedListBox_station.ForeColor = System.Drawing.SystemColors.Info;
+            this.checkedListBox_station.FormattingEnabled = true;
+            this.checkedListBox_station.Location = new System.Drawing.Point(51, 5);
+            this.checkedListBox_station.Name = "checkedListBox_station";
+            this.checkedListBox_station.Size = new System.Drawing.Size(143, 123);
+            this.checkedListBox_station.TabIndex = 6;
             // 
             // stopstation_label
             // 
@@ -432,18 +444,6 @@
             this.label5.Text = "Suggestion";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // checkedListBox_station
-            // 
-            this.checkedListBox_station.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
-            this.checkedListBox_station.CheckOnClick = true;
-            this.checkedListBox_station.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkedListBox_station.ForeColor = System.Drawing.SystemColors.Info;
-            this.checkedListBox_station.FormattingEnabled = true;
-            this.checkedListBox_station.Location = new System.Drawing.Point(51, 5);
-            this.checkedListBox_station.Name = "checkedListBox_station";
-            this.checkedListBox_station.Size = new System.Drawing.Size(143, 123);
-            this.checkedListBox_station.TabIndex = 6;
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -462,7 +462,6 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.output_panel.ResumeLayout(false);
             this.output_panel.PerformLayout();
