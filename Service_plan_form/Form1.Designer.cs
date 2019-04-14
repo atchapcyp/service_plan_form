@@ -62,6 +62,7 @@
             this.summary_label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.calculate_console = new System.Windows.Forms.Button();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -195,6 +196,7 @@
             // panel3
             // 
             this.panel3.AutoScroll = true;
+            this.panel3.Controls.Add(this.calculate_console);
             this.panel3.Controls.Add(this.panel2);
             this.panel3.Controls.Add(this.inbound_checkbox);
             this.panel3.Controls.Add(this.outbound_checkbox);
@@ -229,9 +231,9 @@
             this.checkedListBox_station.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkedListBox_station.ForeColor = System.Drawing.SystemColors.Info;
             this.checkedListBox_station.FormattingEnabled = true;
-            this.checkedListBox_station.Location = new System.Drawing.Point(51, 5);
+            this.checkedListBox_station.Location = new System.Drawing.Point(51, 7);
             this.checkedListBox_station.Name = "checkedListBox_station";
-            this.checkedListBox_station.Size = new System.Drawing.Size(143, 123);
+            this.checkedListBox_station.Size = new System.Drawing.Size(137, 123);
             this.checkedListBox_station.TabIndex = 6;
             // 
             // stopstation_label
@@ -344,9 +346,9 @@
             // 
             this.add_service.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.add_service.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.add_service.Location = new System.Drawing.Point(124, 306);
+            this.add_service.Location = new System.Drawing.Point(108, 306);
             this.add_service.Name = "add_service";
-            this.add_service.Size = new System.Drawing.Size(84, 31);
+            this.add_service.Size = new System.Drawing.Size(100, 31);
             this.add_service.TabIndex = 1;
             this.add_service.Text = "Add Service";
             this.add_service.UseVisualStyleBackColor = true;
@@ -444,6 +446,18 @@
             this.label5.Text = "Suggestion";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
+            // calculate_console
+            // 
+            this.calculate_console.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.calculate_console.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.calculate_console.Location = new System.Drawing.Point(220, 290);
+            this.calculate_console.Name = "calculate_console";
+            this.calculate_console.Size = new System.Drawing.Size(105, 46);
+            this.calculate_console.TabIndex = 12;
+            this.calculate_console.Text = "CALCULATE CONSOLE";
+            this.calculate_console.UseVisualStyleBackColor = true;
+            this.calculate_console.Click += new System.EventHandler(this.calculate_console_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -512,6 +526,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckedListBox checkedListBox_station;
+        private System.Windows.Forms.Button calculate_console;
     }
 }
 

@@ -84,23 +84,35 @@ namespace Service_plan_form
         public void getService_dgv()
         {
             List<Service> services = new List<Service>();
-            int[] service = { 1, 1, 1, 1, 1 };
-            int[] service2 = { 1, 0, 1, 1, 1 };
-            int[] service3 = { 1, 0, 0, 0, 1 };
-            int[] service4 = { 0, 1, 1, 1, 1 };
+           
             Service temp_service;
             int dep_hour = 8; int dep_min = 20;
-            temp_service =new Service(dgvService.Rows[0].Cells[0].Value.ToString(),service,dep_hour,dep_min);
-            services.Add(temp_service);
-            temp_service = new Service(dgvService.Rows[1].Cells[0].Value.ToString(), service2, dep_hour, dep_min);
-            services.Add(temp_service);
-            temp_service = new Service(dgvService.Rows[2].Cells[0].Value.ToString(), service4, dep_hour, dep_min);
-            services.Add(temp_service);
-            temp_service = new Service(dgvService.Rows[3].Cells[0].Value.ToString(), service3, dep_hour, dep_min);
-            services.Add(temp_service);
+            int counter = 0;
+            foreach (DataGridViewRow row in dgvService.Rows)
+            {
+                Console.WriteLine("row height" + dgvService.Rows.Count);
+                if (dgvService.Rows.Count-1==counter)
+                {
+                    break;
+                }
+                temp_service = new Service(row.Cells[0].Value.ToString(), getStopStation(counter), dep_hour, dep_min);
+                services.Add(temp_service);
+                counter++;
+            }
+       
 
             Service_algo.genService(services);
-         
+
+        }
+
+        int[] getStopStation(int datagridviewRow)
+        {
+            int[] stop_station = new int[5];
+            for (int i = 0,y=2; i < 5; i++,y++)
+            {
+                stop_station[i]=Int32.Parse(dgvService.Rows[datagridviewRow].Cells[y].Value.ToString());
+            }
+            return stop_station;
         }
 
         public static List<Station> readxlsx()
@@ -512,7 +524,7 @@ namespace Service_plan_form
             }
             
             dt.Rows.Add(dr);
-            this.getService_dgv();
+            
             
         }
 
@@ -529,6 +541,11 @@ namespace Service_plan_form
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void calculate_console_Click(object sender, EventArgs e)
+        {
+            this.getService_dgv();
         }
     }
 }
