@@ -523,7 +523,7 @@ namespace Service_plan_form
                 dr[1] = "INBOUND";
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < dgvService.ColumnCount-2; i++)
             {
                 if (checkedListBox_station.GetItemChecked(i))
                 {
@@ -533,6 +533,7 @@ namespace Service_plan_form
                 {
                     dr[i+2] = 0;
                 }
+  
             }
 
             dt.Rows.Add(dr);
