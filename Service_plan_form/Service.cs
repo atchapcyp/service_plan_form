@@ -11,7 +11,7 @@ namespace Service_plan_form
         public int service_quantity { get; set; }
         public int max_util { get; set; }
         const int train_cap = 200;
-        public enum Type { INBOUND=1, OUTBOUND=0 }; // inbound outbound
+        public string service_direction { get; set; } // inbound outbound
         public DateTime[] depart_time;
         public List<Train_obj> trains = new List<Train_obj>();
         public int last_stop_index;
@@ -31,6 +31,7 @@ namespace Service_plan_form
         }
         public Service(string id, int[] stop_station,int depart_hour,int depart_min)
         {
+            
             depart_time = new DateTime[stop_station.Length];
             ServiceId = id;
             this.StopStation = stop_station;

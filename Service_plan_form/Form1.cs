@@ -522,7 +522,19 @@ namespace Service_plan_form
             {
                 dr[1] = "INBOUND";
             }
-            
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (checkedListBox_station.GetItemChecked(i))
+                {
+                    dr[i+2] = 1;
+                }
+                else
+                {
+                    dr[i+2] = 0;
+                }
+            }
+
             dt.Rows.Add(dr);
             
             
