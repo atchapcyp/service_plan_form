@@ -27,6 +27,9 @@ namespace Service_plan_form
         public static readonly float service_speed = 100000; // meter per hour
         public static readonly int dwell_time=5; // miniute
         public static readonly int headway = 20; //miniute
+        public static readonly int utilize_percent = 50;
+        public static readonly int under_util_plus_min = 10;
+
     }
 }
 

@@ -62,7 +62,7 @@ namespace Service_plan_form
         {
            // Console.WriteLine("dm.count " + dm.Count + "number of station " + numberOfStation);
             var tf_amount = (dm.Count / numberOfStation);
-            tf_count = tf_amount;
+            tf_count = tf_amount-1; // -1 is to exclude table header of when reader
             var offset = tf_amount * formStation;
             for (int i =offset+1; i < tf_amount+offset; i++)
             {

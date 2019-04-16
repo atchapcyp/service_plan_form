@@ -29,7 +29,7 @@ namespace Service_plan_form
         public static List<Station> stations = new List<Station>();
         DataSet result;
         static DataSet Test_result;
-        DataTable dt = new DataTable();
+        public static DataTable dt = new DataTable();
         static string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
         string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
         static string test_path = @"demand_format\TestData.xlsx";
@@ -44,17 +44,19 @@ namespace Service_plan_form
                     result = reader.AsDataSet();
                     for (int i = 0; i < result.Tables.Count; i++) {
                         dm.AddRange(mapper.Map(result.Tables[i]));
-                        
                     }
                     
                     for (int i = 0; i < result.Tables.Count; i++)
                     { 
                         stations.Add(new Station(dm, i, result.Tables.Count));
+                        checkedListBox_station.Items.Add(stations[i].station_name);
+
                     }
                     Console.WriteLine(stations[2].station_name);
                     Console.WriteLine(stations[2].demand_station[0][0]);
                     foreach (var demand in dm)
                     {
+                        
                       Console.WriteLine("START : " + demand.StartTime + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
                     }
 
@@ -77,6 +79,40 @@ namespace Service_plan_form
             to_demand_box.SelectedIndex = 0;
             
 
+        }
+
+        public void getService_dgv()
+        {
+            List<Service> services = new List<Service>();
+           
+            Service temp_service;
+            int dep_hour = 8; int dep_min = 0;
+            int counter = 0;
+            foreach (DataGridViewRow row in dgvService.Rows)
+            {
+                Console.WriteLine("row height" + dgvService.Rows.Count);
+                if (dgvService.Rows.Count-1==counter)
+                {
+                    break;
+                }
+                temp_service = new Service(row.Cells[0].Value.ToString(), getStopStation(counter), dep_hour, dep_min);
+                services.Add(temp_service);
+                counter++;
+            }
+       
+
+            Service_algo.genService(services);
+
+        }
+
+        int[] getStopStation(int datagridviewRow)
+        {
+            int[] stop_station = new int[5];
+            for (int i = 0,y=2; i < 5; i++,y++)
+            {
+                stop_station[i]=Int32.Parse(dgvService.Rows[datagridviewRow].Cells[y].Value.ToString());
+            }
+            return stop_station;
         }
 
         public static List<Station> readxlsx()
@@ -405,6 +441,8 @@ namespace Service_plan_form
         }
         private void BindDataCSV(string filePath)
         {
+            dgvService.DataSource = null;
+            dt.Clear();
             try
             {
                 // Read in nonexistent file.
@@ -414,9 +452,21 @@ namespace Service_plan_form
             {
                 string firstline = lines[0];
                 string[] headerLabels = firstline.Split(',');
+                if (checkedListBox_station.Items.Count != headerLabels.Length - 2
+                    
+                    )
+                {
+                    MessageBox.Show("Invalid Service format Please re-select service input\n Only "+(headerLabels.Length-2)+" Stations required");
+                }
                 foreach(string headerWord in headerLabels)
                 {
+                    if (dt.Columns.Contains(headerWord))
+                    {
+                        break;
+                    }
+
                     dt.Columns.Add(new DataColumn(headerWord));
+                    
                 }
                 for(int r = 1; r < lines.Length; r++)
                 {
@@ -431,9 +481,12 @@ namespace Service_plan_form
                 } 
             }
             if (dt.Rows.Count > 0)
-            {
+            {   
+               // dt.Columns[0].Unique=true;
                 dgvService.DataSource = dt;
+              
             }
+        
             }
             catch (FileNotFoundException ex)
             {
@@ -443,32 +496,48 @@ namespace Service_plan_form
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
-
+            if (outbound_checkbox.Checked)
+            {
+                inbound_checkbox.Checked = false;
+            }
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (inbound_checkbox.Checked)
+            {
+                outbound_checkbox.Checked = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
-        {
-            
+        {   
             DataRow dr = dt.NewRow();
             dr[0] = service_name_textbox.Text;
             if (outbound_checkbox.Checked && !inbound_checkbox.Checked)
             {
                 dr[1] = "OUTBOUND";
             }
-            else if (outbound_checkbox.Checked && inbound_checkbox.Checked)
-            {
-
-            }
-            else
+            else if (!outbound_checkbox.Checked && inbound_checkbox.Checked)
             {
                 dr[1] = "INBOUND";
             }
+
+            for (int i = 0; i < dgvService.ColumnCount-2; i++)
+            {
+                if (checkedListBox_station.GetItemChecked(i))
+                {
+                    dr[i+2] = 1;
+                }
+                else
+                {
+                    dr[i+2] = 0;
+                }
+  
+            }
+
             dt.Rows.Add(dr);
+            
             
         }
 
@@ -485,6 +554,11 @@ namespace Service_plan_form
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void calculate_console_Click(object sender, EventArgs e)
+        {
+            this.getService_dgv();
         }
     }
 }
