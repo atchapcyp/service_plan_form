@@ -42,6 +42,7 @@
             this.from_demand_box = new MetroFramework.Controls.MetroComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.calculate_console = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.checkedListBox_station = new System.Windows.Forms.CheckedListBox();
             this.stopstation_label = new System.Windows.Forms.Label();
@@ -62,7 +63,6 @@
             this.summary_label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.calculate_console = new System.Windows.Forms.Button();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -215,6 +215,18 @@
             this.panel3.TabIndex = 3;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
+            // calculate_console
+            // 
+            this.calculate_console.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.calculate_console.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.calculate_console.Location = new System.Drawing.Point(220, 290);
+            this.calculate_console.Name = "calculate_console";
+            this.calculate_console.Size = new System.Drawing.Size(105, 46);
+            this.calculate_console.TabIndex = 12;
+            this.calculate_console.Text = "CALCULATE CONSOLE";
+            this.calculate_console.UseVisualStyleBackColor = true;
+            this.calculate_console.Click += new System.EventHandler(this.calculate_console_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.checkedListBox_station);
@@ -282,6 +294,7 @@
             // 
             // dgvService
             // 
+            this.dgvService.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dgvService.BackgroundColor = System.Drawing.Color.Tan;
             this.dgvService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvService.Location = new System.Drawing.Point(338, 63);
@@ -445,18 +458,6 @@
             this.label5.TabIndex = 1;
             this.label5.Text = "Suggestion";
             this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // calculate_console
-            // 
-            this.calculate_console.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.calculate_console.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.calculate_console.Location = new System.Drawing.Point(220, 290);
-            this.calculate_console.Name = "calculate_console";
-            this.calculate_console.Size = new System.Drawing.Size(105, 46);
-            this.calculate_console.TabIndex = 12;
-            this.calculate_console.Text = "CALCULATE CONSOLE";
-            this.calculate_console.UseVisualStyleBackColor = true;
-            this.calculate_console.Click += new System.EventHandler(this.calculate_console_Click);
             // 
             // Form1
             // 

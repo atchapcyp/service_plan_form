@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Service_plan_form.Demands;
@@ -115,7 +116,7 @@ namespace Service_plan_form
                     Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
                 }
             }
-        }
+        }  
 
         public static void update_remain_demand(TF_Demand demands, int timeframe, int fill_demand, int i, int j) {
             if (demands.carry_matrix[i, j] == -1) {
@@ -180,6 +181,8 @@ namespace Service_plan_form
             }
             return true;
         }
+
+        
 
         static public void fixedValue_5x5(int[,] passeng_num, int num)
         {
@@ -508,7 +511,8 @@ namespace Service_plan_form
             Console.WriteLine("____demand_of_this_service");
             showarray(carry_demand);
             var k = 0;
-            while (k < 5)
+            float last_util_percent_memo=1;
+            while (isNotLastTimeFrame() || last_util_percent_memo>=PhysicalData.utilize_percent)
             {
                 Console.WriteLine("-------------NEWLOOP------------ : " +k);
                 for (var i = 0; i < services.Count; i++)
@@ -530,7 +534,8 @@ namespace Service_plan_form
 
                 var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
                 Console.WriteLine("S and P index : " + s + " _ " + p);
-                if (p >= 60)
+                last_util_percent_memo = p; //set lastest utilize percent
+                if (p >= PhysicalData.utilize_percent) //util handle
                 {
                     TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
                     var served_demand = serve_demand_form_station(outboundDemand, train, services[s], 0);
@@ -543,15 +548,40 @@ namespace Service_plan_form
                     Console.WriteLine("REMAIN CARRY DEMAND");
                     carry_demand = outboundDemand.demand[0]; //set carry demand
                     showarray(carry_demand);
+                    Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
+                    foreach (var _service in services)
+                    {
+                        _service.add_starttime(PhysicalData.headway);
+                    }
+                    k++;
+                }
+                else
+                {
+                    Console.WriteLine("-------BELOW UTIL PERCENT ------- ");
+                    
+                    foreach (var _service in services)
+                    {
+                        _service.add_starttime(PhysicalData.under_util_plus_min);
+                    }
+
+                    k++;
+                    continue;
                 }
 
-                Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
-                foreach (var _service in services)
-                {
-                    _service.add_starttime(PhysicalData.headway);
-                }
                 
-                k++;
+            }
+            Console.WriteLine("___ tf count = "+stations.First().tf_count);
+
+            Boolean isNotLastTimeFrame()
+            {
+                foreach (var value in tf_memo)
+                {
+                    if (value != stations.First().tf_count-1)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
 

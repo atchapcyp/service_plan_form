@@ -86,7 +86,7 @@ namespace Service_plan_form
             List<Service> services = new List<Service>();
            
             Service temp_service;
-            int dep_hour = 8; int dep_min = 20;
+            int dep_hour = 8; int dep_min = 0;
             int counter = 0;
             foreach (DataGridViewRow row in dgvService.Rows)
             {
