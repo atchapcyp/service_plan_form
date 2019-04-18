@@ -37,22 +37,22 @@ namespace Service_plan_form
             int[] service3 = { 1, 0, 0, 0, 1 };
             int[] service4 = { 0, 1, 1, 1, 1 };
             Service aService;
-            int dep_hour = 8;int dep_min = 20;
+            int dep_hour = 8;int dep_min = 0;
 
 
             aService = new Service("All_station", service,dep_hour,dep_min);
             //add service to list
             outbound_services.Add(aService);
             outbound_services[0].show();
-            aService = new Service("4_station_outbound_ex_2", service2,dep_hour,dep_min);
+            aService = new Service("4_station_outbound_ex_2", service2, dep_hour, dep_min);
             outbound_services.Add(aService);
             outbound_services[1].show();
-            aService = new Service("4_station_outbound_start_at_2", service4,dep_hour,dep_min);
-            outbound_services.Add(aService);
-            outbound_services[2].show();
-            aService =new Service("1_to_5", service3,dep_hour,dep_min);
-            outbound_services.Add(aService);
-            outbound_services[3].show();
+           // aService = new Service("4_station_outbound_start_at_2", service4,dep_hour,dep_min);
+            //outbound_services.Add(aService);
+            //outbound_services[2].show();
+            //aService =new Service("1_to_5", service3,dep_hour,dep_min);
+            //outbound_services.Add(aService);
+            //outbound_services[3].show();
             Service_algo.genService(outbound_services);
             
            // List<Service> list_gui_service = new List<Service>();

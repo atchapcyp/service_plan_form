@@ -98,6 +98,7 @@
     <Compile Include="Service_editor.Designer.cs">
       <DependentUpon>Service_editor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service_summary.cs" />
     <Compile Include="Station.cs" />
     <Compile Include="TF_Demand.cs" />
     <Compile Include="Train_obj.cs" />

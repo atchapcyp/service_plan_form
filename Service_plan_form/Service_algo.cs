@@ -470,9 +470,9 @@ namespace Service_plan_form
                     }
 
                 }
-                Console.WriteLine("CALCULATE UTIL--- Traincap : " + train.cap);
-                Console.WriteLine("CALCULATE UTIL--- Remaincap : " + train.remain_cap);
-                Console.WriteLine("CALCULATE UTIL--- StationDistance : (METER) " + Station.getDistan_Meter(i, next_station_index));
+                //Console.WriteLine("CALCULATE UTIL--- Traincap : " + train.cap);
+                //Console.WriteLine("CALCULATE UTIL--- Remaincap : " + train.remain_cap);
+                //Console.WriteLine("CALCULATE UTIL--- StationDistance : (METER) " + Station.getDistan_Meter(i, next_station_index));
                 train_util += (train.cap - train.remain_cap) * Station.getDistan_Meter(i,next_station_index);
                 Console.WriteLine("Train_util : " + train_util);
 
@@ -487,7 +487,7 @@ namespace Service_plan_form
                 {
 
                     sum += actual_getoff[l, station];
-                    Console.WriteLine("in_sum get off At  station : " + station + " form station : " + l + " = " + actual_getoff[l, station]);
+                   // Console.WriteLine("in_sum get off At  station : " + station + " form station : " + l + " = " + actual_getoff[l, station]);
                 }
                 return sum;
             }
@@ -498,7 +498,7 @@ namespace Service_plan_form
 
         public static void genService(List<Service> _services)
         {
-            Train_obj train = new Train_obj(500);
+            Train_obj train = new Train_obj(1000);
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
@@ -512,9 +512,13 @@ namespace Service_plan_form
             showarray(carry_demand);
             var k = 0;
             float last_util_percent_memo=1;
-            while (isNotLastTimeFrame() || last_util_percent_memo>=PhysicalData.utilize_percent)
-            {
-                Console.WriteLine("-------------NEWLOOP------------ : " +k);
+            while (services[0].depart_time[0].TimeOfDay<=stations[0].start_time.Last().TimeOfDay || last_util_percent_memo>=PhysicalData.utilize_percent)
+            { //Console.WriteLine("CONDITION 1 : "+ (services[0].depart_time[0].TimeOfDay<=stations[0].start_time.Last().TimeOfDay).ToString() );
+            //    Console.WriteLine("CONDITION 2 : "+ (last_util_percent_memo>=PhysicalData.utilize_percent).ToString() );
+            //    Console.WriteLine(" " +services[0].depart_time[0].TimeOfDay);
+            //    Console.WriteLine("-------------NEWLOOP------------ : " +stations[0].start_time.Last().TimeOfDay);
+            //    Console.WriteLine(" " +last_util_percent_memo);
+            //    Console.WriteLine("-------------NEWLOOP------------ : " +PhysicalData.utilize_percent);
                 for (var i = 0; i < services.Count; i++)
                 {   
                     Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
@@ -525,16 +529,26 @@ namespace Service_plan_form
                     demStation.Insert(i,
                         demand_of_this_service(services[i].depart_time, stations, carry_demand, tf_memo));
                 }
+                
 
                 for (var i = 0; i < services.Count; i++)
                 {
                     Console.WriteLine("SERVICE : " + services[i].ServiceId);
                     showarray(demStation[i]);
+                    if (isDemandEmpty(demStation[i]))
+                    {
+                        Console.WriteLine("-------------THIS DEMAND EMPTY------------ : ");
+                    }
                 }
 
                 var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
+
                 Console.WriteLine("S and P index : " + s + " _ " + p);
                 last_util_percent_memo = p; //set lastest utilize percent
+                //if (last_util_percent_memo == 0)
+                //{
+                //    break;
+                //}
                 if (p >= PhysicalData.utilize_percent) //util handle
                 {
                     TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
@@ -574,15 +588,30 @@ namespace Service_plan_form
 
             Boolean isNotLastTimeFrame()
             {
+
                 foreach (var value in tf_memo)
                 {
-                    if (value != stations.First().tf_count-1)
+                    if (value < stations.First().start_time[0].Hour)
+                    {
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            Boolean IsAllEmptyDemand()
+            {
+                foreach (int[,] NxN_demand in demStation)
+                {
+                    if (isDemandEmpty(NxN_demand))
                     {
                         return true;
                     }
                 }
                 return false;
             }
+
         }
 
         public static int[] init_memo(List<Station> stations,int index)
@@ -618,6 +647,7 @@ namespace Service_plan_form
                             count_memo++;
                         }
                     }
+                    
                 }
                 counter++;
             }
@@ -658,18 +688,18 @@ namespace Service_plan_form
                 }
 
                 int demand_at_station = 0;
-                Console.WriteLine("Remainning Seat : " + train.remain_cap);
+                //Console.WriteLine("Remainning Seat : " + train.remain_cap);
                 get_off_next_station = train.passenger[i];
-                Console.WriteLine("Number of getting off passenger at station " + i + " = " + get_off_next_station);
+               // Console.WriteLine("Number of getting off passenger at station " + i + " = " + get_off_next_station);
                 train.getOff(i);
-                Console.WriteLine("Remainning Seat after get off : " + train.remain_cap);
+               // Console.WriteLine("Remainning Seat after get off : " + train.remain_cap);
                 for (k = i + 1; k < 5; k++) // sum of demand at station i
                 {
                     if (aService.StopStation[k] == 0) { continue; }
                     demand_at_station += demands.demand[0][i, k];
-                    Console.WriteLine("Demand at station " + i + " to station " + k + " is " + demands.demand[0][i, k]);
+                  //  Console.WriteLine("Demand at station " + i + " to station " + k + " is " + demands.demand[0][i, k]);
                 }
-                Console.WriteLine("All of Demand at station " + i + " is " + demand_at_station);
+             //  Console.WriteLine("All of Demand at station " + i + " is " + demand_at_station);
                 if (demand_at_station < train.remain_cap)
                 {
                     for (j = i + 1; j < 5; j++)
@@ -693,21 +723,21 @@ namespace Service_plan_form
                         demand_at_station += fill_demand;
                     }
                     int remain_cap = train.remain_cap;
-                    Console.WriteLine("..............Debug demand at station  " + demand_at_station);
+                   // Console.WriteLine("..............Debug demand at station  " + demand_at_station);
                     remain_cap -= demand_at_station;
                     for (j = i + 1; j < 5; j++)
                     {
                         if (aService.StopStation[j] == 0) { continue; }
-                        Console.WriteLine("..............Debug train remainning seat  " + train.remain_cap);
-                        Console.WriteLine("..............Debug train remainning seat  " + remain_cap);
-                        Console.WriteLine("..............Debug Demand at station      " + demands.demand[0][i, j]);
-                        Console.WriteLine("..............Debug ratio      " + ratio);
+                        //Console.WriteLine("..............Debug train remainning seat  " + train.remain_cap);
+                        //Console.WriteLine("..............Debug train remainning seat  " + remain_cap);
+                        //Console.WriteLine("..............Debug Demand at station      " + demands.demand[0][i, j]);
+                        //Console.WriteLine("..............Debug ratio      " + ratio);
                         fill_demand = (int)(demands.demand[0][i, j] * ratio);
-                        Console.WriteLine("..............Debug fill_demand  " + fill_demand);
+                      //  Console.WriteLine("..............Debug fill_demand  " + fill_demand);
                         
                         if (remain_cap > 0 && demands.demand[0][i, j] > fill_demand)
                         {// ROUND UP IN CASE OF REMAINING a few demand
-                            Console.WriteLine("ROUND UP AT : " + i+"_"+j);
+                    //        Console.WriteLine("ROUND UP AT : " + i+"_"+j);
                             train.getOn(fill_demand + 1, j);
                             update_remain_demand(demands, timeframe, fill_demand + 1, i, j);
                             remain_cap -= 1;
@@ -722,7 +752,7 @@ namespace Service_plan_form
                         demand_at_station += fill_demand;
 
                     }
-                    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
+                //    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
                 }
                 
             }

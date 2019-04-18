@@ -31,7 +31,8 @@ namespace Service_plan_form
         static DataSet Test_result;
         public static DataTable dt = new DataTable();
         static string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-        string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
+       // string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
+        string xlsx_path = @"demand_format\demand_waiting_time.xlsx";
         static string test_path = @"demand_format\TestData.xlsx";
 
         private void Form1_Load(object sender, EventArgs e)
@@ -241,10 +242,12 @@ namespace Service_plan_form
 
                             _chart.Series.Add("demand");
                             _chart.Series[0].ChartType = SeriesChartType.SplineArea;
-
+                            _chart.Series.Add("Serve Demand");
+                            _chart.Series[1].ChartType = SeriesChartType.SplineArea;
                             for (int i = 0; i < stations[_o].tf_count - 1; i++)
                             {
                                 _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
+                                _chart.Series[1].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]/2);
                             }
 
                             //_chart.Series.Add("supply");
@@ -339,7 +342,7 @@ namespace Service_plan_form
             if (stationcheckBox.Checked)
           
                 {
-                    // plot chart
+                    // plot chart TIME FRAME
                     foreach (int _o in _origin)
                     {
                             for (int timeframe = 0; timeframe < stations[_o].tf_count - 1; timeframe++)
@@ -362,7 +365,7 @@ namespace Service_plan_form
                                 _chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
                                 _chart.ChartAreas[0].AxisX.Interval = 1;
                                 _chart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-                                //_chart.ChartAreas[0].AxisX.IntervalType=;
+                           
                                 _chart.ChartAreas[0].AxisY.LineColor = Color.White;
                                 _chart.ChartAreas[0].AxisY.MajorGrid.LineColor = SystemColors.ControlDark;
                                 _chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
@@ -370,20 +373,21 @@ namespace Service_plan_form
                         
                                 _chart.Series.Add("demand");
                                 _chart.Series[0].ChartType = SeriesChartType.Column;
-                                
+                                _chart.Series.Add("Served Demand");
+                        _chart.Series[1].ChartType = SeriesChartType.Column;
                                 for (int i = 0; i < stations.Count; i++)
                                 { 
                                     _chart.Series[0].Points.AddXY(stations[i].station_name, stations[_o].demand_station[timeframe][i]);
-                            _chart.Series[0].IsValueShownAsLabel = true;
-                           
+                                    _chart.Series[0].IsValueShownAsLabel = true;
+                                    _chart.Series[1].Points.AddXY(stations[i].station_name, stations[_o].demand_station[timeframe][i]/10);
+                                    _chart.Series[1].IsValueShownAsLabel = true;
                         }
-
-
-
-                                _chart.Titles.Add(stations[_o].station_name + " Time " + stations[_o].start_time[timeframe].ToShortTimeString()+" - " + stations[_o].stop_time[timeframe].ToShortTimeString());
+                              
+                           _chart.Titles.Add(" Time " + stations[_o].start_time[timeframe].ToShortTimeString()+" - " + stations[_o].stop_time[timeframe].ToShortTimeString()+" demand from "+ stations[_o].station_name +" to");
+                         
                                 _chart.Titles[0].ForeColor = Color.White;
 
-                                _chart.Titles[0].Alignment = ContentAlignment.TopLeft;
+                                //_chart.Titles[0].Alignment = ContentAlignment.TopLeft;
                                 _chart.Legends.Add("legend");
                                 _chart.Legends[0].BackColor = SystemColors.WindowFrame;
                                 _chart.Legends[0].ForeColor = Color.White;

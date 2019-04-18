@@ -135,17 +135,18 @@ namespace Service_plan_form_test
 
         }
 
-        [TestMethod]
-        public void Test_maxUtilze()
-        {
-            Train_obj train = new Train_obj(100);
+        //[TestMethod]
+        //public void Test_maxUtilze()
+        //{
+        //    Train_obj train = new Train_obj(100);
 
-            int[] service = { 1, 1, 1, 1, 0 };
-            Service services = new Service("test", service);
-            float actual = Service_algo.max_utilize_of_service(train.cap, services);
-            float expected = 8500;
-            Assert.AreEqual(expected, actual);
-        }
+        //    int[] service = { 1, 1, 1, 1, 0 };
+        //    Service services = new Service("test", service);
+        //    float actual = Service_algo.max_utilize_of_service(train.cap, services);
+        //    float expected = 8500;
+        //    Assert.AreEqual(expected, actual);
+        //}
+        
 
         [TestMethod]
         public void Test_getOff_TrainClass()
