@@ -31,8 +31,8 @@ namespace Service_plan_form
         static DataSet Test_result;
         public static DataTable dt = new DataTable();
         static string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-       // string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
-        string xlsx_path = @"demand_format\demand_waiting_time.xlsx";
+        string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
+       // string xlsx_path = @"demand_format\demand_waiting_time.xlsx";
         static string test_path = @"demand_format\TestData.xlsx";
 
         private void Form1_Load(object sender, EventArgs e)
@@ -101,9 +101,23 @@ namespace Service_plan_form
                 counter++;
             }
        
+            var (a,b) = Service_algo.genService(services);
+            Console.WriteLine("_________ENDED___________"); 
+            foreach (var stopstaion in a)
+            {
+                Console.WriteLine(stopstaion.Service_name);
+                Console.WriteLine(stopstaion.utilization_percent);
+                Console.WriteLine(stopstaion.income);
+                for (var i = 0; i < stopstaion.departure_time.Length; i++)
+                {
+                    Console.WriteLine(stopstaion.departure_time[i]);
+                }
 
-            Service_algo.genService(services);
+                Console.WriteLine(Service_algo.PrettyPrintArrays(stopstaion.StopStation));
+                Service_algo.showarray(stopstaion.actual_serve_demand);
 
+            }
+            Console.WriteLine(a.Count);
         }
 
         int[] getStopStation(int datagridviewRow)
@@ -563,6 +577,7 @@ namespace Service_plan_form
         private void calculate_console_Click(object sender, EventArgs e)
         {
             this.getService_dgv();
+
         }
     }
 }

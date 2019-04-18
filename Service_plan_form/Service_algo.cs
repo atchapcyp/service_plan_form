@@ -252,6 +252,10 @@ namespace Service_plan_form
             float util_percent = 0;
             for (int i = 0; i < services.Count; i++)
             {
+                if (isDemandEmpty(outbound_demand[i]))
+                {
+                    continue;
+                }
                 Console.WriteLine("----- ROUND " + ++counter + " ----- ");
                 services[i].show();
                 showarray(outbound_demand[i]);
@@ -496,11 +500,13 @@ namespace Service_plan_form
         }
 
 
-        public static void genService(List<Service> _services)
+        public static (List<Service_summary>,float) genService(List<Service> _services)
         {
-            Train_obj train = new Train_obj(1000);
+            float sum_waiting_time=0;
+            Train_obj train = new Train_obj(500);
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
+            List<Service_summary> summaries = new List<Service_summary>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
            
             int[] tf_memo = init_memo(stations,0); // index of start(depart)_time
@@ -518,14 +524,16 @@ namespace Service_plan_form
             //    Console.WriteLine(" " +services[0].depart_time[0].TimeOfDay);
             //    Console.WriteLine("-------------NEWLOOP------------ : " +stations[0].start_time.Last().TimeOfDay);
             //    Console.WriteLine(" " +last_util_percent_memo);
-            //    Console.WriteLine("-------------NEWLOOP------------ : " +PhysicalData.utilize_percent);
+               Console.WriteLine("-------------NEWLOOP------------ : " +k);
+            var _summary = new Service_summary();
+            
                 for (var i = 0; i < services.Count; i++)
                 {   
                     Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
                     Console.WriteLine(services[i].depart_time[1].ToShortTimeString());
                     Console.WriteLine(services[i].depart_time[2].ToShortTimeString());
                     Console.WriteLine(services[i].depart_time[3].ToShortTimeString());
-                    Console.WriteLine(services[i].depart_time[4].ToShortTimeString() + "\n");
+                    Console.WriteLine(services[i].depart_time[4].ToShortTimeString());
                     demStation.Insert(i,
                         demand_of_this_service(services[i].depart_time, stations, carry_demand, tf_memo));
                 }
@@ -534,8 +542,12 @@ namespace Service_plan_form
                 for (var i = 0; i < services.Count; i++)
                 {
                     Console.WriteLine("SERVICE : " + services[i].ServiceId);
-                    showarray(demStation[i]);
-                    if (isDemandEmpty(demStation[i]))
+                    
+                    if (!isDemandEmpty(demStation[i]))
+                    {
+                        showarray(demStation[i]);
+                    }
+                    else
                     {
                         Console.WriteLine("-------------THIS DEMAND EMPTY------------ : ");
                     }
@@ -543,12 +555,11 @@ namespace Service_plan_form
 
                 var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
 
+
+
                 Console.WriteLine("S and P index : " + s + " _ " + p);
                 last_util_percent_memo = p; //set lastest utilize percent
-                //if (last_util_percent_memo == 0)
-                //{
-                //    break;
-                //}
+               
                 if (p >= PhysicalData.utilize_percent) //util handle
                 {
                     TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
@@ -563,11 +574,25 @@ namespace Service_plan_form
                     carry_demand = outboundDemand.demand[0]; //set carry demand
                     showarray(carry_demand);
                     Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
+
+                    DateTime[] newDateTime = new DateTime[5];
+                    newDateTime = services[s].depart_time;
+                    _summary.departure_time = newDateTime;
+
                     foreach (var _service in services)
                     {
                         _service.add_starttime(PhysicalData.headway);
                     }
                     k++;
+                    //set summary to return
+                    int income = calIncome(served_demand);
+                    _summary.Service_name = services[s].ServiceId;
+                    _summary.StopStation = services[s].StopStation;
+                    _summary.utilization_percent = p;
+                    _summary.actual_serve_demand = served_demand;
+                    
+                    _summary.income = income;
+                    summaries.Add(_summary);
                 }
                 else
                 {
@@ -577,40 +602,27 @@ namespace Service_plan_form
                     {
                         _service.add_starttime(PhysicalData.under_util_plus_min);
                     }
-
-                    k++;
                     continue;
                 }
 
                 
             }
-            Console.WriteLine("___ tf count = "+stations.First().tf_count);
+           
+            return (summaries,sum_waiting_time);
+        }
 
-            Boolean isNotLastTimeFrame()
+        public static int calIncome(int[,] demand)
+        {
+            int sum=0;
+            for (var i = 0; i < 5; i++)
             {
-
-                foreach (var value in tf_memo)
+                for (var j = 0; j < 5; j++)
                 {
-                    if (value < stations.First().start_time[0].Hour)
-                    {
-
-                        return true;
-                    }
+                    sum += demand[i, j] * PhysicalData.ticket_price[i, j];
                 }
-                return false;
             }
 
-            Boolean IsAllEmptyDemand()
-            {
-                foreach (int[,] NxN_demand in demStation)
-                {
-                    if (isDemandEmpty(NxN_demand))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
+            return sum;
 
         }
 

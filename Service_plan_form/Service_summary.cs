@@ -7,20 +7,26 @@ using System.Threading.Tasks;
 
 namespace Service_plan_form
 {
-    class Service_summary : IEnumerable<int>
+    public class Service_summary : IEnumerable<int[]>
     {
-
+        public string Service_name;
         public int[] StopStation { get; set; }
         public DateTime[] departure_time;
         public int[,] actual_serve_demand;
         public float profitability;
+        public float utilization_percent;
+        public int income;
 
-
-
-
-        public IEnumerator<int> GetEnumerator()
+        public Service_summary()
         {
-            yield return 0;
+
+        }
+
+
+
+        public IEnumerator<int[]> GetEnumerator()
+        {
+            yield return StopStation;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
