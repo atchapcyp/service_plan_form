@@ -182,8 +182,6 @@ namespace Service_plan_form
             return true;
         }
 
-        
-
         static public void fixedValue_5x5(int[,] passeng_num, int num)
         {
 
@@ -525,7 +523,7 @@ namespace Service_plan_form
             //    Console.WriteLine("-------------NEWLOOP------------ : " +stations[0].start_time.Last().TimeOfDay);
             //    Console.WriteLine(" " +last_util_percent_memo);
                Console.WriteLine("-------------NEWLOOP------------ : " +k);
-            var _summary = new Service_summary();
+            
             
                 for (var i = 0; i < services.Count; i++)
                 {   
@@ -555,8 +553,6 @@ namespace Service_plan_form
 
                 var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
 
-
-
                 Console.WriteLine("S and P index : " + s + " _ " + p);
                 last_util_percent_memo = p; //set lastest utilize percent
                
@@ -567,17 +563,19 @@ namespace Service_plan_form
                     Console.WriteLine("__ REMAINNING \n");
                     showarray(outboundDemand.demand[0]);
                     Console.WriteLine("__ REMAINNING 22222222\n");
+                    Console.WriteLine(services[s].depart_time[0].ToShortTimeString());
                     update_memo(services[s].depart_time, stations, tf_memo); //set memo
-                    
+                    Console.WriteLine(services[s].depart_time[0].ToShortTimeString());
+               
                     Console.WriteLine("UPDATED_ MEMO "+PrettyPrintArrays(tf_memo));
                     Console.WriteLine("REMAIN CARRY DEMAND");
                     carry_demand = outboundDemand.demand[0]; //set carry demand
                     showarray(carry_demand);
                     Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
 
-                    DateTime[] newDateTime = new DateTime[5];
-                    newDateTime = services[s].depart_time;
-                    _summary.departure_time = newDateTime;
+                    var test_depart = services[s].depart_time.Clone() as DateTime[];
+                    int income = calIncome(served_demand);
+                    Service_summary _summary =new Service_summary(services[s].ServiceId,services[s].StopStation,test_depart,served_demand,100,p,income);
 
                     foreach (var _service in services)
                     {
@@ -585,13 +583,13 @@ namespace Service_plan_form
                     }
                     k++;
                     //set summary to return
-                    int income = calIncome(served_demand);
-                    _summary.Service_name = services[s].ServiceId;
-                    _summary.StopStation = services[s].StopStation;
-                    _summary.utilization_percent = p;
-                    _summary.actual_serve_demand = served_demand;
                     
-                    _summary.income = income;
+                    //_summary.Service_name = services[s].ServiceId;
+                    //_summary.StopStation = services[s].StopStation;
+                    //_summary.Utilization_percent = p;
+                    //_summary.Actual_serve_demand = served_demand;
+                    
+                    //_summary.Income = Income;
                     summaries.Add(_summary);
                 }
                 else
@@ -604,8 +602,6 @@ namespace Service_plan_form
                     }
                     continue;
                 }
-
-                
             }
            
             return (summaries,sum_waiting_time);
@@ -872,8 +868,6 @@ namespace Service_plan_form
             }
             return result;
         }
-
-        
 
         public static string PrettyPrintArrayOfArrays(int[][] arrayOfArrays)
         {

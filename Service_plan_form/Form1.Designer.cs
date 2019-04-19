@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -60,9 +63,19 @@
             this.exitbutton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.summary_label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Selected_service_dgv = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
+            this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.servicenameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.profitabilityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.utilizationpercentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.incomeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.servicesummaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.servicesummaryBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -70,6 +83,10 @@
             this.input_groupbox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -294,6 +311,8 @@
             // 
             // dgvService
             // 
+            this.dgvService.AllowUserToAddRows = false;
+            this.dgvService.AllowUserToResizeRows = false;
             this.dgvService.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dgvService.BackgroundColor = System.Drawing.Color.Tan;
             this.dgvService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -411,6 +430,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.summary_label);
             this.groupBox1.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -420,6 +440,15 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Summary";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 81);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 14);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "label4";
             // 
             // summary_label
             // 
@@ -436,15 +465,49 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.Selected_service_dgv);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox2.Location = new System.Drawing.Point(1355, 383);
+            this.groupBox2.Location = new System.Drawing.Point(1355, 373);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(289, 528);
+            this.groupBox2.Size = new System.Drawing.Size(289, 510);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Suggestion";
+            // 
+            // Selected_service_dgv
+            // 
+            this.Selected_service_dgv.AutoGenerateColumns = false;
+            this.Selected_service_dgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.Selected_service_dgv.BackgroundColor = System.Drawing.Color.LightSalmon;
+            this.Selected_service_dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Selected_service_dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.servicenameDataGridViewTextBoxColumn,
+            this.profitabilityDataGridViewTextBoxColumn,
+            this.utilizationpercentDataGridViewTextBoxColumn,
+            this.incomeDataGridViewTextBoxColumn});
+            this.Selected_service_dgv.DataSource = this.servicesummaryBindingSource;
+            this.Selected_service_dgv.Location = new System.Drawing.Point(9, 71);
+            this.Selected_service_dgv.Name = "Selected_service_dgv";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.DarkViolet;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Selected_service_dgv.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.Selected_service_dgv.RowHeadersWidth = 20;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Honeydew;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.DarkSlateGray;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            this.Selected_service_dgv.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.Selected_service_dgv.Size = new System.Drawing.Size(274, 433);
+            this.Selected_service_dgv.TabIndex = 2;
             // 
             // label5
             // 
@@ -454,16 +517,65 @@
             this.label5.ForeColor = System.Drawing.Color.Cornsilk;
             this.label5.Location = new System.Drawing.Point(6, 18);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(188, 42);
+            this.label5.Size = new System.Drawing.Size(267, 42);
             this.label5.TabIndex = 1;
-            this.label5.Text = "Suggestion";
+            this.label5.Text = "Selected Service";
             this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // stopStationBindingSource
+            // 
+            this.stopStationBindingSource.DataMember = "StopStation";
+            this.stopStationBindingSource.DataSource = this.servicesummaryBindingSource;
+            // 
+            // ID
+            // 
+            this.ID.DataPropertyName = "ID";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 43;
+            // 
+            // servicenameDataGridViewTextBoxColumn
+            // 
+            this.servicenameDataGridViewTextBoxColumn.DataPropertyName = "Service_name";
+            this.servicenameDataGridViewTextBoxColumn.HeaderText = "Service_name";
+            this.servicenameDataGridViewTextBoxColumn.Name = "servicenameDataGridViewTextBoxColumn";
+            this.servicenameDataGridViewTextBoxColumn.Width = 106;
+            // 
+            // profitabilityDataGridViewTextBoxColumn
+            // 
+            this.profitabilityDataGridViewTextBoxColumn.DataPropertyName = "Profitability";
+            this.profitabilityDataGridViewTextBoxColumn.HeaderText = "Profitability";
+            this.profitabilityDataGridViewTextBoxColumn.Name = "profitabilityDataGridViewTextBoxColumn";
+            this.profitabilityDataGridViewTextBoxColumn.Width = 93;
+            // 
+            // utilizationpercentDataGridViewTextBoxColumn
+            // 
+            this.utilizationpercentDataGridViewTextBoxColumn.DataPropertyName = "Utilization_percent";
+            this.utilizationpercentDataGridViewTextBoxColumn.HeaderText = "Utilization_percent";
+            this.utilizationpercentDataGridViewTextBoxColumn.Name = "utilizationpercentDataGridViewTextBoxColumn";
+            this.utilizationpercentDataGridViewTextBoxColumn.Width = 132;
+            // 
+            // incomeDataGridViewTextBoxColumn
+            // 
+            this.incomeDataGridViewTextBoxColumn.DataPropertyName = "Income";
+            this.incomeDataGridViewTextBoxColumn.HeaderText = "Income";
+            this.incomeDataGridViewTextBoxColumn.Name = "incomeDataGridViewTextBoxColumn";
+            this.incomeDataGridViewTextBoxColumn.Width = 71;
+            // 
+            // servicesummaryBindingSource
+            // 
+            this.servicesummaryBindingSource.DataSource = typeof(Service_plan_form.Service_summary);
+            // 
+            // servicesummaryBindingSource1
+            // 
+            this.servicesummaryBindingSource1.DataSource = typeof(Service_plan_form.Service_summary);
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
-            this.ClientSize = new System.Drawing.Size(1685, 928);
+            this.ClientSize = new System.Drawing.Size(1685, 895);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.exitbutton);
@@ -490,6 +602,10 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -528,6 +644,16 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckedListBox checkedListBox_station;
         private System.Windows.Forms.Button calculate_console;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView Selected_service_dgv;
+        private System.Windows.Forms.BindingSource servicesummaryBindingSource;
+        private System.Windows.Forms.BindingSource stopStationBindingSource;
+        private System.Windows.Forms.BindingSource servicesummaryBindingSource1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn servicenameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn profitabilityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn utilizationpercentDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn incomeDataGridViewTextBoxColumn;
     }
 }
 

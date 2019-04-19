@@ -101,23 +101,21 @@ namespace Service_plan_form
                 counter++;
             }
        
-            var (a,b) = Service_algo.genService(services);
-            Console.WriteLine("_________ENDED___________"); 
-            foreach (var stopstaion in a)
+            var (selected_services,b) = Service_algo.genService(services);
+
+            BindingSource bs = new BindingSource();
+            bs.DataSource = typeof(Service_summary);
+            for (var index = 0; index < selected_services.Count; index++)
             {
-                Console.WriteLine(stopstaion.Service_name);
-                Console.WriteLine(stopstaion.utilization_percent);
-                Console.WriteLine(stopstaion.income);
-                for (var i = 0; i < stopstaion.departure_time.Length; i++)
-                {
-                    Console.WriteLine(stopstaion.departure_time[i]);
-                }
-
-                Console.WriteLine(Service_algo.PrettyPrintArrays(stopstaion.StopStation));
-                Service_algo.showarray(stopstaion.actual_serve_demand);
-
+                bs.Add(selected_services[index]);
             }
-            Console.WriteLine(a.Count);
+           // bs.DataSource = typeof(Airplane);  
+            
+
+            Selected_service_dgv.DataSource = bs;
+            Selected_service_dgv.AutoGenerateColumns = true;
+
+            Console.WriteLine("DGV DONE "+bs.Count);
         }
 
         int[] getStopStation(int datagridviewRow)

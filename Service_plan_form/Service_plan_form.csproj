@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Airplane.cs" />
     <Compile Include="Attributes\DataNamesAttribute.cs" />
     <Compile Include="Contracts\Person.cs" />
     <Compile Include="DataSets\DataSetGenerator.cs" />
@@ -118,6 +119,7 @@
       <DependentUpon>Service_editor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Service_summary.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

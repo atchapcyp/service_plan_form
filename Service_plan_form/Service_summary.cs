@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,20 +10,64 @@ namespace Service_plan_form
 {
     public class Service_summary : IEnumerable<int[]>
     {
-        public string Service_name;
-        public int[] StopStation { get; set; }
-        public DateTime[] departure_time;
-        public int[,] actual_serve_demand;
-        public float profitability;
-        public float utilization_percent;
-        public int income;
-
-        public Service_summary()
+        private static int lastID = 0;
+        public int ID
         {
-
+            get;
+            set;
+        }
+        public string Service_name
+        {
+            get;
+            set;
         }
 
+        public int[] StopStation
+        {
+            get;
+            set;
+        }
 
+        public DateTime[] Departure_time
+        {
+            get
+            {
+               return this.Departure_time;
+            }
+            set { }
+        }
+        public int[,] Actual_serve_demand
+        {
+            get;
+            set;
+        }
+        public float Profitability
+        {
+            get;
+            set;
+        }
+        public float Utilization_percent
+        {
+            get;
+            set;
+        }
+        public int Income
+        {
+            get;
+            set;
+        }
+
+        public Service_summary(String name, int[] Stopstation, DateTime[] departure, int[,] actual_dem, float profitability, float utilizationPercent, int income)
+        {
+            this.ID = ++lastID;
+            Service_name = name;
+            Departure_time = departure;
+            Actual_serve_demand = actual_dem;
+            this.Profitability = profitability;
+            Utilization_percent = utilizationPercent;
+            this.Income = income;
+           
+        }
 
         public IEnumerator<int[]> GetEnumerator()
         {
