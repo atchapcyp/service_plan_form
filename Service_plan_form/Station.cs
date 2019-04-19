@@ -8,6 +8,7 @@ namespace Service_plan_form
     {
         public static readonly int[] distance_meter = {0, 62000, 106000, 173000, 251000};
         public List<double[]> demand_station = new List<double[]>();
+        public List<double[]> served_demand = new List<double[]>();
         public int tf_size_min = -1;
         public List<DateTime> start_time = new List<DateTime>();
         public List<DateTime> stop_time = new List<DateTime>();
@@ -66,14 +67,13 @@ namespace Service_plan_form
             var offset = tf_amount * formStation;
             for (int i =offset+1; i < tf_amount+offset; i++)
             {
-                //Console.WriteLine("tf_amount " + tf_amount + " offset" + offset + " formstation " + formStation);
+                
                 demand_station.Add(dm[i].ToArray());
                 start_time.Add(dm[i].StartTime);
                 stop_time.Add(dm[i].EndTime);
-               // Console.WriteLine(demand_station.Count);
-                //Console.WriteLine("INSERT COMPLETE"+i);
-
             }
+
+            demand_station[0].Clone();
             var diff= dm[1].EndTime.Subtract(dm[1].StartTime);
             this.tf_size_min =(int)diff.TotalMinutes;
             formStation += 1;

@@ -27,6 +27,24 @@ namespace Service_plan_form
             
         }
 
+        public static string showarray_toStr(int[,] passeng_num)
+        {
+            //show 5x5 array
+            int rowLength = passeng_num.GetLength(0);
+            int colLength = passeng_num.GetLength(1);
+            string a="";
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                   a+= string.Format("{0}\t ", passeng_num[i, j]);
+                }
+
+                a += "\n";
+            }
+            return a;
+
+        }
         public static void Train_a_b_c_d_e(TF_Demand demands, Train_obj train, Service aService, int timeframe)
         {
             int[,] actual_getoff = new int[5, 5];
@@ -182,8 +200,6 @@ namespace Service_plan_form
             return true;
         }
 
-        
-
         static public void fixedValue_5x5(int[,] passeng_num, int num)
         {
 
@@ -252,6 +268,10 @@ namespace Service_plan_form
             float util_percent = 0;
             for (int i = 0; i < services.Count; i++)
             {
+                if (isDemandEmpty(outbound_demand[i]))
+                {
+                    continue;
+                }
                 Console.WriteLine("----- ROUND " + ++counter + " ----- ");
                 services[i].show();
                 showarray(outbound_demand[i]);
@@ -470,9 +490,9 @@ namespace Service_plan_form
                     }
 
                 }
-                Console.WriteLine("CALCULATE UTIL--- Traincap : " + train.cap);
-                Console.WriteLine("CALCULATE UTIL--- Remaincap : " + train.remain_cap);
-                Console.WriteLine("CALCULATE UTIL--- StationDistance : (METER) " + Station.getDistan_Meter(i, next_station_index));
+                //Console.WriteLine("CALCULATE UTIL--- Traincap : " + train.cap);
+                //Console.WriteLine("CALCULATE UTIL--- Remaincap : " + train.remain_cap);
+                //Console.WriteLine("CALCULATE UTIL--- StationDistance : (METER) " + Station.getDistan_Meter(i, next_station_index));
                 train_util += (train.cap - train.remain_cap) * Station.getDistan_Meter(i,next_station_index);
                 Console.WriteLine("Train_util : " + train_util);
 
@@ -487,7 +507,7 @@ namespace Service_plan_form
                 {
 
                     sum += actual_getoff[l, station];
-                    Console.WriteLine("in_sum get off At  station : " + station + " form station : " + l + " = " + actual_getoff[l, station]);
+                   // Console.WriteLine("in_sum get off At  station : " + station + " form station : " + l + " = " + actual_getoff[l, station]);
                 }
                 return sum;
             }
@@ -496,11 +516,13 @@ namespace Service_plan_form
         }
 
 
-        public static void genService(List<Service> _services)
+        public static (List<Service_summary>,float) genService(List<Service> _services)
         {
+            float sum_waiting_time=0;
             Train_obj train = new Train_obj(500);
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
+            List<Service_summary> summaries = new List<Service_summary>();
             stations.InsertRange(0, Form1.stations); // copy demand form 1 TF of each station
            
             int[] tf_memo = init_memo(stations,0); // index of start(depart)_time
@@ -512,29 +534,46 @@ namespace Service_plan_form
             showarray(carry_demand);
             var k = 0;
             float last_util_percent_memo=1;
-            while (isNotLastTimeFrame() || last_util_percent_memo>=PhysicalData.utilize_percent)
-            {
-                Console.WriteLine("-------------NEWLOOP------------ : " +k);
+            while (services[0].depart_time[0].TimeOfDay<=stations[0].start_time.Last().TimeOfDay || last_util_percent_memo>=PhysicalData.utilize_percent)
+            { //Console.WriteLine("CONDITION 1 : "+ (services[0].depart_time[0].TimeOfDay<=stations[0].start_time.Last().TimeOfDay).ToString() );
+            //    Console.WriteLine("CONDITION 2 : "+ (last_util_percent_memo>=PhysicalData.utilize_percent).ToString() );
+            //    Console.WriteLine(" " +services[0].depart_time[0].TimeOfDay);
+            //    Console.WriteLine("-------------NEWLOOP------------ : " +stations[0].start_time.Last().TimeOfDay);
+            //    Console.WriteLine(" " +last_util_percent_memo);
+               Console.WriteLine("-------------NEWLOOP------------ : " +k);
+            
+            
                 for (var i = 0; i < services.Count; i++)
                 {   
                     Console.WriteLine(services[i].depart_time[0].ToShortTimeString());
                     Console.WriteLine(services[i].depart_time[1].ToShortTimeString());
                     Console.WriteLine(services[i].depart_time[2].ToShortTimeString());
                     Console.WriteLine(services[i].depart_time[3].ToShortTimeString());
-                    Console.WriteLine(services[i].depart_time[4].ToShortTimeString() + "\n");
+                    Console.WriteLine(services[i].depart_time[4].ToShortTimeString());
                     demStation.Insert(i,
                         demand_of_this_service(services[i].depart_time, stations, carry_demand, tf_memo));
                 }
+                
 
                 for (var i = 0; i < services.Count; i++)
                 {
                     Console.WriteLine("SERVICE : " + services[i].ServiceId);
-                    showarray(demStation[i]);
+                    
+                    if (!isDemandEmpty(demStation[i]))
+                    {
+                        showarray(demStation[i]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("-------------THIS DEMAND EMPTY------------ : ");
+                    }
                 }
 
                 var (s, p) = new_index_of_most_utilize_service(demStation, train, services);
+
                 Console.WriteLine("S and P index : " + s + " _ " + p);
                 last_util_percent_memo = p; //set lastest utilize percent
+               
                 if (p >= PhysicalData.utilize_percent) //util handle
                 {
                     TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
@@ -542,18 +581,34 @@ namespace Service_plan_form
                     Console.WriteLine("__ REMAINNING \n");
                     showarray(outboundDemand.demand[0]);
                     Console.WriteLine("__ REMAINNING 22222222\n");
+                    Console.WriteLine(services[s].depart_time[0].ToShortTimeString());
                     update_memo(services[s].depart_time, stations, tf_memo); //set memo
-                    
+                    Console.WriteLine(services[s].depart_time[0].ToShortTimeString());
+               
                     Console.WriteLine("UPDATED_ MEMO "+PrettyPrintArrays(tf_memo));
                     Console.WriteLine("REMAIN CARRY DEMAND");
                     carry_demand = outboundDemand.demand[0]; //set carry demand
                     showarray(carry_demand);
                     Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
+
+                    var test_depart = services[s].depart_time.Clone() as DateTime[];
+                    int income = calIncome(served_demand);
+                    Service_summary _summary =new Service_summary(services[s].ServiceId,services[s].StopStation,test_depart,served_demand,100,p,income);
+
                     foreach (var _service in services)
                     {
                         _service.add_starttime(PhysicalData.headway);
                     }
                     k++;
+                    //set summary to return
+                    
+                    //_summary.Service_name = services[s].ServiceId;
+                    //_summary.StopStation = services[s].StopStation;
+                    //_summary.Utilization_percent = p;
+                    //_summary.Actual_serve_demand = served_demand;
+                    
+                    //_summary.Income = Income;
+                    summaries.Add(_summary);
                 }
                 else
                 {
@@ -563,26 +618,26 @@ namespace Service_plan_form
                     {
                         _service.add_starttime(PhysicalData.under_util_plus_min);
                     }
-
-                    k++;
                     continue;
                 }
-
-                
             }
-            Console.WriteLine("___ tf count = "+stations.First().tf_count);
+           
+            return (summaries,sum_waiting_time);
+        }
 
-            Boolean isNotLastTimeFrame()
+        public static int calIncome(int[,] demand)
+        {
+            int sum=0;
+            for (var i = 0; i < 5; i++)
             {
-                foreach (var value in tf_memo)
+                for (var j = 0; j < 5; j++)
                 {
-                    if (value != stations.First().tf_count-1)
-                    {
-                        return true;
-                    }
+                    sum += demand[i, j] * PhysicalData.ticket_price[i, j];
                 }
-                return false;
             }
+
+            return sum;
+
         }
 
         public static int[] init_memo(List<Station> stations,int index)
@@ -618,6 +673,7 @@ namespace Service_plan_form
                             count_memo++;
                         }
                     }
+                    
                 }
                 counter++;
             }
@@ -658,18 +714,18 @@ namespace Service_plan_form
                 }
 
                 int demand_at_station = 0;
-                Console.WriteLine("Remainning Seat : " + train.remain_cap);
+                //Console.WriteLine("Remainning Seat : " + train.remain_cap);
                 get_off_next_station = train.passenger[i];
-                Console.WriteLine("Number of getting off passenger at station " + i + " = " + get_off_next_station);
+               // Console.WriteLine("Number of getting off passenger at station " + i + " = " + get_off_next_station);
                 train.getOff(i);
-                Console.WriteLine("Remainning Seat after get off : " + train.remain_cap);
+               // Console.WriteLine("Remainning Seat after get off : " + train.remain_cap);
                 for (k = i + 1; k < 5; k++) // sum of demand at station i
                 {
                     if (aService.StopStation[k] == 0) { continue; }
                     demand_at_station += demands.demand[0][i, k];
-                    Console.WriteLine("Demand at station " + i + " to station " + k + " is " + demands.demand[0][i, k]);
+                  //  Console.WriteLine("Demand at station " + i + " to station " + k + " is " + demands.demand[0][i, k]);
                 }
-                Console.WriteLine("All of Demand at station " + i + " is " + demand_at_station);
+             //  Console.WriteLine("All of Demand at station " + i + " is " + demand_at_station);
                 if (demand_at_station < train.remain_cap)
                 {
                     for (j = i + 1; j < 5; j++)
@@ -693,21 +749,21 @@ namespace Service_plan_form
                         demand_at_station += fill_demand;
                     }
                     int remain_cap = train.remain_cap;
-                    Console.WriteLine("..............Debug demand at station  " + demand_at_station);
+                   // Console.WriteLine("..............Debug demand at station  " + demand_at_station);
                     remain_cap -= demand_at_station;
                     for (j = i + 1; j < 5; j++)
                     {
                         if (aService.StopStation[j] == 0) { continue; }
-                        Console.WriteLine("..............Debug train remainning seat  " + train.remain_cap);
-                        Console.WriteLine("..............Debug train remainning seat  " + remain_cap);
-                        Console.WriteLine("..............Debug Demand at station      " + demands.demand[0][i, j]);
-                        Console.WriteLine("..............Debug ratio      " + ratio);
+                        //Console.WriteLine("..............Debug train remainning seat  " + train.remain_cap);
+                        //Console.WriteLine("..............Debug train remainning seat  " + remain_cap);
+                        //Console.WriteLine("..............Debug Demand at station      " + demands.demand[0][i, j]);
+                        //Console.WriteLine("..............Debug ratio      " + ratio);
                         fill_demand = (int)(demands.demand[0][i, j] * ratio);
-                        Console.WriteLine("..............Debug fill_demand  " + fill_demand);
+                      //  Console.WriteLine("..............Debug fill_demand  " + fill_demand);
                         
                         if (remain_cap > 0 && demands.demand[0][i, j] > fill_demand)
                         {// ROUND UP IN CASE OF REMAINING a few demand
-                            Console.WriteLine("ROUND UP AT : " + i+"_"+j);
+                    //        Console.WriteLine("ROUND UP AT : " + i+"_"+j);
                             train.getOn(fill_demand + 1, j);
                             update_remain_demand(demands, timeframe, fill_demand + 1, i, j);
                             remain_cap -= 1;
@@ -722,7 +778,7 @@ namespace Service_plan_form
                         demand_at_station += fill_demand;
 
                     }
-                    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
+                //    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
                 }
                 
             }
@@ -831,8 +887,6 @@ namespace Service_plan_form
             return result;
         }
 
-        
-
         public static string PrettyPrintArrayOfArrays(int[][] arrayOfArrays)
         {
             if (arrayOfArrays == null)
@@ -872,10 +926,10 @@ namespace Service_plan_form
 
             for (int i = 0; i < arrayOfArrays.Length; i++)
             {
-                prettyArrays[i] = "[" + String.Join(",", arrayOfArrays[i]) + "]";
+                prettyArrays[i] = " [" + String.Join(",", arrayOfArrays[i]) + "]";
             }
 
-            return "[" + String.Join(",", prettyArrays) + "]";
+            return " " + String.Join(",", prettyArrays) + " ";
         }
     }
 }
