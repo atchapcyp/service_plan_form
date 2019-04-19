@@ -24,7 +24,9 @@ namespace Service_plan_form
         {
             InitializeComponent();
         }
-        List<Demand_blueprint> dm = new List<Demand_blueprint>();
+            
+        List<Service_summary>  selected_services = new List<Service_summary>();
+            List<Demand_blueprint> dm = new List<Demand_blueprint>();
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
         public static List<Station> stations = new List<Station>();
         DataSet result;
@@ -91,7 +93,6 @@ namespace Service_plan_form
             int counter = 0;
             foreach (DataGridViewRow row in dgvService.Rows)
             {
-                Console.WriteLine("row height" + dgvService.Rows.Count);
                 if (dgvService.Rows.Count-1==counter)
                 {
                     break;
@@ -100,8 +101,10 @@ namespace Service_plan_form
                 services.Add(temp_service);
                 counter++;
             }
-       
-            var (selected_services,b) = Service_algo.genService(services);
+
+            var b = 0;
+              selected_services.Clear();
+             (selected_services,_) = Service_algo.genService(services);
 
             BindingSource bs = new BindingSource();
             bs.DataSource = typeof(Service_summary);
@@ -111,7 +114,6 @@ namespace Service_plan_form
             }
            // bs.DataSource = typeof(Airplane);  
             
-
             Selected_service_dgv.DataSource = bs;
             Selected_service_dgv.AutoGenerateColumns = true;
 
@@ -427,6 +429,7 @@ namespace Service_plan_form
         private void exitbutton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+         
         }
 
        /* public DataTable readCSV(string filePath)
@@ -576,6 +579,22 @@ namespace Service_plan_form
         {
             this.getService_dgv();
 
+        }
+
+        private void reloadBtn_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void dgvService_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Console.WriteLine(e.RowIndex+"_"+e.ColumnIndex);
+        }
+
+        private void Selected_service_dgv_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Console.WriteLine(e.RowIndex+"_"+e.ColumnIndex);
+            Console.WriteLine();
         }
     }
 }
