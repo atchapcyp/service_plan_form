@@ -22,19 +22,12 @@ namespace Service_plan_form
             set;
         }
 
-        public int[] StopStation
-        {
-            get;
-            set;
-        }
+        public int[] StopStation { get; set; }
 
         public DateTime[] Departure_time
         {
-            get
-            {
-               return this.Departure_time;
-            }
-            set { }
+            get;
+            set;
         }
         public int[,] Actual_serve_demand
         {
@@ -57,16 +50,29 @@ namespace Service_plan_form
             set;
         }
 
+        public int indexOfFirstStation()
+        {
+            for (var i = 0; i < this.StopStation.Length; i++)
+            {
+                if (StopStation[i] == 1)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         public Service_summary(String name, int[] Stopstation, DateTime[] departure, int[,] actual_dem, float profitability, float utilizationPercent, int income)
         {
-            this.ID = ++lastID;
+            this.ID = ++lastID; 
             Service_name = name;
             Departure_time = departure;
             Actual_serve_demand = actual_dem;
             this.Profitability = profitability;
             Utilization_percent = utilizationPercent;
             this.Income = income;
-           
+            this.StopStation = Stopstation;
         }
 
         public IEnumerator<int[]> GetEnumerator()

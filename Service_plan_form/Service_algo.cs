@@ -27,6 +27,24 @@ namespace Service_plan_form
             
         }
 
+        public static string showarray_toStr(int[,] passeng_num)
+        {
+            //show 5x5 array
+            int rowLength = passeng_num.GetLength(0);
+            int colLength = passeng_num.GetLength(1);
+            string a="";
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                   a+= string.Format("{0}\t ", passeng_num[i, j]);
+                }
+
+                a += "\n";
+            }
+            return a;
+
+        }
         public static void Train_a_b_c_d_e(TF_Demand demands, Train_obj train, Service aService, int timeframe)
         {
             int[,] actual_getoff = new int[5, 5];
@@ -908,10 +926,10 @@ namespace Service_plan_form
 
             for (int i = 0; i < arrayOfArrays.Length; i++)
             {
-                prettyArrays[i] = "[" + String.Join(",", arrayOfArrays[i]) + "]";
+                prettyArrays[i] = " [" + String.Join(",", arrayOfArrays[i]) + "]";
             }
 
-            return "[" + String.Join(",", prettyArrays) + "]";
+            return " " + String.Join(",", prettyArrays) + " ";
         }
     }
 }

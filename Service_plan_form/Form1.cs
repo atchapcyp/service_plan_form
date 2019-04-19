@@ -593,8 +593,64 @@ namespace Service_plan_form
 
         private void Selected_service_dgv_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            
             Console.WriteLine(e.RowIndex+"_"+e.ColumnIndex);
-            Console.WriteLine();
+
+            if (e.RowIndex == -1 || e.ColumnIndex == -1)
+            {
+
+            }
+            else
+            {
+                Console.WriteLine(selected_services[e.RowIndex].Income);
+                service_name.Text = selected_services[e.RowIndex].Service_name;
+                service_name.Visible = true;
+                stop_station.Text = Service_algo.PrettyPrintArrays(selected_services[e.RowIndex].StopStation);
+                stop_station.Visible = true;
+                departure_time.Text = selected_services[e.RowIndex].Departure_time[selected_services[e.RowIndex].indexOfFirstStation()].ToShortTimeString();
+                departure_time.Visible = true;
+                served_demand.Text = Service_algo.showarray_toStr(selected_services[e.RowIndex].Actual_serve_demand);
+                served_demand.Visible = true;
+                income.Text = selected_services[e.RowIndex].Income.ToString();
+                income.Visible = true;
+                utilization_percent.Text = selected_services[e.RowIndex].Utilization_percent.ToString();
+                utilization_percent.Visible = true;
+                profit.Text = selected_services[e.RowIndex].Profitability.ToString();
+                profit.Visible = true;
+          
+                
+                panel_summary.Refresh();
+            }
+        }
+
+        private void Selected_service_dgv_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            Console.WriteLine(e.RowIndex+"_"+e.ColumnIndex);
+
+            if (e.RowIndex == -1 || e.ColumnIndex == -1)
+            {
+
+            }
+            else
+            {
+                Console.WriteLine(selected_services[e.RowIndex].Income);
+                service_name.Text = selected_services[e.RowIndex].Service_name;
+                service_name.Visible = true;
+                stop_station.Text = Service_algo.PrettyPrintArrays(selected_services[e.RowIndex].StopStation);
+                stop_station.Visible = true;
+                departure_time.Text = selected_services[e.RowIndex].Departure_time[selected_services[e.RowIndex].indexOfFirstStation()].ToShortTimeString();
+                departure_time.Visible = true;
+                served_demand.Text = Service_algo.showarray_toStr(selected_services[e.RowIndex].Actual_serve_demand);
+                served_demand.Visible = true;
+                income.Text = selected_services[e.RowIndex].Income.ToString();
+                income.Visible = true;
+                utilization_percent.Text = selected_services[e.RowIndex].Utilization_percent.ToString();
+                utilization_percent.Visible = true;
+                profit.Text = selected_services[e.RowIndex].Profitability.ToString();
+                profit.Visible = true;
+                panel_summary.Refresh();
+            }
         }
     }
 }
