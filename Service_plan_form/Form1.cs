@@ -33,8 +33,8 @@ namespace Service_plan_form
         static DataSet Test_result;
         public static DataTable dt = new DataTable();
         static string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-        string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
-       // string xlsx_path = @"demand_format\demand_waiting_time.xlsx";
+       // string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
+        string xlsx_path = @"demand_format\demand_waiting_time.xlsx";
         static string test_path = @"demand_format\TestData.xlsx";
 
         private void Form1_Load(object sender, EventArgs e)
@@ -130,7 +130,11 @@ namespace Service_plan_form
                 }
                 
             }
-
+            Console.WriteLine("STATION 1 WAITING TIME : "+stations[0].sum_waiting_time);
+            Console.WriteLine("STATION 2 WAITING TIME : "+stations[1].sum_waiting_time);
+            Console.WriteLine("STATION 3 WAITING TIME : "+stations[2].sum_waiting_time);
+            Console.WriteLine("STATION 4 WAITING TIME : "+stations[3].sum_waiting_time);
+            Console.WriteLine("STATION 5 WAITING TIME : "+stations[4].sum_waiting_time);
             Console.WriteLine("DGV DONE "+bs.Count);
         }
         public static double ConvertToDouble(string Value) {

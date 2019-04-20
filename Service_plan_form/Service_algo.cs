@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Service_plan_form.Demands;
+using DateTime = System.DateTime;
 
 namespace Service_plan_form
 {
@@ -519,7 +520,7 @@ namespace Service_plan_form
         public static (List<Service_summary>,float) genService(List<Service> _services)
         {
             float sum_waiting_time=0;
-            Train_obj train = new Train_obj(500);
+            Train_obj train = new Train_obj(PhysicalData.TrainSize);
             List<Station> stations = new List<Station>();
             List<int[,]> demStation = new List<int[,]>();
             List<Service_summary> summaries = new List<Service_summary>();
@@ -535,13 +536,16 @@ namespace Service_plan_form
             var k = 0;
             float last_util_percent_memo=1;
             while (services[0].depart_time[0].TimeOfDay<=stations[0].start_time.Last().TimeOfDay || last_util_percent_memo>=PhysicalData.utilize_percent)
-            { //Console.WriteLine("CONDITION 1 : "+ (services[0].depart_time[0].TimeOfDay<=stations[0].start_time.Last().TimeOfDay).ToString() );
-            //    Console.WriteLine("CONDITION 2 : "+ (last_util_percent_memo>=PhysicalData.utilize_percent).ToString() );
-            //    Console.WriteLine(" " +services[0].depart_time[0].TimeOfDay);
-            //    Console.WriteLine("-------------NEWLOOP------------ : " +stations[0].start_time.Last().TimeOfDay);
-            //    Console.WriteLine(" " +last_util_percent_memo);
-               Console.WriteLine("-------------NEWLOOP------------ : " +k);
-            
+            {
+                Console.WriteLine("CONDITION 1 : " + (services[0].depart_time[0].TimeOfDay <= stations[0].start_time.Last().TimeOfDay).ToString());
+                Console.WriteLine("CONDITION 2 : " + (last_util_percent_memo >= PhysicalData.utilize_percent).ToString());
+                Console.WriteLine(" " + services[0].depart_time[0].TimeOfDay);
+                Console.WriteLine("-------------NEWLOOP-----station-- : " + stations[0].start_time[0]);
+                Console.WriteLine("-------------NEWLOOP-----service-- : " + services[0].depart_time[0]);
+                //    Console.WriteLine(" " +last_util_percent_memo);
+                Console.WriteLine("-------------NEWLOOP------------ : " +k);
+
+                if (services[0].depart_time[0].Day != 1) break; // new day not allow
             
                 for (var i = 0; i < services.Count; i++)
                 {   
@@ -621,8 +625,40 @@ namespace Service_plan_form
                     continue;
                 }
             }
-           
+
+            update_remaining_demand(summaries, stations);
             return (summaries,sum_waiting_time);
+        }
+
+        public static void update_remaining_demand(List<Service_summary> results,List<Station> stations)
+        {
+            int station_index=0;
+            foreach (Station station in stations)
+            {   
+                foreach (Service_summary summary in results)
+                {
+                    for (var n = 0; n < station.start_time.Count; n++)
+                    {
+                        if (summary.Departure_time[station_index].Hour == station.start_time[n].Hour)
+                        {   var temp = summary.getDemandWithStation(station_index);
+                            Console.WriteLine("RESULT BEFORE"+PrettyPrintArrays(station.served_demand[n]));
+                            for (int i = 0; i < temp.Length; i++)
+                            {
+                                station.served_demand[n][i] += temp[i];
+                            }
+                            Console.WriteLine("UPDATE At "+station.station_name+" time "+station.start_time[n].Hour);
+                            Console.WriteLine("WITH VALUE " + temp[0]+"_"+temp[1]+"_"+temp[2]+"_"+temp[3]+"_"+ temp[4]);
+                            Console.WriteLine("RESULT AFTER"+PrettyPrintArrays(station.served_demand[n]));
+                            break;
+                        }
+                    }
+                }
+                station.calWaiting(station_index);
+                station_index++;
+                
+            }
+
+
         }
 
         public static int calIncome(int[,] demand)
@@ -905,7 +941,7 @@ namespace Service_plan_form
         public static string PrettyPrintArrays(double[] arrayOfArrays)
         {
             if (arrayOfArrays == null)
-                return "";
+                return "EMPTY";
 
             var prettyArrays = new string[arrayOfArrays.Length];
 

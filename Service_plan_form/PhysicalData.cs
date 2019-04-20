@@ -26,9 +26,10 @@ namespace Service_plan_form
         public static readonly float operation_cost_per_meter = 1.0f;
         public static readonly float service_speed = 100000; // meter per hour
         public static readonly int dwell_time=5; // miniute
-        public static readonly int headway = 15; //miniute
+        public static readonly int headway = 10; //miniute
         public static readonly int utilize_percent = 50;
-        public static readonly int under_util_plus_min = 10;
+        public static readonly int under_util_plus_min = 5;
+        public static readonly int TrainSize = 200;
 
     }
 }

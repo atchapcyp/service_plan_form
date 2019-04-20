@@ -100,6 +100,17 @@ namespace Service_plan_form
             return Math.Abs(PhysicalData.distance_meter[source_index]-PhysicalData.distance_meter[des_index]);
         }
 
+        public double[] getDemandWithStation(int station_index)
+        {
+            double[] result=new double[this.StopStation.Length];
+            for (int i = 0; i < Actual_serve_demand.GetLength(0); i++)
+            {
+                result.SetValue(Actual_serve_demand[station_index, i],i);
+                
+            }
+       return result;
+        }
+
         public IEnumerator<int[]> GetEnumerator()
         {
             yield return StopStation;
@@ -109,5 +120,6 @@ namespace Service_plan_form
         {
             return GetEnumerator();
         }
+
     }
 }
