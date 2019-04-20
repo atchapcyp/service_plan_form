@@ -593,7 +593,7 @@ namespace Service_plan_form
 
                     var test_depart = services[s].depart_time.Clone() as DateTime[];
                     int income = calIncome(served_demand);
-                    Service_summary _summary =new Service_summary(services[s].ServiceId,services[s].StopStation,test_depart,served_demand,100,p,income);
+                    Service_summary _summary =new Service_summary(services[s].ServiceId,services[s].StopStation,test_depart,served_demand,p,income);
 
                     foreach (var _service in services)
                     {

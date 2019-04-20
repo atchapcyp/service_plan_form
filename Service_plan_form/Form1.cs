@@ -93,7 +93,7 @@ namespace Service_plan_form
             int counter = 0;
             foreach (DataGridViewRow row in dgvService.Rows)
             {
-                if (dgvService.Rows.Count-1==counter)
+                if (dgvService.Rows.Count==counter)
                 {
                     break;
                 }
@@ -116,8 +116,36 @@ namespace Service_plan_form
             
             Selected_service_dgv.DataSource = bs;
             Selected_service_dgv.AutoGenerateColumns = true;
+            foreach (DataGridViewRow dgvr in Selected_service_dgv.Rows)//dgv is datagridview
+            {
+                var carry = ConvertToDouble(dgvr.Cells[2].Value.ToString());
+                
+                if (carry>0)
+                {
+                    dgvr.DefaultCellStyle.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    dgvr.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                }
+                
+            }
 
             Console.WriteLine("DGV DONE "+bs.Count);
+        }
+        public static double ConvertToDouble(string Value) {
+            if (Value == null) {
+                return 0;
+            }
+            else {
+                double OutVal;
+                double.TryParse(Value, out OutVal);
+
+                if (double.IsNaN(OutVal) || double.IsInfinity(OutVal)) {
+                    return 0;
+                }
+                return OutVal;
+            }
         }
 
         int[] getStopStation(int datagridviewRow)
@@ -338,10 +366,10 @@ namespace Service_plan_form
                                 _chart.Series[0].Points[i].Color =Color.Orange;
                             } 
 
-                            _chart.Titles.Add("From " + stations[_o].station_name + " to " + stations[_d].station_name);
+                            _chart.Titles.Add("Demand From " + stations[_o].station_name + " to " + stations[_d].station_name);
                             _chart.Titles[0].ForeColor = Color.White;
                             //   _chart.Titles[0].Text = planning_sch[_o].station_name + " -> " + planning_sch[_d].station_name;
-                            _chart.Titles[0].Alignment = ContentAlignment.TopLeft;
+                            _chart.Titles[0].Alignment = ContentAlignment.TopCenter;
                             _chart.Legends.Add("legend");
                             _chart.Legends[0].BackColor = SystemColors.WindowFrame;
                             _chart.Legends[0].ForeColor = Color.AliceBlue;
@@ -617,7 +645,8 @@ namespace Service_plan_form
                 utilization_percent.Visible = true;
                 profit.Text = selected_services[e.RowIndex].Profitability.ToString();
                 profit.Visible = true;
-          
+                operation_cost.Text=((double) (selected_services[e.RowIndex].operation_cost)).ToString();
+                operation_cost.Visible = true;
                 
                 panel_summary.Refresh();
             }
@@ -649,8 +678,17 @@ namespace Service_plan_form
                 utilization_percent.Visible = true;
                 profit.Text = selected_services[e.RowIndex].Profitability.ToString();
                 profit.Visible = true;
+                operation_cost.Text = ((double)(selected_services[e.RowIndex].operation_cost)).ToString();
+              
+                operation_cost.Visible = true;
                 panel_summary.Refresh();
             }
+        }
+
+        private void dgvService_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            add_service.Enabled = true;
+            calculate_console.Enabled = true;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Service_plan_form
     {
         public static readonly int[] distance_meter = {0, 62000, 106000, 173000, 251000};
         public List<double[]> demand_station = new List<double[]>();
-        public List<double[]> served_demand = new List<double[]>();
+        public List<double[]> remaining_demand = new List<double[]>();
         public int tf_size_min = -1;
         public List<DateTime> start_time = new List<DateTime>();
         public List<DateTime> stop_time = new List<DateTime>();
@@ -78,6 +78,7 @@ namespace Service_plan_form
             this.tf_size_min =(int)diff.TotalMinutes;
             formStation += 1;
             station_name = "Station" + formStation;
+            remaining_demand = demand_station;
         }
 
         public static int getDistan_Meter(int s,int d) {

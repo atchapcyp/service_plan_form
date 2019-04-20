@@ -23,7 +23,7 @@ namespace Service_plan_form
         };
 
         public static readonly int[] distance_meter = {0,62000,106000,173000,251000 };
-
+        public static readonly float operation_cost_per_meter = 1.0f;
         public static readonly float service_speed = 100000; // meter per hour
         public static readonly int dwell_time=5; // miniute
         public static readonly int headway = 15; //miniute
