@@ -29,7 +29,7 @@ namespace Service_plan_form
         public static readonly int headway = 10; //miniute
         public static readonly int utilize_percent = 50;
         public static readonly int under_util_plus_min = 5;
-        public static readonly int TrainSize = 200;
+        public static readonly int TrainSize = 500;
 
     }
 }

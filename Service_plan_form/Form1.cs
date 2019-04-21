@@ -14,6 +14,9 @@ using Service_plan_form.DataSets;
 using Service_plan_form.Mapping;
 using System.Windows.Forms.DataVisualization.Charting;
 using CsvHelper;
+using Excel = Microsoft.Office.Interop.Excel;
+using GemBox.Spreadsheet;
+using GemBox.Spreadsheet.WinFormsUtilities;
 
 namespace Service_plan_form
 {
@@ -22,19 +25,20 @@ namespace Service_plan_form
 
         public Form1()
         {
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             InitializeComponent();
         }
             
         List<Service_summary>  selected_services = new List<Service_summary>();
-            List<Demand_blueprint> dm = new List<Demand_blueprint>();
+        List<Demand_blueprint> dm = new List<Demand_blueprint>();
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
         public static List<Station> stations = new List<Station>();
         DataSet result;
         static DataSet Test_result;
         public static DataTable dt = new DataTable();
         static string project_path = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-       // string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
-        string xlsx_path = @"demand_format\demand_waiting_time.xlsx";
+        string xlsx_path = @"demand_format\demandTFtestXLSX_new.xlsx";
+      //  string xlsx_path = @"demand_format\demand_waiting_time.xlsx";
         static string test_path = @"demand_format\TestData.xlsx";
 
         private void Form1_Load(object sender, EventArgs e)
@@ -55,8 +59,7 @@ namespace Service_plan_form
                         checkedListBox_station.Items.Add(stations[i].station_name);
 
                     }
-                    Console.WriteLine(stations[2].station_name);
-                    Console.WriteLine(stations[2].demand_station[0][0]);
+                    
                     foreach (var demand in dm)
                     {
                         
@@ -126,8 +129,14 @@ namespace Service_plan_form
                 }
                 else
                 {
-                    dgvr.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                    dgvr.DefaultCellStyle.BackColor = Color.Firebrick;
+                    dgvr.DefaultCellStyle.ForeColor= Color.Beige;
                 }
+                
+            }
+
+            foreach (Station station in stations)
+            {
                 
             }
             Console.WriteLine("STATION 1 WAITING TIME : "+stations[0].sum_waiting_time);
@@ -478,6 +487,8 @@ namespace Service_plan_form
             return dt;
         }*/
 
+
+
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -488,8 +499,8 @@ namespace Service_plan_form
             openFileDialog1.ShowDialog();
             textfilepath.Text = openFileDialog1.FileName;
             BindDataCSV(textfilepath.Text);
-            
         }
+
         private void BindDataCSV(string filePath)
         {
             dgvService.DataSource = null;
@@ -503,9 +514,7 @@ namespace Service_plan_form
             {
                 string firstline = lines[0];
                 string[] headerLabels = firstline.Split(',');
-                if (checkedListBox_station.Items.Count != headerLabels.Length - 2
-                    
-                    )
+                if (checkedListBox_station.Items.Count != headerLabels.Length - 2 )
                 {
                     MessageBox.Show("Invalid Service format Please re-select service input\n Only "+(headerLabels.Length-2)+" Stations required");
                 }
@@ -544,6 +553,35 @@ namespace Service_plan_form
                 Console.WriteLine(ex);
             }
         }
+
+        private void copyAlltoClipboard()
+        {
+            //to remove the first blank column from datagridview
+            dgvService.RowHeadersVisible = false;
+            dgvService.SelectAll();
+            DataObject dataObj = dgvService.GetClipboardContent();
+            if (dataObj != null)
+                Clipboard.SetDataObject(dataObj);
+        }
+
+        private void save_service_Click(object sender, EventArgs e)
+        {   
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XLS files (*.xls)|*.xls|XLSX files (*.xlsx)|*.xlsx|CSV (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 3;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var workbook = new ExcelFile();
+                var worksheet = workbook.Worksheets.Add("Services");
+
+                // From DataGridView to ExcelFile.
+                DataGridViewConverter.ImportFromDataGridView(worksheet, this.dgvService, new ImportFromDataGridViewOptions() { ColumnHeaders = true });
+
+                workbook.Save(saveFileDialog.FileName);
+            }
+        }
+
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
@@ -693,6 +731,11 @@ namespace Service_plan_form
         {
             add_service.Enabled = true;
             calculate_console.Enabled = true;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            
         }
     }
 }
