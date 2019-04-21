@@ -29,12 +29,30 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TabPage Individual;
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TabPage Individual;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.panel_summary = new System.Windows.Forms.Panel();
+            this.operation_cost = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.profit = new System.Windows.Forms.Label();
+            this.utilization_percent = new System.Windows.Forms.Label();
+            this.income = new System.Windows.Forms.Label();
+            this.served_demand = new System.Windows.Forms.Label();
+            this.departure_time = new System.Windows.Forms.Label();
+            this.stop_station = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.service_name = new System.Windows.Forms.Label();
+            this.servicesummaryBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.output_panel = new System.Windows.Forms.Panel();
@@ -46,6 +64,7 @@
             this.from_demand_box = new MetroFramework.Controls.MetroComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.save_service = new System.Windows.Forms.Button();
             this.calculate_console = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.checkedListBox_station = new System.Windows.Forms.CheckedListBox();
@@ -64,76 +83,239 @@
             this.exitbutton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.serviceTab = new System.Windows.Forms.TabControl();
+            this.service_set = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
             this.summary_label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Selected_service_dgv = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.reloadBtn = new System.Windows.Forms.Button();
-            this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.serviceTab = new System.Windows.Forms.TabControl();
-            this.service_set = new System.Windows.Forms.TabPage();
-            this.panel_summary = new System.Windows.Forms.Panel();
-            this.operation_cost = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.profit = new System.Windows.Forms.Label();
-            this.utilization_percent = new System.Windows.Forms.Label();
-            this.income = new System.Windows.Forms.Label();
-            this.served_demand = new System.Windows.Forms.Label();
-            this.departure_time = new System.Windows.Forms.Label();
-            this.stop_station = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.service_name = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.save_service = new System.Windows.Forms.Button();
             this.servicenameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.profitabilityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.utilizationpercentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.incomeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servicesummaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.servicesummaryBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.label5 = new System.Windows.Forms.Label();
+            this.reloadBtn = new System.Windows.Forms.Button();
+            this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.servicesummaryBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             Individual = new System.Windows.Forms.TabPage();
+            Individual.SuspendLayout();
+            this.panel_summary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).BeginInit();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvService)).BeginInit();
             this.input_groupbox.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.serviceTab.SuspendLayout();
+            this.service_set.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).BeginInit();
-            this.serviceTab.SuspendLayout();
-            Individual.SuspendLayout();
-            this.service_set.SuspendLayout();
-            this.panel_summary.SuspendLayout();
-            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // Individual
+            // 
+            Individual.AllowDrop = true;
+            Individual.BackColor = System.Drawing.Color.PaleVioletRed;
+            Individual.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            Individual.Controls.Add(this.panel_summary);
+            Individual.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            Individual.Location = new System.Drawing.Point(4, 23);
+            Individual.Margin = new System.Windows.Forms.Padding(0);
+            Individual.Name = "Individual";
+            Individual.Size = new System.Drawing.Size(272, 443);
+            Individual.TabIndex = 0;
+            Individual.Text = "Individual";
+            // 
+            // panel_summary
+            // 
+            this.panel_summary.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel_summary.Controls.Add(this.operation_cost);
+            this.panel_summary.Controls.Add(this.label12);
+            this.panel_summary.Controls.Add(this.profit);
+            this.panel_summary.Controls.Add(this.utilization_percent);
+            this.panel_summary.Controls.Add(this.income);
+            this.panel_summary.Controls.Add(this.served_demand);
+            this.panel_summary.Controls.Add(this.departure_time);
+            this.panel_summary.Controls.Add(this.stop_station);
+            this.panel_summary.Controls.Add(this.label11);
+            this.panel_summary.Controls.Add(this.label10);
+            this.panel_summary.Controls.Add(this.label9);
+            this.panel_summary.Controls.Add(this.label8);
+            this.panel_summary.Controls.Add(this.label7);
+            this.panel_summary.Controls.Add(this.label6);
+            this.panel_summary.Controls.Add(this.label4);
+            this.panel_summary.Controls.Add(this.service_name);
+            this.panel_summary.DataBindings.Add(new System.Windows.Forms.Binding("BorderStyle", this.servicesummaryBindingSource2, "ID", true));
+            this.panel_summary.ForeColor = System.Drawing.SystemColors.Info;
+            this.panel_summary.Location = new System.Drawing.Point(6, 3);
+            this.panel_summary.Name = "panel_summary";
+            this.panel_summary.Size = new System.Drawing.Size(260, 432);
+            this.panel_summary.TabIndex = 3;
+            // 
+            // operation_cost
+            // 
+            this.operation_cost.AutoSize = true;
+            this.operation_cost.Location = new System.Drawing.Point(108, 197);
+            this.operation_cost.Name = "operation_cost";
+            this.operation_cost.Size = new System.Drawing.Size(91, 14);
+            this.operation_cost.TabIndex = 15;
+            this.operation_cost.Text = "Operation_Cost";
+            this.operation_cost.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(9, 197);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(93, 14);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "Operation Cost :";
+            // 
+            // profit
+            // 
+            this.profit.AutoSize = true;
+            this.profit.Location = new System.Drawing.Point(108, 221);
+            this.profit.Name = "profit";
+            this.profit.Size = new System.Drawing.Size(36, 14);
+            this.profit.TabIndex = 13;
+            this.profit.Text = "Profit";
+            this.profit.Visible = false;
+            // 
+            // utilization_percent
+            // 
+            this.utilization_percent.AutoSize = true;
+            this.utilization_percent.Location = new System.Drawing.Point(108, 159);
+            this.utilization_percent.Name = "utilization_percent";
+            this.utilization_percent.Size = new System.Drawing.Size(107, 14);
+            this.utilization_percent.TabIndex = 12;
+            this.utilization_percent.Text = "Utilization_Percent";
+            this.utilization_percent.Visible = false;
+            // 
+            // income
+            // 
+            this.income.AutoSize = true;
+            this.income.Location = new System.Drawing.Point(108, 179);
+            this.income.Name = "income";
+            this.income.Size = new System.Drawing.Size(46, 14);
+            this.income.TabIndex = 11;
+            this.income.Text = "Income";
+            this.income.Visible = false;
+            // 
+            // served_demand
+            // 
+            this.served_demand.AutoSize = true;
+            this.served_demand.Location = new System.Drawing.Point(108, 72);
+            this.served_demand.Name = "served_demand";
+            this.served_demand.Size = new System.Drawing.Size(94, 14);
+            this.served_demand.TabIndex = 10;
+            this.served_demand.Text = "Served_Demand";
+            this.served_demand.Visible = false;
+            // 
+            // departure_time
+            // 
+            this.departure_time.AutoSize = true;
+            this.departure_time.Location = new System.Drawing.Point(108, 48);
+            this.departure_time.Name = "departure_time";
+            this.departure_time.Size = new System.Drawing.Size(92, 14);
+            this.departure_time.TabIndex = 9;
+            this.departure_time.Text = "Departure_Time";
+            this.departure_time.Visible = false;
+            // 
+            // stop_station
+            // 
+            this.stop_station.AutoSize = true;
+            this.stop_station.Location = new System.Drawing.Point(108, 24);
+            this.stop_station.Name = "stop_station";
+            this.stop_station.Size = new System.Drawing.Size(77, 14);
+            this.stop_station.TabIndex = 8;
+            this.stop_station.Text = "Stop_Station";
+            this.stop_station.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(14, 4);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(88, 14);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "Service Name  :";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(61, 221);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(42, 14);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "Profit :";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(-2, 159);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(109, 14);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Utilization Percent :";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(50, 179);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(52, 14);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "Income :";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 72);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(96, 14);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Served Demand :";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 47);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(94, 14);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Departure Time :";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(27, 24);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 14);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "StopStation :";
+            // 
+            // service_name
+            // 
+            this.service_name.AutoSize = true;
+            this.service_name.Location = new System.Drawing.Point(108, 4);
+            this.service_name.Name = "service_name";
+            this.service_name.Size = new System.Drawing.Size(83, 14);
+            this.service_name.TabIndex = 0;
+            this.service_name.Text = "Service_Name";
+            this.service_name.Visible = false;
+            // 
+            // servicesummaryBindingSource2
+            // 
+            this.servicesummaryBindingSource2.DataSource = typeof(Service_plan_form.Service_summary);
             // 
             // button1
             // 
@@ -278,6 +460,18 @@
             this.panel3.Size = new System.Drawing.Size(1284, 340);
             this.panel3.TabIndex = 3;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            // 
+            // save_service
+            // 
+            this.save_service.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.save_service.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.save_service.Location = new System.Drawing.Point(0, 305);
+            this.save_service.Name = "save_service";
+            this.save_service.Size = new System.Drawing.Size(99, 30);
+            this.save_service.TabIndex = 13;
+            this.save_service.Text = "Save services";
+            this.save_service.UseVisualStyleBackColor = true;
+            this.save_service.Click += new System.EventHandler(this.save_service_Click);
             // 
             // calculate_console
             // 
@@ -494,6 +688,49 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Summary";
             // 
+            // serviceTab
+            // 
+            this.serviceTab.Controls.Add(Individual);
+            this.serviceTab.Controls.Add(this.service_set);
+            this.serviceTab.Location = new System.Drawing.Point(6, 63);
+            this.serviceTab.Multiline = true;
+            this.serviceTab.Name = "serviceTab";
+            this.serviceTab.SelectedIndex = 0;
+            this.serviceTab.Size = new System.Drawing.Size(280, 470);
+            this.serviceTab.TabIndex = 13;
+            // 
+            // service_set
+            // 
+            this.service_set.BackColor = System.Drawing.Color.LightPink;
+            this.service_set.Controls.Add(this.panel4);
+            this.service_set.Location = new System.Drawing.Point(4, 23);
+            this.service_set.Name = "service_set";
+            this.service_set.Padding = new System.Windows.Forms.Padding(3);
+            this.service_set.Size = new System.Drawing.Size(272, 443);
+            this.service_set.TabIndex = 1;
+            this.service_set.Text = "Set";
+            // 
+            // panel4
+            // 
+            this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel4.Controls.Add(this.richTextBox1);
+            this.panel4.Controls.Add(this.label21);
+            this.panel4.DataBindings.Add(new System.Windows.Forms.Binding("BorderStyle", this.servicesummaryBindingSource2, "ID", true));
+            this.panel4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panel4.Location = new System.Drawing.Point(6, 1);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(260, 395);
+            this.panel4.TabIndex = 4;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(14, 4);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(13, 14);
+            this.label21.TabIndex = 7;
+            this.label21.Text = "  ";
+            // 
             // summary_label
             // 
             this.summary_label.AutoSize = true;
@@ -519,6 +756,7 @@
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Show Selected Service";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // Selected_service_dgv
             // 
@@ -564,439 +802,6 @@
             this.ID.ReadOnly = true;
             this.ID.Width = 43;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.label5.Font = new System.Drawing.Font("Varela Round", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Cornsilk;
-            this.label5.Location = new System.Drawing.Point(6, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(267, 42);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Selected Service";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // reloadBtn
-            // 
-            this.reloadBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(199)))), ((int)(((byte)(72)))));
-            this.reloadBtn.Image = global::Service_plan_form.Properties.Resources.refresh_page_option__1_;
-            this.reloadBtn.Location = new System.Drawing.Point(1559, 2);
-            this.reloadBtn.Name = "reloadBtn";
-            this.reloadBtn.Size = new System.Drawing.Size(42, 28);
-            this.reloadBtn.TabIndex = 11;
-            this.reloadBtn.UseVisualStyleBackColor = false;
-            this.reloadBtn.Click += new System.EventHandler(this.reloadBtn_Click);
-            // 
-            // stopStationBindingSource
-            // 
-            this.stopStationBindingSource.DataMember = "StopStation";
-            this.stopStationBindingSource.DataSource = this.servicesummaryBindingSource;
-            // 
-            // serviceTab
-            // 
-            this.serviceTab.Controls.Add(Individual);
-            this.serviceTab.Controls.Add(this.service_set);
-            this.serviceTab.Location = new System.Drawing.Point(6, 63);
-            this.serviceTab.Multiline = true;
-            this.serviceTab.Name = "serviceTab";
-            this.serviceTab.SelectedIndex = 0;
-            this.serviceTab.Size = new System.Drawing.Size(280, 470);
-            this.serviceTab.TabIndex = 13;
-            // 
-            // Individual
-            // 
-            Individual.AllowDrop = true;
-            Individual.BackColor = System.Drawing.Color.PaleVioletRed;
-            Individual.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            Individual.Controls.Add(this.panel_summary);
-            Individual.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            Individual.Location = new System.Drawing.Point(4, 23);
-            Individual.Margin = new System.Windows.Forms.Padding(0);
-            Individual.Name = "Individual";
-            Individual.Size = new System.Drawing.Size(272, 443);
-            Individual.TabIndex = 0;
-            Individual.Text = "Individual";
-            // 
-            // service_set
-            // 
-            this.service_set.BackColor = System.Drawing.Color.LightPink;
-            this.service_set.Controls.Add(this.panel4);
-            this.service_set.Location = new System.Drawing.Point(4, 23);
-            this.service_set.Name = "service_set";
-            this.service_set.Padding = new System.Windows.Forms.Padding(3);
-            this.service_set.Size = new System.Drawing.Size(272, 443);
-            this.service_set.TabIndex = 1;
-            this.service_set.Text = "Set";
-            // 
-            // panel_summary
-            // 
-            this.panel_summary.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel_summary.Controls.Add(this.operation_cost);
-            this.panel_summary.Controls.Add(this.label12);
-            this.panel_summary.Controls.Add(this.profit);
-            this.panel_summary.Controls.Add(this.utilization_percent);
-            this.panel_summary.Controls.Add(this.income);
-            this.panel_summary.Controls.Add(this.served_demand);
-            this.panel_summary.Controls.Add(this.departure_time);
-            this.panel_summary.Controls.Add(this.stop_station);
-            this.panel_summary.Controls.Add(this.label11);
-            this.panel_summary.Controls.Add(this.label10);
-            this.panel_summary.Controls.Add(this.label9);
-            this.panel_summary.Controls.Add(this.label8);
-            this.panel_summary.Controls.Add(this.label7);
-            this.panel_summary.Controls.Add(this.label6);
-            this.panel_summary.Controls.Add(this.label4);
-            this.panel_summary.Controls.Add(this.service_name);
-            this.panel_summary.DataBindings.Add(new System.Windows.Forms.Binding("BorderStyle", this.servicesummaryBindingSource2, "ID", true));
-            this.panel_summary.ForeColor = System.Drawing.SystemColors.Info;
-            this.panel_summary.Location = new System.Drawing.Point(6, 3);
-            this.panel_summary.Name = "panel_summary";
-            this.panel_summary.Size = new System.Drawing.Size(260, 432);
-            this.panel_summary.TabIndex = 3;
-            // 
-            // operation_cost
-            // 
-            this.operation_cost.AutoSize = true;
-            this.operation_cost.Location = new System.Drawing.Point(108, 197);
-            this.operation_cost.Name = "operation_cost";
-            this.operation_cost.Size = new System.Drawing.Size(91, 14);
-            this.operation_cost.TabIndex = 15;
-            this.operation_cost.Text = "Operation_Cost";
-            this.operation_cost.Visible = false;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(9, 197);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(93, 14);
-            this.label12.TabIndex = 14;
-            this.label12.Text = "Operation Cost :";
-            // 
-            // profit
-            // 
-            this.profit.AutoSize = true;
-            this.profit.Location = new System.Drawing.Point(108, 221);
-            this.profit.Name = "profit";
-            this.profit.Size = new System.Drawing.Size(36, 14);
-            this.profit.TabIndex = 13;
-            this.profit.Text = "Profit";
-            this.profit.Visible = false;
-            // 
-            // utilization_percent
-            // 
-            this.utilization_percent.AutoSize = true;
-            this.utilization_percent.Location = new System.Drawing.Point(108, 159);
-            this.utilization_percent.Name = "utilization_percent";
-            this.utilization_percent.Size = new System.Drawing.Size(107, 14);
-            this.utilization_percent.TabIndex = 12;
-            this.utilization_percent.Text = "Utilization_Percent";
-            this.utilization_percent.Visible = false;
-            // 
-            // income
-            // 
-            this.income.AutoSize = true;
-            this.income.Location = new System.Drawing.Point(108, 179);
-            this.income.Name = "income";
-            this.income.Size = new System.Drawing.Size(46, 14);
-            this.income.TabIndex = 11;
-            this.income.Text = "Income";
-            this.income.Visible = false;
-            // 
-            // served_demand
-            // 
-            this.served_demand.AutoSize = true;
-            this.served_demand.Location = new System.Drawing.Point(108, 72);
-            this.served_demand.Name = "served_demand";
-            this.served_demand.Size = new System.Drawing.Size(94, 14);
-            this.served_demand.TabIndex = 10;
-            this.served_demand.Text = "Served_Demand";
-            this.served_demand.Visible = false;
-            // 
-            // departure_time
-            // 
-            this.departure_time.AutoSize = true;
-            this.departure_time.Location = new System.Drawing.Point(108, 48);
-            this.departure_time.Name = "departure_time";
-            this.departure_time.Size = new System.Drawing.Size(92, 14);
-            this.departure_time.TabIndex = 9;
-            this.departure_time.Text = "Departure_Time";
-            this.departure_time.Visible = false;
-            // 
-            // stop_station
-            // 
-            this.stop_station.AutoSize = true;
-            this.stop_station.Location = new System.Drawing.Point(108, 24);
-            this.stop_station.Name = "stop_station";
-            this.stop_station.Size = new System.Drawing.Size(77, 14);
-            this.stop_station.TabIndex = 8;
-            this.stop_station.Text = "Stop_Station";
-            this.stop_station.Visible = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 4);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(88, 14);
-            this.label11.TabIndex = 7;
-            this.label11.Text = "Service Name  :";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(61, 221);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(42, 14);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "Profit :";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(-2, 159);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(109, 14);
-            this.label9.TabIndex = 5;
-            this.label9.Text = "Utilization Percent :";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(50, 179);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(52, 14);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "Income :";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 72);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(96, 14);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Served Demand :";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 47);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 14);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Departure Time :";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 24);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 14);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "StopStation :";
-            // 
-            // service_name
-            // 
-            this.service_name.AutoSize = true;
-            this.service_name.Location = new System.Drawing.Point(108, 4);
-            this.service_name.Name = "service_name";
-            this.service_name.Size = new System.Drawing.Size(83, 14);
-            this.service_name.TabIndex = 0;
-            this.service_name.Text = "Service_Name";
-            this.service_name.Visible = false;
-            // 
-            // panel4
-            // 
-            this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel4.Controls.Add(this.label13);
-            this.panel4.Controls.Add(this.label14);
-            this.panel4.Controls.Add(this.label15);
-            this.panel4.Controls.Add(this.label16);
-            this.panel4.Controls.Add(this.label17);
-            this.panel4.Controls.Add(this.label18);
-            this.panel4.Controls.Add(this.label19);
-            this.panel4.Controls.Add(this.label20);
-            this.panel4.Controls.Add(this.label21);
-            this.panel4.Controls.Add(this.label22);
-            this.panel4.Controls.Add(this.label23);
-            this.panel4.Controls.Add(this.label24);
-            this.panel4.Controls.Add(this.label25);
-            this.panel4.Controls.Add(this.label26);
-            this.panel4.Controls.Add(this.label27);
-            this.panel4.Controls.Add(this.label28);
-            this.panel4.DataBindings.Add(new System.Windows.Forms.Binding("BorderStyle", this.servicesummaryBindingSource2, "ID", true));
-            this.panel4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel4.Location = new System.Drawing.Point(6, 1);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(260, 395);
-            this.panel4.TabIndex = 4;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(108, 197);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(91, 14);
-            this.label13.TabIndex = 15;
-            this.label13.Text = "Operation_Cost";
-            this.label13.Visible = false;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(9, 197);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(93, 14);
-            this.label14.TabIndex = 14;
-            this.label14.Text = "Operation Cost :";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(108, 221);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(36, 14);
-            this.label15.TabIndex = 13;
-            this.label15.Text = "Profit";
-            this.label15.Visible = false;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(108, 159);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(107, 14);
-            this.label16.TabIndex = 12;
-            this.label16.Text = "Utilization_Percent";
-            this.label16.Visible = false;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(108, 179);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(46, 14);
-            this.label17.TabIndex = 11;
-            this.label17.Text = "Income";
-            this.label17.Visible = false;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(108, 72);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(94, 14);
-            this.label18.TabIndex = 10;
-            this.label18.Text = "Served_Demand";
-            this.label18.Visible = false;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(108, 48);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(92, 14);
-            this.label19.TabIndex = 9;
-            this.label19.Text = "Departure_Time";
-            this.label19.Visible = false;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(108, 24);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(77, 14);
-            this.label20.TabIndex = 8;
-            this.label20.Text = "Stop_Station";
-            this.label20.Visible = false;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(14, 4);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(13, 14);
-            this.label21.TabIndex = 7;
-            this.label21.Text = "  ";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(61, 221);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(42, 14);
-            this.label22.TabIndex = 6;
-            this.label22.Text = "Profit :";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(-2, 159);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(109, 14);
-            this.label23.TabIndex = 5;
-            this.label23.Text = "Utilization Percent :";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(50, 179);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(52, 14);
-            this.label24.TabIndex = 4;
-            this.label24.Text = "Income :";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(7, 72);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(96, 14);
-            this.label25.TabIndex = 3;
-            this.label25.Text = "Served Demand :";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(10, 47);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(94, 14);
-            this.label26.TabIndex = 2;
-            this.label26.Text = "Departure Time :";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(27, 24);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(76, 14);
-            this.label27.TabIndex = 1;
-            this.label27.Text = "StopStation :";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(108, 4);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(83, 14);
-            this.label28.TabIndex = 0;
-            this.label28.Text = "Service_Name";
-            this.label28.Visible = false;
-            // 
-            // save_service
-            // 
-            this.save_service.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.save_service.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.save_service.Location = new System.Drawing.Point(0, 305);
-            this.save_service.Name = "save_service";
-            this.save_service.Size = new System.Drawing.Size(99, 30);
-            this.save_service.TabIndex = 13;
-            this.save_service.Text = "Save services";
-            this.save_service.UseVisualStyleBackColor = true;
-            this.save_service.Click += new System.EventHandler(this.save_service_Click);
-            // 
             // servicenameDataGridViewTextBoxColumn
             // 
             this.servicenameDataGridViewTextBoxColumn.DataPropertyName = "Service_name";
@@ -1029,13 +834,47 @@
             // 
             this.servicesummaryBindingSource.DataSource = typeof(Service_plan_form.Service_summary);
             // 
-            // servicesummaryBindingSource2
+            // label5
             // 
-            this.servicesummaryBindingSource2.DataSource = typeof(Service_plan_form.Service_summary);
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.label5.Font = new System.Drawing.Font("Varela Round", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Cornsilk;
+            this.label5.Location = new System.Drawing.Point(6, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(267, 42);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Selected Service";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // reloadBtn
+            // 
+            this.reloadBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(199)))), ((int)(((byte)(72)))));
+            this.reloadBtn.Image = global::Service_plan_form.Properties.Resources.refresh_page_option__1_;
+            this.reloadBtn.Location = new System.Drawing.Point(1559, 2);
+            this.reloadBtn.Name = "reloadBtn";
+            this.reloadBtn.Size = new System.Drawing.Size(42, 28);
+            this.reloadBtn.TabIndex = 11;
+            this.reloadBtn.UseVisualStyleBackColor = false;
+            this.reloadBtn.Click += new System.EventHandler(this.reloadBtn_Click);
+            // 
+            // stopStationBindingSource
+            // 
+            this.stopStationBindingSource.DataMember = "StopStation";
+            this.stopStationBindingSource.DataSource = this.servicesummaryBindingSource;
             // 
             // servicesummaryBindingSource1
             // 
             this.servicesummaryBindingSource1.DataSource = typeof(Service_plan_form.Service_summary);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.Color.RosyBrown;
+            this.richTextBox1.Location = new System.Drawing.Point(8, 21);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(248, 361);
+            this.richTextBox1.TabIndex = 16;
+            this.richTextBox1.Text = "";
             // 
             // Form1
             // 
@@ -1057,6 +896,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            Individual.ResumeLayout(false);
+            this.panel_summary.ResumeLayout(false);
+            this.panel_summary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).EndInit();
             this.output_panel.ResumeLayout(false);
             this.output_panel.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -1067,19 +910,15 @@
             this.input_groupbox.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.serviceTab.ResumeLayout(false);
+            this.service_set.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).EndInit();
-            this.serviceTab.ResumeLayout(false);
-            Individual.ResumeLayout(false);
-            this.service_set.ResumeLayout(false);
-            this.panel_summary.ResumeLayout(false);
-            this.panel_summary.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
@@ -1150,23 +989,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label service_name;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button save_service;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 

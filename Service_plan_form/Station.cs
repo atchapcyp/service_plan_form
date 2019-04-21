@@ -18,6 +18,7 @@ namespace Service_plan_form
         public string station_name;
         public int tf_count;
         public double sum_waiting_time;
+        public double sum_passenger;
        
 
         // input remaining demand , Used service station index in that List
@@ -107,6 +108,7 @@ namespace Service_plan_form
             }
 
             this.sum_waiting_time = wait_to_next_tf.Sum(); // hours
+            this.sum_passenger = servedArr.Sum();
         }
 
         public double[] sumDemArray(int station_index)

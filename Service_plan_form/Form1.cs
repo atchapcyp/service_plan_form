@@ -66,7 +66,7 @@ namespace Service_plan_form
                       Console.WriteLine("START : " + demand.StartTime + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
                     }
 
-                    // The result of each spreadsheet is in result.Tables
+               
                 } 
             }
             
@@ -135,15 +135,19 @@ namespace Service_plan_form
                 
             }
 
+
+            
             foreach (Station station in stations)
             {
-                
+                var average = 0.0;
+                if (station.sum_passenger != 0)
+                {
+                     average = Math.Round((station.sum_waiting_time / station.sum_passenger * 60), 2);
+                }
+         
+                richTextBox1.Text += station.station_name + " waiting time is : " + station.sum_waiting_time +" hours \nAverage : "+average+" miniutes\n\n";
             }
-            Console.WriteLine("STATION 1 WAITING TIME : "+stations[0].sum_waiting_time);
-            Console.WriteLine("STATION 2 WAITING TIME : "+stations[1].sum_waiting_time);
-            Console.WriteLine("STATION 3 WAITING TIME : "+stations[2].sum_waiting_time);
-            Console.WriteLine("STATION 4 WAITING TIME : "+stations[3].sum_waiting_time);
-            Console.WriteLine("STATION 5 WAITING TIME : "+stations[4].sum_waiting_time);
+
             Console.WriteLine("DGV DONE "+bs.Count);
         }
         public static double ConvertToDouble(string Value) {
@@ -431,10 +435,14 @@ namespace Service_plan_form
                                 _chart.Series.Add("Served Demand");
                         _chart.Series[1].ChartType = SeriesChartType.Column;
                                 for (int i = 0; i < stations.Count; i++)
-                                { 
+                                {
+                                    if (stations[_o].station_name == stations[i].station_name)
+                                    {
+                                        continue;
+                                    }
                                     _chart.Series[0].Points.AddXY(stations[i].station_name, stations[_o].demand_station[timeframe][i]);
                                     _chart.Series[0].IsValueShownAsLabel = true;
-                                    _chart.Series[1].Points.AddXY(stations[i].station_name, stations[_o].demand_station[timeframe][i]/10);
+                                    _chart.Series[1].Points.AddXY(stations[i].station_name, stations[_o].served_demand[timeframe][i]);
                                     _chart.Series[1].IsValueShownAsLabel = true;
                         }
                               
@@ -499,6 +507,7 @@ namespace Service_plan_form
             openFileDialog1.ShowDialog();
             textfilepath.Text = openFileDialog1.FileName;
             BindDataCSV(textfilepath.Text);
+
         }
 
         private void BindDataCSV(string filePath)
@@ -552,16 +561,6 @@ namespace Service_plan_form
             {
                 Console.WriteLine(ex);
             }
-        }
-
-        private void copyAlltoClipboard()
-        {
-            //to remove the first blank column from datagridview
-            dgvService.RowHeadersVisible = false;
-            dgvService.SelectAll();
-            DataObject dataObj = dgvService.GetClipboardContent();
-            if (dataObj != null)
-                Clipboard.SetDataObject(dataObj);
         }
 
         private void save_service_Click(object sender, EventArgs e)
@@ -736,6 +735,11 @@ namespace Service_plan_form
         private void button2_Click_1(object sender, EventArgs e)
         {
             
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
