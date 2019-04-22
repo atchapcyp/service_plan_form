@@ -125,7 +125,7 @@ namespace Service_plan_form
                 
                 if (carry>0)
                 {
-                    dgvr.DefaultCellStyle.BackColor = Color.LightGreen;
+                    dgvr.DefaultCellStyle.BackColor = Color.FromArgb(222, 251, 184);
                 }
                 else
                 {
@@ -134,7 +134,6 @@ namespace Service_plan_form
                 }
                 
             }
-
 
             
             foreach (Station station in stations)
@@ -299,18 +298,18 @@ namespace Service_plan_form
                             _chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
                             _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
 
-                            _chart.Series.Add("demand");
+                            _chart.Series.Add("Demand");
                             _chart.Series[0].ChartType = SeriesChartType.SplineArea;
-                            _chart.Series.Add("Serve Demand");
+                            _chart.Series.Add("Over-Demand Service");
                             _chart.Series[1].ChartType = SeriesChartType.SplineArea;
+                            _chart.Series.Add("Served Demand");
                             for (int i = 0; i < stations[_o].tf_count - 1; i++)
                             {
                                 _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
-                                _chart.Series[1].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]/2);
+                                _chart.Series[1].Points.AddXY(stations[_o].start_time[i], stations[_o].served_demand[i][_d]);
                             }
 
-                            //_chart.Series.Add("supply");
-                            //_chart.Series[1].ChartType = SeriesChartType.BoxPlot;
+                          
                             // _chart.Series[1].IsValueShownAsLabel = true;
                             // _chart.Series[1].LabelForeColor = Color.Orange;
 
@@ -335,69 +334,72 @@ namespace Service_plan_form
                             _chart.Legends[0].BackColor = SystemColors.WindowFrame;
                             _chart.Legends[0].ForeColor = Color.White;
                             _chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+                            _chart.Series[1].Color = Color.FromArgb(120,74, 136, 255);
+                            _chart.Series[0].Color = Color.FromArgb(200,255, 103, 103  );
+                            _chart.Series[2].Color = Color.FromArgb(153, 119, 175);
 
                             chart_cnt++;
                         }
                     }
                 }
             }
-            if (barChart.Checked)
-            {
-                // plot bar chart
-                foreach (int _o in _origin)
-                {
-                    foreach (int _d in _destination)
-                    {
+            //if (barChart.Checked)
+            //{
+            //    // plot bar chart
+            //    foreach (int _o in _origin)
+            //    {
+            //        foreach (int _d in _destination)
+            //        {
 
-                        if (_o != _d)
-                        {
-                            Chart _chart = new Chart();
+            //            if (_o != _d)
+            //            {
+            //                Chart _chart = new Chart();
 
-                            output_panel_graph.Controls.Add(_chart);
-                            _chart.Location = new Point(3, 10 + 160 * chart_cnt);
-                            _chart.Size = new Size(_x_size, 150);
-                            _chart.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-                            _chart.BackColor = SystemColors.WindowFrame;
+            //                output_panel_graph.Controls.Add(_chart);
+            //                _chart.Location = new Point(3, 10 + 160 * chart_cnt);
+            //                _chart.Size = new Size(_x_size, 150);
+            //                _chart.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+            //                _chart.BackColor = SystemColors.WindowFrame;
                             
-                            _chart.ChartAreas.Add("area");
-                            _chart.ChartAreas[0].BackColor = Color.DimGray;
-                            _chart.ChartAreas[0].AxisX.LineColor = Color.White;
-                            _chart.ChartAreas[0].AxisX.LabelStyle.Format = "HH:00";
-                            _chart.ChartAreas[0].AxisX.MajorGrid.LineColor = SystemColors.ControlDark;
-                            _chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.White;
-                            _chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
-                            _chart.ChartAreas[0].AxisX.Interval = 1;
-                            _chart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-                            _chart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                            _chart.ChartAreas[0].AxisY.LineColor = Color.White;
-                            _chart.ChartAreas[0].AxisY.MajorGrid.LineColor = SystemColors.ControlDark;
-                            _chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
-                            _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+            //                _chart.ChartAreas.Add("area");
+            //                _chart.ChartAreas[0].BackColor = Color.DimGray;
+            //                _chart.ChartAreas[0].AxisX.LineColor = Color.White;
+            //                _chart.ChartAreas[0].AxisX.LabelStyle.Format = "HH:00";
+            //                _chart.ChartAreas[0].AxisX.MajorGrid.LineColor = SystemColors.ControlDark;
+            //                _chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.White;
+            //                _chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
+            //                _chart.ChartAreas[0].AxisX.Interval = 1;
+            //                _chart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+            //                _chart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+            //                _chart.ChartAreas[0].AxisY.LineColor = Color.White;
+            //                _chart.ChartAreas[0].AxisY.MajorGrid.LineColor = SystemColors.ControlDark;
+            //                _chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
+            //                _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
 
-                            _chart.Series.Add("demand");
-                            _chart.Series[0].ChartType = SeriesChartType.Column;
+            //                _chart.Series.Add("demand");
+            //                _chart.Series[0].ChartType = SeriesChartType.Column;
 
-                            for (int i = 0; i < stations[_o].tf_count - 1; i++)
-                            {
-                                _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
-                                _chart.Series[0].Points[i].Color =Color.Orange;
-                            } 
+            //                for (int i = 0; i < stations[_o].tf_count - 1; i++)
+            //                {
+            //                    _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
+            //                    _chart.Series[0].Points[i].Color =Color.Orange;
+            //                } 
 
-                            _chart.Titles.Add("Demand From " + stations[_o].station_name + " to " + stations[_d].station_name);
-                            _chart.Titles[0].ForeColor = Color.White;
-                            //   _chart.Titles[0].Text = planning_sch[_o].station_name + " -> " + planning_sch[_d].station_name;
-                            _chart.Titles[0].Alignment = ContentAlignment.TopCenter;
-                            _chart.Legends.Add("legend");
-                            _chart.Legends[0].BackColor = SystemColors.WindowFrame;
-                            _chart.Legends[0].ForeColor = Color.AliceBlue;
-                            _chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            //                _chart.Titles.Add("Demand From " + stations[_o].station_name + " to " + stations[_d].station_name);
+            //                _chart.Titles[0].ForeColor = Color.White;
+            //                //   _chart.Titles[0].Text = planning_sch[_o].station_name + " -> " + planning_sch[_d].station_name;
+            //                _chart.Titles[0].Alignment = ContentAlignment.TopCenter;
+            //                _chart.Legends.Add("legend");
+            //                _chart.Legends[0].BackColor = SystemColors.WindowFrame;
+            //                _chart.Legends[0].ForeColor = Color.AliceBlue;
+            //                _chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
 
-                            _chart.Series[0].Color = Color.Orange;
-                            chart_cnt++;
-                        }
-                    }
-                }
-            }
+            //                _chart.Series[0].Color = Color.Orange;
+            //                chart_cnt++;
+            //            }
+            //        }
+            //    }
+            //}
             if (stationcheckBox.Checked)
           
                 {
@@ -410,7 +412,16 @@ namespace Service_plan_form
                                 Chart _chart = new Chart();
 
                                 output_panel_graph.Controls.Add(_chart);
-                                _chart.Location = new Point(3, 10 + 160 * chart_cnt);
+                                if (timeframe % 2 == 0)
+                                {
+                                    _chart.Location = new Point(3, 10 + 160 * chart_cnt);
+                                    chart_cnt++;
+                                }
+                                else
+                                {
+                                    _chart.Location = new Point(_x_size / 2, 10 + 160 * (chart_cnt-1));
+                                }
+                                
                                 _chart.Size = new Size(_x_size / 2, 150);
                                 _chart.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
                                 _chart.BackColor = SystemColors.WindowFrame;
@@ -444,7 +455,9 @@ namespace Service_plan_form
                                     _chart.Series[0].IsValueShownAsLabel = true;
                                     _chart.Series[1].Points.AddXY(stations[i].station_name, stations[_o].served_demand[timeframe][i]);
                                     _chart.Series[1].IsValueShownAsLabel = true;
-                        }
+                                    _chart.Series[0].LabelForeColor = Color.White;
+                                    _chart.Series[1].LabelForeColor = Color.White;
+                                }
                               
                            _chart.Titles.Add(" Time " + stations[_o].start_time[timeframe].ToShortTimeString()+" - " + stations[_o].stop_time[timeframe].ToShortTimeString()+" demand from "+ stations[_o].station_name +" to");
                          
@@ -456,7 +469,7 @@ namespace Service_plan_form
                                 _chart.Legends[0].ForeColor = Color.White;
                                 _chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
 
-                                chart_cnt++;
+                               
                             }
                             
                         
@@ -674,7 +687,7 @@ namespace Service_plan_form
                 Console.WriteLine(selected_services[e.RowIndex].Income);
                 service_name.Text = selected_services[e.RowIndex].Service_name;
                 service_name.Visible = true;
-                stop_station.Text = Service_algo.PrettyPrintArrays(selected_services[e.RowIndex].StopStation);
+                stop_station.Text = Service_algo.PrettyPrintArraysFormat(selected_services[e.RowIndex].StopStation);
                 stop_station.Visible = true;
                 departure_time.Text = selected_services[e.RowIndex].Departure_time[selected_services[e.RowIndex].indexOfFirstStation()].ToShortTimeString();
                 departure_time.Visible = true;
@@ -707,7 +720,7 @@ namespace Service_plan_form
                 Console.WriteLine(selected_services[e.RowIndex].Income);
                 service_name.Text = selected_services[e.RowIndex].Service_name;
                 service_name.Visible = true;
-                stop_station.Text = Service_algo.PrettyPrintArrays(selected_services[e.RowIndex].StopStation);
+                stop_station.Text = Service_algo.PrettyPrintArraysFormat(selected_services[e.RowIndex].StopStation);
                 stop_station.Visible = true;
                 departure_time.Text = selected_services[e.RowIndex].Departure_time[selected_services[e.RowIndex].indexOfFirstStation()].ToShortTimeString();
                 departure_time.Visible = true;
@@ -738,6 +751,21 @@ namespace Service_plan_form
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Selected_service_dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void serviceTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void served_demand_Click(object sender, EventArgs e)
         {
 
         }

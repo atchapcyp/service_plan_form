@@ -78,26 +78,32 @@ namespace Service_plan_form
             this.StopStation = Stopstation;
             this.operation_cost = PhysicalData.operation_cost_per_meter * getDistance(this.StopStation);
             this.Profitability = this.Income - this.operation_cost;
+            Console.WriteLine(Profitability +" Profit " + Income+" Income "+operation_cost+" operation");
         }
 
         public int getDistance(int[] StopStation)
         {
+            Console.WriteLine("___GETDISTANT "+Service_algo.PrettyPrintArrays(StopStation));
             int source_index=0, des_index=0;
-            for (var i = 0; i < StopStation.Length; i++)
+            for (var i = StopStation.Length-1; i >= 0 ; i--)
             {
-                if (StopStation[i] != 0)
+                if (StopStation[i] ==1 )
                 {
                     des_index = i;
+                    break;
                 }
             }
-            for (var i = StopStation.Length; i <=0; i--)
+            for (var i = 0; i <StopStation.Length; i++)
             {
-                if (StopStation[i] != 0)
+                if (StopStation[i] == 1)
                 {
                     source_index = i;
+                    break;
                 }
             }
-            return Math.Abs(PhysicalData.distance_meter[source_index]-PhysicalData.distance_meter[des_index]);
+            Console.WriteLine("souce_index " + source_index+ " Des_index "+des_index);
+            var result = Math.Abs(PhysicalData.distance_meter[source_index] - PhysicalData.distance_meter[des_index]);
+            return result;
         }
 
         public double[] getDemandWithStation(int station_index)

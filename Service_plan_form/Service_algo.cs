@@ -38,9 +38,23 @@ namespace Service_plan_form
             {
                 for (int j = 0; j < colLength; j++)
                 {
-                   a+= string.Format("{0}\t ", passeng_num[i, j]);
+                    if (passeng_num[i, j] >= 1000)
+                    {
+                        a += passeng_num[i, j].ToString().PadRight(4);
+                    }
+                    else if (passeng_num[i, j] < 1000 && passeng_num[i, j] >= 100)
+                    {
+                        a += passeng_num[i, j].ToString().PadRight(5);
+                    }
+                    else if (passeng_num[i,j]<100 && passeng_num[i,j]>=10)
+                    {
+                        a += passeng_num[i, j].ToString().PadRight(7);
+                    }
+                    else
+                    {
+                        a += passeng_num[i, j].ToString().PadRight(8);
+                    }
                 }
-
                 a += "\n";
             }
             return a;
@@ -951,6 +965,29 @@ namespace Service_plan_form
             }
 
             return "[" + String.Join(",", prettyArrays) + "]";
+        }
+
+        public static string PrettyPrintArraysFormat(int[] arrayOfArrays)
+        {
+            if (arrayOfArrays == null)
+                return "EMPTY";
+
+            var prettyArrays = new string[arrayOfArrays.Length];
+
+            for (int i = 0; i < arrayOfArrays.Length; i++)
+            {
+                if (arrayOfArrays[i] == 1)
+                {
+                    prettyArrays[i] = "[" + String.Join(",", i+1) + "]";
+                }
+                else
+                {
+                    prettyArrays[i] = "[" + String.Join(",","-") + "]";
+                }
+
+            }
+
+                return  String.Join(", ", prettyArrays);
         }
 
         public static string PrettyPrintArrays(int[] arrayOfArrays)
