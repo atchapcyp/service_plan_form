@@ -22,13 +22,14 @@ namespace Service_plan_form
         { 535,  393,    320,    278,    0}
         };
 
-        public static readonly int[] distance_meter = {0,62000,106000,173000,251000 };
-        public static readonly float operation_cost_per_meter = 1.0f;
-        public static readonly float service_speed = 100000; // meter per hour
-        public static readonly int dwell_time=5; // miniute
-        public static readonly int headway = 15; //miniute
-        public static readonly int utilize_percent = 50;
-        public static readonly int under_util_plus_min = 10;
+        public static int[] distance_meter = {0,62000,106000,173000,251000 };
+        public static float operation_cost_per_meter = 1.0f;
+        public static float service_speed = 100000; // meter per hour
+        public static int dwell_time=5; // miniute
+        public static int headway = 10; //miniute
+        public static int utilize_percent = 50;
+        public static int under_util_plus_min = 5;
+        public static int TrainSize = 500;
 
     }
 }

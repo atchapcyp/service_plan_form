@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using Service_plan_form.Demands;
 namespace Service_plan_form
 {
@@ -9,43 +11,21 @@ namespace Service_plan_form
         public static readonly int[] distance_meter = {0, 62000, 106000, 173000, 251000};
         public List<double[]> demand_station = new List<double[]>();
         public List<double[]> remaining_demand = new List<double[]>();
+        public List<double[]> served_demand = new List<double[]>();
+        
         public int tf_size_min = -1;
         public List<DateTime> start_time = new List<DateTime>();
         public List<DateTime> stop_time = new List<DateTime>();
         public string station_name;
         public int tf_count;
-
-        /*public Station(TF_Demand tf_demand)
-        {
-              for (int i = 0; i < tf_demand.dimension;i++){
-                demand_station.Add(tf_demand.To_station_class(i));
-            }
-        }*/
+        public double sum_waiting_time;
+        public double sum_passenger;
+       
 
         // input remaining demand , Used service station index in that List
-        public void update_demand(int[,] served_demand,Service service,int station_index)
-        {
-            Console.WriteLine("IN UPDATE"+service.depart_time[station_index].ToShortTimeString());
-            int counter = 0;
-            foreach (var time in start_time)
-            {
-                if ( time.Hour.Equals(service.depart_time[station_index].Hour))
-                {
-                    Console.WriteLine("IN HERE UPDATE");
-                    for (var i = 0; i < 5; i++)
-                    {
-                        Console.WriteLine("IN HERE UPDATE "+counter);
-                        Console.WriteLine("before "+this.demand_station[counter][i]);
-                        this.demand_station[counter][i] -=  served_demand[station_index,i];
-                        Console.WriteLine("after " + this.demand_station[counter][i]);
-                    }
-                 }
-                counter++;
-            }
-            
-        }
+        
 
-    public static int getDistance(int s,int d){
+        public static int getDistance(int s,int d){
             int distance=0;
             if (s==d){
                 return distance;
@@ -79,6 +59,12 @@ namespace Service_plan_form
             formStation += 1;
             station_name = "Station" + formStation;
             remaining_demand = demand_station;
+            
+            for (int index = 0; index < demand_station.Count; index++)
+            {
+                served_demand.Add(new double[numberOfStation]);
+            }
+
         }
 
         public static int getDistan_Meter(int s,int d) {
@@ -106,5 +92,50 @@ namespace Service_plan_form
                 yield return val;
             }
         }
+
+        public void calWaiting(int station_index)
+        {
+            var demArr = sumDemArray(station_index);
+            var servedArr = sumServedArray(station_index);
+            double[] must_served= new double[tf_count];
+            double[] wait_to_next_tf= new double[tf_count];
+            must_served[0] = demArr[0]; // init must served
+            wait_to_next_tf[0] = must_served[0] - servedArr[0]; // init wait passenger counter
+
+            for (int i = 1; i < tf_count; i++)
+            {
+                must_served[i] = wait_to_next_tf[i-1] + demArr[i];
+                wait_to_next_tf[i] = must_served[i] - servedArr[i];
+            }
+
+            this.sum_waiting_time = wait_to_next_tf.Sum(); // hours
+            this.sum_passenger = servedArr.Sum();
+        }
+
+        public double[] sumDemArray(int station_index)
+        {
+            double[] result_set = new double[tf_count];
+           for (int i = 0; i < tf_count; i++)
+            {
+                for (int j = station_index; j <  demand_station[0].Length; j++)
+                {
+                    result_set[i] += demand_station[i][j];
+                }
+            }
+            return result_set;
+        }
+
+        public double[] sumServedArray(int station_index)
+        {
+            double[] result_set = new double[tf_count];
+            for (int i = 0; i < tf_count; i++)
+            {
+                for (int j = station_index; j <  demand_station[0].Length; j++)
+                {
+                    result_set[i] += served_demand[i][j];
+                }
+            }
+            return result_set;
+         }
     }
 }

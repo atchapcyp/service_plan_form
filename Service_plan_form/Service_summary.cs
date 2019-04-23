@@ -35,6 +35,11 @@ namespace Service_plan_form
             get;
             set;
         }
+        public int[,] Actual_serve_income
+        {
+            get;
+            set;
+        }
         public float Profitability
         {
             get;
@@ -52,6 +57,7 @@ namespace Service_plan_form
         }
 
         public float operation_cost;
+        public double[,] over_serve;
 
         public int indexOfFirstStation()
         {
@@ -66,38 +72,107 @@ namespace Service_plan_form
             return -1;
         }
 
-        public Service_summary(String name, int[] Stopstation, DateTime[] departure, int[,] actual_dem, float utilizationPercent, int income)
+        public Service_summary(String name, int[] Stopstation, DateTime[] departure, int[,] actual_dem, float utilizationPercent, int income,int [,]served_demand_income)
         {
             this.ID = ++lastID; 
             Service_name = name;
             Departure_time = departure;
             Actual_serve_demand = actual_dem;
+            Actual_serve_income = served_demand_income;
            
             Utilization_percent = utilizationPercent;
             this.Income = income;
             this.StopStation = Stopstation;
             this.operation_cost = PhysicalData.operation_cost_per_meter * getDistance(this.StopStation);
             this.Profitability = this.Income - this.operation_cost;
+            Console.WriteLine(Profitability +" Profit " + Income+" Income "+operation_cost+" operation");
+            setOverDemand();
+            Console.WriteLine("______________________________________");
+            Service_algo.showarray(this.over_serve);
+            Console.WriteLine("______________________________________");
         }
+
+        public void setOverDemand()
+        {
+            over_serve = new double[this.Actual_serve_demand.GetLength(0),this.Actual_serve_demand.GetLength(0)];
+            var size = Actual_serve_demand.GetLength(0);
+            var (source_index, des_index) = getSouceDesIndex();
+            for (int z = source_index; z < des_index; z++)
+            {
+                var result = 0;
+               for (int i = source_index; i < z+1 ; i++)
+                {
+                    for (int j = size-1 ; j > z; j--)
+                    {
+                        Console.WriteLine("____LOOP__{0}_{1}_{2}_"+ Actual_serve_demand[i,j],z,i,j);
+                        Console.WriteLine("______________________________________ actual "+ Actual_serve_demand[i,j]);
+                        result += Actual_serve_demand[i,j];
+                    }
+                }
+               Console.WriteLine("______________________________________ RESULT "+ result);
+               this.over_serve[z, z+1]=500-result;
+            }
+
+        } 
 
         public int getDistance(int[] StopStation)
         {
+            Console.WriteLine("___GETDISTANT "+Service_algo.PrettyPrintArrays(StopStation));
             int source_index=0, des_index=0;
-            for (var i = 0; i < StopStation.Length; i++)
+            for (var i = StopStation.Length-1; i >= 0 ; i--)
             {
-                if (StopStation[i] != 0)
+                if (StopStation[i] ==1 )
                 {
                     des_index = i;
+                    break;
                 }
             }
-            for (var i = StopStation.Length; i <=0; i--)
+            for (var i = 0; i <StopStation.Length; i++)
             {
-                if (StopStation[i] != 0)
+                if (StopStation[i] == 1)
                 {
                     source_index = i;
+                    break;
                 }
             }
-            return Math.Abs(PhysicalData.distance_meter[source_index]-PhysicalData.distance_meter[des_index]);
+            Console.WriteLine("souce_index " + source_index+ " Des_index "+des_index);
+            var result = Math.Abs(PhysicalData.distance_meter[source_index] - PhysicalData.distance_meter[des_index]);
+            return result;
+        }
+
+        public (int,int) getSouceDesIndex()
+        {
+            Console.WriteLine("__GET SOURCE_DEST "+Service_algo.PrettyPrintArrays(StopStation));
+            int source_index=0, des_index=0;
+            for (var i = StopStation.Length-1; i >= 0 ; i--)
+            {
+                if (StopStation[i] ==1 )
+                {
+                    des_index = i;
+                    break;
+                }
+            }
+            for (var i = 0; i <StopStation.Length; i++)
+            {
+                if (StopStation[i] == 1)
+                {
+                    source_index = i;
+                    break;
+                }
+            }
+            Console.WriteLine("souce_index " + source_index+ " Des_index "+des_index);
+            return (source_index,des_index);
+        }
+
+        public double[] getDemandWithStation(int station_index)
+        {
+            double[] result=new double[this.StopStation.Length];
+            for (int i = 0; i < Actual_serve_demand.GetLength(0); i++)
+            {
+                result.SetValue(Actual_serve_demand[station_index, i],i);
+                
+            }
+       return result;
         }
 
         public IEnumerator<int[]> GetEnumerator()
@@ -109,5 +184,6 @@ namespace Service_plan_form
         {
             return GetEnumerator();
         }
+
     }
 }

@@ -73,6 +73,16 @@ namespace Service_plan_form.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _57485820_1014994658709706_583367450557415424_n {
+            get {
+                object obj = ResourceManager.GetObject("57485820_1014994658709706_583367450557415424_n", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap refresh_page_option {
             get {
                 object obj = ResourceManager.GetObject("refresh-page-option", resourceCulture);
@@ -86,6 +96,46 @@ namespace Service_plan_form.Properties {
         internal static System.Drawing.Bitmap refresh_page_option__1_ {
             get {
                 object obj = ResourceManager.GetObject("refresh-page-option (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refresh_page_option__1_1 {
+            get {
+                object obj = ResourceManager.GetObject("refresh-page-option (1)1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_work_tool {
+            get {
+                object obj = ResourceManager.GetObject("settings-work-tool", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_work_tool__2_ {
+            get {
+                object obj = ResourceManager.GetObject("settings-work-tool (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_work_tool1 {
+            get {
+                object obj = ResourceManager.GetObject("settings-work-tool1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

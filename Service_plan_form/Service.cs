@@ -5,7 +5,6 @@ namespace Service_plan_form
     public class Service 
 
     {
-
         public string ServiceId { get; set; }
         public int[] StopStation { get; set; }
         public int service_quantity { get; set; }
@@ -29,6 +28,7 @@ namespace Service_plan_form
             last_stop_index = getDestinationStation();
             first_stop_index = getSourceStation();
         }
+
         public Service(string id, int[] stop_station,int depart_hour,int depart_min)
         {
             
@@ -40,6 +40,8 @@ namespace Service_plan_form
             first_stop_index = getSourceStation();
             this.AddScheduleFromStart(depart_hour, depart_min);
         }
+
+
 
         public void AddSchedulePeriod(int first_depart,int last_arrive)
         {   
