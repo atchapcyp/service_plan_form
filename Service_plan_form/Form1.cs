@@ -33,7 +33,7 @@ namespace Service_plan_form
         List<Demand_blueprint> dm = new List<Demand_blueprint>();
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
         public static List<Station> stations = new List<Station>();
-        
+        List<Service> service_list = new List<Service>();
         DataSet result;
         static DataSet Test_result;
         public static DataTable dt = new DataTable();
@@ -105,7 +105,7 @@ namespace Service_plan_form
                 services.Add(temp_service);
                 counter++;
             }
-
+            service_list = services;
             var b = 0;
               selected_services.Clear();
              (selected_services,_) = Service_algo.genService(services);
@@ -326,6 +326,7 @@ namespace Service_plan_form
                             _chart.Series[1].Color = Color.FromArgb(120,74, 136, 255);
                             _chart.Series[0].Color = Color.FromArgb(200,255, 103, 103  );
                             _chart.Series[2].Color = Color.FromArgb(153, 119, 175);
+                            
 
                             chart_cnt++;
                         }
@@ -761,6 +762,132 @@ namespace Service_plan_form
         private void served_demand_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            var workbook = new ExcelFile();
+            ExcelWorksheet service_freq = workbook.Worksheets.Add("Result");
+            ExcelWorksheet worksheet2 = workbook.Worksheets.Add("Service");
+            int[,] service_freq_carry = new int[service_list.Count, stations[0].start_time.Count];
+            int[,] stopStation_toXlsx = new int[service_list.Count, service_list[0].StopStation.Length];
+            
+            for (int i = 0; i < service_list.Count; i++)
+            {
+                for (int j = 0; j < service_list[0].StopStation.Length; j++)
+                {
+                    stopStation_toXlsx[i,j]= service_list[i].StopStation[j];
+                }
+            }
+            
+            
+           int[,] result = new int[,] { { 5, 5, 5, 5, 5 }, { 5, 5, 5, 5, 5 }, { 5, 5, 5, 5, 5 }, { 5, 5, 5, 5, 5 }, { 5, 5, 5, 5, 5 }, { 5, 5, 5, 5, 5 } };
+
+            
+            service_freq.Cells["A1"].Value = "Example of writing typical table - tallest buildings in the world (2019):";
+
+            // Column width of 8, 30, 16, 20, 9, 11, 9, 9, 4 and 5 characters.
+            service_freq.Columns["A"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // Rank
+            service_freq.Columns["B"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // Building
+            service_freq.Columns["C"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // City
+            service_freq.Columns["D"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // Country
+            service_freq.Columns["E"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // Metric
+            service_freq.Columns["F"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // Imperial
+            service_freq.Columns["G"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // Floors
+            service_freq.Columns["H"].SetWidth(8, LengthUnit.ZeroCharacterWidth); // Built (Year)
+            service_freq.Columns["I"].SetWidth(8, LengthUnit.ZeroCharacterWidth);
+            service_freq.Columns["J"].SetWidth(8, LengthUnit.ZeroCharacterWidth);
+
+
+            // Write header data to Excel cells.
+            foreach (DataGridViewRow dgvr in Selected_service_dgv.Rows)//dgv is datagridview
+            {
+                var carry = ConvertToDouble(dgvr.Cells[2].Value.ToString());
+
+                var i=getIndexOfServiceList(dgvr.Cells[1].Value.ToString());
+                //Console.WriteLine("_____SERVICE DGV____"+dgvr.Cells[1].Value.ToString()+"_ "+i);
+                var j = getIndexBy_time(selected_services[dgvr.Index].Departure_time[selected_services[dgvr.Index].indexOfFirstStation()]);
+                // Console.WriteLine("_____SERVICE TIME____"+ selected_services[dgvr.Index].Departure_time[selected_services[dgvr.Index].indexOfFirstStation()].ToShortTimeString()+"___"+j);
+                service_freq_carry[i,j] += 1;
+            }
+
+            for(int i =0; i< service_list.Count; i++)
+            {
+                for(int j=0;j< stations[0].start_time.Count; j++)
+                {
+                    service_freq.Cells[i, j].Value = service_freq_carry[i, j];
+                }
+            }
+            for(int i = 0; i < stations[0].start_time.Count; i++)
+            {
+                service_freq.Cells[service_list.Count, i].Value = i + stations[0].start_time[0].Hour;
+            }
+
+            for (int i = 0; i < service_list.Count; i++) // to be fix later
+            {
+                
+                for (int j = 0; j < service_list[0].StopStation.Length; j++)
+                {
+                    worksheet2.Cells[i, j].Value = stopStation_toXlsx[i, j];
+                }
+                    
+            }
+
+
+
+            var style = new CellStyle();
+            style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            style.VerticalAlignment = VerticalAlignmentStyle.Center;
+            style.FillPattern.SetSolid(Color.Chocolate);
+            style.Font.Weight = ExcelFont.BoldWeight;
+            style.Font.Color = Color.White;
+            style.WrapText = true;
+            style.Borders.SetBorders(MultipleBorders.Right | MultipleBorders.Top, Color.Black, LineStyle.Thin);
+
+
+            // Write and format sample data to Excel cells.
+
+            
+
+            var saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "xls files (*.xls)|*.xls|xlsx files (*.xlsx)|*.xlsx|csv (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 3;
+            saveFileDialog1.InitialDirectory = @"C:\";
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.Title = "Browse Text Files";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                workbook.Save(saveFileDialog1.FileName);
+            }
+        }
+
+        public int getIndexBy_time(DateTime service_time)
+        {
+           foreach((DateTime station_time,int index) in stations[0].start_time.Select((station_time, index) => ( station_time, index )))
+            {
+                if (station_time.Hour == service_time.Hour)
+                {
+                    return index;
+                }
+            }
+
+            return -1;
+        }
+
+        public int getIndexOfServiceList(string service_name)
+        {
+            int index = 0;
+            foreach (Service _service in service_list)
+            {
+                if (_service.ServiceId == service_name)
+                {
+                    return index;
+                }
+                index++;
+            }
+            return -1;
         }
     }
 }
