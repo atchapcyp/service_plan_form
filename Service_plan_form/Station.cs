@@ -12,6 +12,7 @@ namespace Service_plan_form
         public List<double[]> demand_station = new List<double[]>();
         public List<double[]> remaining_demand = new List<double[]>();
         public List<double[]> served_demand = new List<double[]>();
+        
         public int tf_size_min = -1;
         public List<DateTime> start_time = new List<DateTime>();
         public List<DateTime> stop_time = new List<DateTime>();

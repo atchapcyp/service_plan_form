@@ -33,6 +33,7 @@ namespace Service_plan_form
         List<Demand_blueprint> dm = new List<Demand_blueprint>();
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
         public static List<Station> stations = new List<Station>();
+        
         DataSet result;
         static DataSet Test_result;
         public static DataTable dt = new DataTable();
@@ -177,7 +178,7 @@ namespace Service_plan_form
         public static List<Station> readxlsx()
         {   var Test_stations = new List<Station>();
             var Test_dm = new List<Demand_blueprint>();
-           var Test_mapper = new DataNamesMapper<Demand_blueprint>();
+            var Test_mapper = new DataNamesMapper<Demand_blueprint>();
             var filePath = Path.Combine(project_path, test_path);
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -216,7 +217,11 @@ namespace Service_plan_form
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
-
+            //private void routeManagmentToolStripMenuItem_Click(object sender, EventArgs e)
+            //{
+            //    Route_management route_form = new Route_management();
+            //    route_form.Show();
+            //}
         }
 
        

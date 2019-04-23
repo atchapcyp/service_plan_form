@@ -52,6 +52,7 @@ namespace Service_plan_form
         }
 
         public float operation_cost;
+        public double[,] over_serve;
 
         public int indexOfFirstStation()
         {
@@ -79,7 +80,34 @@ namespace Service_plan_form
             this.operation_cost = PhysicalData.operation_cost_per_meter * getDistance(this.StopStation);
             this.Profitability = this.Income - this.operation_cost;
             Console.WriteLine(Profitability +" Profit " + Income+" Income "+operation_cost+" operation");
+            setOverDemand();
+            Console.WriteLine("______________________________________");
+            Service_algo.showarray(this.over_serve);
+            Console.WriteLine("______________________________________");
         }
+
+        public void setOverDemand()
+        {
+            over_serve = new double[this.Actual_serve_demand.GetLength(0),this.Actual_serve_demand.GetLength(0)];
+            var size = Actual_serve_demand.GetLength(0);
+            var (source_index, des_index) = getSouceDesIndex();
+            for (int z = source_index; z < des_index; z++)
+            {
+                var result = 0;
+               for (int i = source_index; i < z+1 ; i++)
+                {
+                    for (int j = size-1 ; j > z; j--)
+                    {
+                        Console.WriteLine("____LOOP__{0}_{1}_{2}_"+ Actual_serve_demand[i,j],z,i,j);
+                        Console.WriteLine("______________________________________ actual "+ Actual_serve_demand[i,j]);
+                        result += Actual_serve_demand[i,j];
+                    }
+                }
+               Console.WriteLine("______________________________________ RESULT "+ result);
+               this.over_serve[z, z+1]=500-result;
+            }
+
+        } 
 
         public int getDistance(int[] StopStation)
         {
@@ -104,6 +132,30 @@ namespace Service_plan_form
             Console.WriteLine("souce_index " + source_index+ " Des_index "+des_index);
             var result = Math.Abs(PhysicalData.distance_meter[source_index] - PhysicalData.distance_meter[des_index]);
             return result;
+        }
+
+        public (int,int) getSouceDesIndex()
+        {
+            Console.WriteLine("__GET SOURCE_DEST "+Service_algo.PrettyPrintArrays(StopStation));
+            int source_index=0, des_index=0;
+            for (var i = StopStation.Length-1; i >= 0 ; i--)
+            {
+                if (StopStation[i] ==1 )
+                {
+                    des_index = i;
+                    break;
+                }
+            }
+            for (var i = 0; i <StopStation.Length; i++)
+            {
+                if (StopStation[i] == 1)
+                {
+                    source_index = i;
+                    break;
+                }
+            }
+            Console.WriteLine("souce_index " + source_index+ " Des_index "+des_index);
+            return (source_index,des_index);
         }
 
         public double[] getDemandWithStation(int station_index)

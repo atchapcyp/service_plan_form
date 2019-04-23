@@ -27,6 +27,22 @@ namespace Service_plan_form
             }
             
         }
+        public static void showarray(double[,] passeng_num)
+        {
+            //show 5x5 array
+            int rowLength = passeng_num.GetLength(0);
+            int colLength = passeng_num.GetLength(1);
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                    Console.Write(string.Format("{0}\t ", passeng_num[i, j]));
+                }
+                Console.Write(Environment.NewLine + Environment.NewLine);
+            }
+            
+        }
 
         public static string showarray_toStr(int[,] passeng_num)
         {
@@ -786,6 +802,7 @@ namespace Service_plan_form
                         demands.demand[0][i, j] = 0;
                         clear_remain_demand(demands, timeframe, i, j);
                     }
+
                 }
                 else
                 {

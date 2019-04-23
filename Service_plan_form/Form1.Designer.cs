@@ -52,6 +52,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.service_name = new System.Windows.Forms.Label();
+            this.servicesummaryBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.output_panel = new System.Windows.Forms.Panel();
@@ -91,20 +92,20 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Selected_service_dgv = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.reloadBtn = new System.Windows.Forms.Button();
             this.servicenameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.profitabilityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.utilizationpercentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.incomeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servicesummaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.servicesummaryBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.label5 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.reloadBtn = new System.Windows.Forms.Button();
             this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.servicesummaryBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             Individual = new System.Windows.Forms.TabPage();
             Individual.SuspendLayout();
             this.panel_summary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).BeginInit();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -117,7 +118,6 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -317,6 +317,10 @@
             this.service_name.TabIndex = 0;
             this.service_name.Text = "Service_Name";
             this.service_name.Visible = false;
+            // 
+            // servicesummaryBindingSource2
+            // 
+            this.servicesummaryBindingSource2.DataSource = typeof(Service_plan_form.Service_summary);
             // 
             // button1
             // 
@@ -707,10 +711,10 @@
             // 
             this.service_set.BackColor = System.Drawing.Color.LightPink;
             this.service_set.Controls.Add(this.panel4);
-            this.service_set.Location = new System.Drawing.Point(4, 22);
+            this.service_set.Location = new System.Drawing.Point(4, 23);
             this.service_set.Name = "service_set";
             this.service_set.Padding = new System.Windows.Forms.Padding(3);
-            this.service_set.Size = new System.Drawing.Size(272, 444);
+            this.service_set.Size = new System.Drawing.Size(272, 443);
             this.service_set.TabIndex = 1;
             this.service_set.Text = "Overall";
             // 
@@ -816,6 +820,38 @@
             this.ID.ReadOnly = true;
             this.ID.Width = 43;
             // 
+            // servicenameDataGridViewTextBoxColumn
+            // 
+            this.servicenameDataGridViewTextBoxColumn.DataPropertyName = "Service_name";
+            this.servicenameDataGridViewTextBoxColumn.HeaderText = "Service_name";
+            this.servicenameDataGridViewTextBoxColumn.Name = "servicenameDataGridViewTextBoxColumn";
+            this.servicenameDataGridViewTextBoxColumn.Width = 106;
+            // 
+            // profitabilityDataGridViewTextBoxColumn
+            // 
+            this.profitabilityDataGridViewTextBoxColumn.DataPropertyName = "Profitability";
+            this.profitabilityDataGridViewTextBoxColumn.HeaderText = "Profitability";
+            this.profitabilityDataGridViewTextBoxColumn.Name = "profitabilityDataGridViewTextBoxColumn";
+            this.profitabilityDataGridViewTextBoxColumn.Width = 93;
+            // 
+            // utilizationpercentDataGridViewTextBoxColumn
+            // 
+            this.utilizationpercentDataGridViewTextBoxColumn.DataPropertyName = "Utilization_percent";
+            this.utilizationpercentDataGridViewTextBoxColumn.HeaderText = "Utilization_percent";
+            this.utilizationpercentDataGridViewTextBoxColumn.Name = "utilizationpercentDataGridViewTextBoxColumn";
+            this.utilizationpercentDataGridViewTextBoxColumn.Width = 132;
+            // 
+            // incomeDataGridViewTextBoxColumn
+            // 
+            this.incomeDataGridViewTextBoxColumn.DataPropertyName = "Income";
+            this.incomeDataGridViewTextBoxColumn.HeaderText = "Income";
+            this.incomeDataGridViewTextBoxColumn.Name = "incomeDataGridViewTextBoxColumn";
+            this.incomeDataGridViewTextBoxColumn.Width = 71;
+            // 
+            // servicesummaryBindingSource
+            // 
+            this.servicesummaryBindingSource.DataSource = typeof(Service_plan_form.Service_summary);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -850,42 +886,6 @@
             this.reloadBtn.UseVisualStyleBackColor = false;
             this.reloadBtn.Click += new System.EventHandler(this.reloadBtn_Click);
             // 
-            // servicenameDataGridViewTextBoxColumn
-            // 
-            this.servicenameDataGridViewTextBoxColumn.DataPropertyName = "Service_name";
-            this.servicenameDataGridViewTextBoxColumn.HeaderText = "Service_name";
-            this.servicenameDataGridViewTextBoxColumn.Name = "servicenameDataGridViewTextBoxColumn";
-            this.servicenameDataGridViewTextBoxColumn.Width = 106;
-            // 
-            // profitabilityDataGridViewTextBoxColumn
-            // 
-            this.profitabilityDataGridViewTextBoxColumn.DataPropertyName = "Profitability";
-            this.profitabilityDataGridViewTextBoxColumn.HeaderText = "Profitability";
-            this.profitabilityDataGridViewTextBoxColumn.Name = "profitabilityDataGridViewTextBoxColumn";
-            this.profitabilityDataGridViewTextBoxColumn.Width = 93;
-            // 
-            // utilizationpercentDataGridViewTextBoxColumn
-            // 
-            this.utilizationpercentDataGridViewTextBoxColumn.DataPropertyName = "Utilization_percent";
-            this.utilizationpercentDataGridViewTextBoxColumn.HeaderText = "Utilization_percent";
-            this.utilizationpercentDataGridViewTextBoxColumn.Name = "utilizationpercentDataGridViewTextBoxColumn";
-            this.utilizationpercentDataGridViewTextBoxColumn.Width = 132;
-            // 
-            // incomeDataGridViewTextBoxColumn
-            // 
-            this.incomeDataGridViewTextBoxColumn.DataPropertyName = "Income";
-            this.incomeDataGridViewTextBoxColumn.HeaderText = "Income";
-            this.incomeDataGridViewTextBoxColumn.Name = "incomeDataGridViewTextBoxColumn";
-            this.incomeDataGridViewTextBoxColumn.Width = 71;
-            // 
-            // servicesummaryBindingSource
-            // 
-            this.servicesummaryBindingSource.DataSource = typeof(Service_plan_form.Service_summary);
-            // 
-            // servicesummaryBindingSource2
-            // 
-            this.servicesummaryBindingSource2.DataSource = typeof(Service_plan_form.Service_summary);
-            // 
             // stopStationBindingSource
             // 
             this.stopStationBindingSource.DataMember = "StopStation";
@@ -919,6 +919,7 @@
             Individual.ResumeLayout(false);
             this.panel_summary.ResumeLayout(false);
             this.panel_summary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).EndInit();
             this.output_panel.ResumeLayout(false);
             this.output_panel.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -937,7 +938,6 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).EndInit();
             this.ResumeLayout(false);
