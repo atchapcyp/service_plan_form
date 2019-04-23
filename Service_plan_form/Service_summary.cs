@@ -35,6 +35,11 @@ namespace Service_plan_form
             get;
             set;
         }
+        public int[,] Actual_serve_income
+        {
+            get;
+            set;
+        }
         public float Profitability
         {
             get;
@@ -67,12 +72,13 @@ namespace Service_plan_form
             return -1;
         }
 
-        public Service_summary(String name, int[] Stopstation, DateTime[] departure, int[,] actual_dem, float utilizationPercent, int income)
+        public Service_summary(String name, int[] Stopstation, DateTime[] departure, int[,] actual_dem, float utilizationPercent, int income,int [,]served_demand_income)
         {
             this.ID = ++lastID; 
             Service_name = name;
             Departure_time = departure;
             Actual_serve_demand = actual_dem;
+            Actual_serve_income = served_demand_income;
            
             Utilization_percent = utilizationPercent;
             this.Income = income;

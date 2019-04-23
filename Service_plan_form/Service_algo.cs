@@ -611,7 +611,7 @@ namespace Service_plan_form
                 if (p >= PhysicalData.utilize_percent) //util handle
                 {
                     TF_Demand outboundDemand = new TF_Demand(demStation[s]).Gen_Outbound_demand();
-                    var served_demand = serve_demand_form_station(outboundDemand, train, services[s], 0);
+                    var (served_demand,served_demand_income) = serve_demand_form_station(outboundDemand, train, services[s], 0);
                     Console.WriteLine("__ REMAINNING \n");
                     showarray(outboundDemand.demand[0]);
                     Console.WriteLine("__ REMAINNING 22222222\n");
@@ -626,22 +626,15 @@ namespace Service_plan_form
                     Console.WriteLine("NEXT" + PhysicalData.headway + "  MINUTE\n");
 
                     var test_depart = services[s].depart_time.Clone() as DateTime[];
-                    int income = calIncome(served_demand);
-                    Service_summary _summary =new Service_summary(services[s].ServiceId,services[s].StopStation,test_depart,served_demand,p,income);
+                    int income = calIncome(served_demand_income);
+                    Service_summary _summary =new Service_summary(services[s].ServiceId,services[s].StopStation,test_depart,served_demand,p,income,served_demand_income);
 
                     foreach (var _service in services)
                     {
                         _service.add_starttime(PhysicalData.headway);
                     }
                     k++;
-                    //set summary to return
                     
-                    //_summary.Service_name = services[s].ServiceId;
-                    //_summary.StopStation = services[s].StopStation;
-                    //_summary.Utilization_percent = p;
-                    //_summary.Actual_serve_demand = served_demand;
-                    
-                    //_summary.Income = Income;
                     summaries.Add(_summary);
                 }
                 else
@@ -652,7 +645,7 @@ namespace Service_plan_form
                     {
                         _service.add_starttime(PhysicalData.under_util_plus_min);
                     }
-                    continue;
+                    
                 }
             }
 
@@ -671,14 +664,10 @@ namespace Service_plan_form
                     {
                         if (summary.Departure_time[station_index].Hour == station.start_time[n].Hour)
                         {   var temp = summary.getDemandWithStation(station_index);
-                            Console.WriteLine("RESULT BEFORE"+PrettyPrintArrays(station.served_demand[n]));
                             for (int i = 0; i < temp.Length; i++)
                             {
                                 station.served_demand[n][i] += temp[i];
                             }
-                            Console.WriteLine("UPDATE At "+station.station_name+" time "+station.start_time[n].Hour);
-                            Console.WriteLine("WITH VALUE " + temp[0]+"_"+temp[1]+"_"+temp[2]+"_"+temp[3]+"_"+ temp[4]);
-                            Console.WriteLine("RESULT AFTER"+PrettyPrintArrays(station.served_demand[n]));
                             break;
                         }
                     }
@@ -755,13 +744,14 @@ namespace Service_plan_form
                 }
             }
         }
-        public static int[,] serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)
+        public static (int[,],int[,]) serve_demand_form_station(TF_Demand demands, Train_obj train, Service aService, int timeframe)
         {
             Console.WriteLine("\n\nACTUAL_RUN __ serve_demand_form_station ");
             Console.WriteLine(aService.ServiceId);
             showarray(demands.demand[0]);
 
             int[,] actual_getoff = new int[5, 5];
+            int[,] actual_getoff_income = new int[5, 5];
             int get_off_next_station = 0;
             int i, j, k, next_station_index = -1;
             int fill_demand;
@@ -799,10 +789,15 @@ namespace Service_plan_form
                         if (aService.StopStation[j] == 0) { continue; }
                         train.getOn(demands.demand[0][i, j], j);
                         actual_getoff[i, j] = demands.demand[0][i, j];
+                        actual_getoff_income[i,j] = demands.demand[0][i, j]; // set for income calculation
                         demands.demand[0][i, j] = 0;
                         clear_remain_demand(demands, timeframe, i, j);
                     }
 
+                    if (i + 1 < 5)
+                    {
+                        actual_getoff[i, i + 1] += train.remain_cap;
+                    }
                 }
                 else
                 {
@@ -835,15 +830,16 @@ namespace Service_plan_form
                             update_remain_demand(demands, timeframe, fill_demand + 1, i, j);
                             remain_cap -= 1;
                             actual_getoff[i, j] = fill_demand+1;
+                            actual_getoff_income[i, j] = fill_demand + 1;
                         }
                         else
                         {// NO FEW demand left
-                           train.getOn(fill_demand, j);
+                            train.getOn(fill_demand, j);
                             update_remain_demand(demands, timeframe, fill_demand, i, j);
                             actual_getoff[i, j] = fill_demand;
+                            actual_getoff_income[i, j] = fill_demand;
                         }
                         demand_at_station += fill_demand;
-
                     }
                 //    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
                 }
@@ -851,7 +847,7 @@ namespace Service_plan_form
             }
             Console.WriteLine("ACTUAL GETOFF  ");
             showarray(actual_getoff); //served demand
-            return actual_getoff;
+            return (actual_getoff,actual_getoff_income);
         }
 
         public static int[,] demand_of_this_service(DateTime[] depart_time, List<Station> stations,int[,] carry_demand,int[] tf_memo)
