@@ -58,11 +58,13 @@ namespace Service_plan_form
             this.tf_size_min =(int)diff.TotalMinutes;
             formStation += 1;
             station_name = "Station" + formStation;
-            remaining_demand = demand_station;
-            
+           
+
+           
             for (int index = 0; index < demand_station.Count; index++)
             {
                 served_demand.Add(new double[numberOfStation]);
+                remaining_demand.Add(new double[numberOfStation]);
             }
 
         }
@@ -97,8 +99,8 @@ namespace Service_plan_form
         {
             var demArr = sumDemArray(station_index);
             var servedArr = sumServedArray(station_index);
-            double[] must_served= new double[tf_count];
-            double[] wait_to_next_tf= new double[tf_count];
+            double[] must_served = new double[tf_count];
+            double[] wait_to_next_tf = new double[tf_count];
             must_served[0] = demArr[0]; // init must served
             wait_to_next_tf[0] = must_served[0] - servedArr[0]; // init wait passenger counter
 
@@ -119,7 +121,7 @@ namespace Service_plan_form
             {
                 for (int j = station_index; j <  demand_station[0].Length; j++)
                 {
-                    result_set[i] += demand_station[i][j];
+                    result_set[i] += served_demand[i][j];
                 }
             }
             return result_set;
@@ -132,7 +134,7 @@ namespace Service_plan_form
             {
                 for (int j = station_index; j <  demand_station[0].Length; j++)
                 {
-                    result_set[i] += served_demand[i][j];
+                    result_set[i] += remaining_demand[i][j];
                 }
             }
             return result_set;

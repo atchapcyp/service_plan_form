@@ -87,9 +87,7 @@ namespace Service_plan_form
             this.Profitability = this.Income - this.operation_cost;
             Console.WriteLine(Profitability +" Profit " + Income+" Income "+operation_cost+" operation");
             setOverDemand();
-            Console.WriteLine("______________________________________");
-            Service_algo.showarray(this.over_serve);
-            Console.WriteLine("______________________________________");
+            
         }
 
         public void setOverDemand()
@@ -110,7 +108,7 @@ namespace Service_plan_form
                     }
                 }
                Console.WriteLine("______________________________________ RESULT "+ result);
-               this.over_serve[z, z+1]=500-result;
+               this.over_serve[z, z+1]=PhysicalData.TrainSize-result;
             }
 
         } 

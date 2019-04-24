@@ -136,17 +136,50 @@ namespace Service_plan_form
                 
             }
 
-            
+            richTextBox1.Text = ""; //reset
+            var average_wait = 0.0;
             foreach (Station station in stations)
             {
-                var average = 0.0;
-                if (station.sum_passenger != 0)
-                {
-                     average = Math.Round((station.sum_waiting_time / station.sum_passenger * 60), 2);
-                }
-         
-                richTextBox1.Text += station.station_name + " waiting time is : " + station.sum_waiting_time +" hours \nAverage : "+average+" miniutes\n\n";
+                Console.WriteLine("Station : " + station.station_name);
+                Console.WriteLine("sum_passenger : " + station.sum_passenger);
+                Console.WriteLine("sum_waiting time : " + station.sum_waiting_time);
+                Console.WriteLine("_____________________________________________________________ ");
+                
+                    average_wait += Math.Round((station.sum_waiting_time / 400000 * 60), 2);
+                
             }
+                richTextBox1.Text += "Average Ppan waiting time  : " + average_wait/stations.Count + " miniutes\n\n";
+            
+            // get sum profit
+            var sum_profit_all_selected = 0.0;
+
+            foreach(Service_summary _sum in selected_services)
+            {
+                sum_profit_all_selected += _sum.Profitability;
+            }
+            richTextBox1.Text += "Profitablie of Plan : " + sum_profit_all_selected+"\n\n";
+
+            var sum_utilize = 0.0;
+            var max_util=0.0;
+            var min_util = 100.0;
+            foreach (Service_summary _sum in selected_services)
+            {
+                sum_utilize += _sum.Utilization_percent;
+                if (_sum.Utilization_percent >= max_util)
+                {
+                    max_util = _sum.Utilization_percent;
+                }
+
+                if (_sum.Utilization_percent <= min_util)
+                {
+                    min_util = _sum.Utilization_percent;
+                }
+
+            }
+            var average_utilize = sum_utilize / selected_services.Count;
+            richTextBox1.Text += "Avarage Utilization of Plan : " + Math.Round(Convert.ToDecimal(average_utilize), 2)+" \n\n";
+            richTextBox1.Text += "MAX Utilization of Plan : " + Math.Round(Convert.ToDecimal(max_util), 2) + " \n\n";
+            richTextBox1.Text += "MIN Utilization of Plan : " + Math.Round(Convert.ToDecimal(min_util), 2) + " \n\n";
 
             Console.WriteLine("DGV DONE "+bs.Count);
         }
@@ -308,11 +341,12 @@ namespace Service_plan_form
                             _chart.Series.Add("Over-Demand Service");
                             _chart.Series[1].ChartType = SeriesChartType.SplineArea;
                             _chart.Series.Add("Served Demand");
-                            for (int i = 0; i < stations[_o].tf_count - 1; i++)
+                            for (int i = 0; i < stations[_o].tf_count; i++)
                             {
                                 _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
                                 _chart.Series[1].Points.AddXY(stations[_o].start_time[i], stations[_o].served_demand[i][_d]);
                             }
+                            //Console.WriteLine("_________________________________________deMdn count " + stations[_o].demand_station[i][_d])
 
 
                             _chart.Titles.Add("From " + stations[_o].station_name + " to " + stations[_d].station_name);
@@ -371,7 +405,7 @@ namespace Service_plan_form
                             _chart.Series.Add("Over-Demand Service");
                             _chart.Series[1].ChartType = SeriesChartType.Column;
 
-                            for (int i = 0; i < stations[_o].tf_count - 1; i++)
+                            for (int i = 0; i < stations[_o].tf_count; i++)
                             {
                                 _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
                                 _chart.Series[1].Points.AddXY(stations[_o].start_time[i], stations[_o].served_demand[i][_d]);
@@ -400,7 +434,7 @@ namespace Service_plan_form
                     // plot chart TIME FRAME
                     foreach (int _o in _origin)
                     {
-                            for (int timeframe = 0; timeframe < stations[_o].tf_count - 1; timeframe++)
+                            for (int timeframe = 0; timeframe < stations[_o].tf_count; timeframe++)
                             {
                                 
                                 Chart _chart = new Chart();
@@ -852,7 +886,8 @@ namespace Service_plan_form
             
 
             var saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "xls files (*.xls)|*.xls|xlsx files (*.xlsx)|*.xlsx|csv (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog1.Filter = "xls files (*.xls)|*.xls|xlsx files (*.xlsx)|*.xlsx|csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog1.DefaultExt = ".xlsx";
             saveFileDialog1.FilterIndex = 3;
             saveFileDialog1.InitialDirectory = @"C:\";
             saveFileDialog1.RestoreDirectory = true;

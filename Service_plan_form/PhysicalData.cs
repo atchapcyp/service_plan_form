@@ -24,7 +24,7 @@ namespace Service_plan_form
 
         public static int[] distance_meter = {0,62000,106000,173000,251000 };
         public static float operation_cost_per_meter = 1.0f;
-        public static float service_speed = 100000; // meter per hour
+        public static float service_speed = 200000; // meter per hour
         public static int dwell_time=5; // miniute
         public static int headway = 10; //miniute
         public static int utilize_percent = 50;

@@ -627,6 +627,8 @@ namespace Service_plan_form
 
                     var test_depart = services[s].depart_time.Clone() as DateTime[];
                     int income = calIncome(served_demand_income);
+                    Console.WriteLine("_____________________________________ REMAINNING ___________________________________________________\n");
+                    showarray(served_demand_income);
                     Service_summary _summary =new Service_summary(services[s].ServiceId,services[s].StopStation,test_depart,served_demand,p,income,served_demand_income);
 
                     foreach (var _service in services)
