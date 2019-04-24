@@ -52,7 +52,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.service_name = new System.Windows.Forms.Label();
-            this.servicesummaryBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.output_panel = new System.Windows.Forms.Panel();
@@ -87,7 +86,7 @@
             this.service_set = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.save_path = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.export_to_time_table_btn = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.summary_label = new System.Windows.Forms.Label();
@@ -104,11 +103,9 @@
             this.config_btn = new System.Windows.Forms.Button();
             this.reloadBtn = new System.Windows.Forms.Button();
             this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.servicesummaryBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             Individual = new System.Windows.Forms.TabPage();
             Individual.SuspendLayout();
             this.panel_summary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).BeginInit();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -122,7 +119,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // Individual
@@ -159,7 +155,6 @@
             this.panel_summary.Controls.Add(this.label6);
             this.panel_summary.Controls.Add(this.label4);
             this.panel_summary.Controls.Add(this.service_name);
-            this.panel_summary.DataBindings.Add(new System.Windows.Forms.Binding("BorderStyle", this.servicesummaryBindingSource2, "ID", true));
             this.panel_summary.Font = new System.Drawing.Font("Varela", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel_summary.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.panel_summary.Location = new System.Drawing.Point(3, 3);
@@ -320,10 +315,6 @@
             this.service_name.TabIndex = 0;
             this.service_name.Text = "Service_Name";
             this.service_name.Visible = false;
-            // 
-            // servicesummaryBindingSource2
-            // 
-            this.servicesummaryBindingSource2.DataSource = typeof(Service_plan_form.Service_summary);
             // 
             // button1
             // 
@@ -506,13 +497,14 @@
             // checkedListBox_station
             // 
             this.checkedListBox_station.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
+            this.checkedListBox_station.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBox_station.CheckOnClick = true;
             this.checkedListBox_station.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkedListBox_station.ForeColor = System.Drawing.SystemColors.Info;
             this.checkedListBox_station.FormattingEnabled = true;
             this.checkedListBox_station.Location = new System.Drawing.Point(51, 7);
             this.checkedListBox_station.Name = "checkedListBox_station";
-            this.checkedListBox_station.Size = new System.Drawing.Size(168, 123);
+            this.checkedListBox_station.Size = new System.Drawing.Size(168, 119);
             this.checkedListBox_station.TabIndex = 6;
             // 
             // stopstation_label
@@ -725,10 +717,9 @@
             // 
             this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel4.Controls.Add(this.save_path);
-            this.panel4.Controls.Add(this.button3);
+            this.panel4.Controls.Add(this.export_to_time_table_btn);
             this.panel4.Controls.Add(this.richTextBox1);
             this.panel4.Controls.Add(this.label21);
-            this.panel4.DataBindings.Add(new System.Windows.Forms.Binding("BorderStyle", this.servicesummaryBindingSource2, "ID", true));
             this.panel4.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panel4.Location = new System.Drawing.Point(6, 1);
             this.panel4.Name = "panel4";
@@ -743,15 +734,16 @@
             this.save_path.TabIndex = 18;
             this.save_path.Visible = false;
             // 
-            // button3
+            // export_to_time_table_btn
             // 
-            this.button3.Location = new System.Drawing.Point(12, 400);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(244, 33);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Send To Time Tabling";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.export_to_time_table_btn.Enabled = false;
+            this.export_to_time_table_btn.Location = new System.Drawing.Point(12, 400);
+            this.export_to_time_table_btn.Name = "export_to_time_table_btn";
+            this.export_to_time_table_btn.Size = new System.Drawing.Size(244, 33);
+            this.export_to_time_table_btn.TabIndex = 17;
+            this.export_to_time_table_btn.Text = "Send To Time Tabling";
+            this.export_to_time_table_btn.UseVisualStyleBackColor = true;
+            this.export_to_time_table_btn.Click += new System.EventHandler(this.button3_Click);
             // 
             // richTextBox1
             // 
@@ -919,10 +911,6 @@
             this.stopStationBindingSource.DataMember = "StopStation";
             this.stopStationBindingSource.DataSource = this.servicesummaryBindingSource;
             // 
-            // servicesummaryBindingSource1
-            // 
-            this.servicesummaryBindingSource1.DataSource = typeof(Service_plan_form.Service_summary);
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -947,7 +935,6 @@
             Individual.ResumeLayout(false);
             this.panel_summary.ResumeLayout(false);
             this.panel_summary.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).EndInit();
             this.output_panel.ResumeLayout(false);
             this.output_panel.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -967,7 +954,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1009,10 +995,8 @@
         private System.Windows.Forms.DataGridView Selected_service_dgv;
         private System.Windows.Forms.BindingSource servicesummaryBindingSource;
         private System.Windows.Forms.BindingSource stopStationBindingSource;
-        private System.Windows.Forms.BindingSource servicesummaryBindingSource1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.Button reloadBtn;
-        private System.Windows.Forms.BindingSource servicesummaryBindingSource2;
         private System.Windows.Forms.TabControl serviceTab;
         private System.Windows.Forms.TabPage service_set;
         private System.Windows.Forms.Panel panel_summary;
@@ -1037,7 +1021,7 @@
         private System.Windows.Forms.Button save_service;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button config_btn;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button export_to_time_table_btn;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TextBox save_path;
         private System.Windows.Forms.DataGridViewTextBoxColumn servicenameDataGridViewTextBoxColumn;

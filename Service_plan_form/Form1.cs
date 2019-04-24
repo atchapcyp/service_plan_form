@@ -148,7 +148,7 @@ namespace Service_plan_form
                     average_wait += Math.Round((station.sum_waiting_time / 400000 * 60), 2);
                 
             }
-                richTextBox1.Text += "Average Ppan waiting time  : " + average_wait/stations.Count + " miniutes\n\n";
+                richTextBox1.Text += "Average plan waiting time  : " + average_wait/stations.Count + " miniutes\n\n";
             
             // get sum profit
             var sum_profit_all_selected = 0.0;
@@ -688,7 +688,7 @@ namespace Service_plan_form
         private void calculate_console_Click(object sender, EventArgs e)
         {
             this.getService_dgv();
-
+            export_to_time_table_btn.Enabled = true;
         }
 
         private void reloadBtn_Click(object sender, EventArgs e)
