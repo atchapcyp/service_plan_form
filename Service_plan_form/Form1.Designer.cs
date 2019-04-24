@@ -52,6 +52,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.service_name = new System.Windows.Forms.Label();
+            this.servicesummaryBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.output_panel = new System.Windows.Forms.Panel();
@@ -93,21 +94,21 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Selected_service_dgv = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.reloadBtn = new System.Windows.Forms.Button();
-            this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.servicenameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.profitabilityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.utilizationpercentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.incomeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servicesummaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.servicesummaryBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.label5 = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.config_btn = new System.Windows.Forms.Button();
+            this.reloadBtn = new System.Windows.Forms.Button();
+            this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.servicesummaryBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             Individual = new System.Windows.Forms.TabPage();
             Individual.SuspendLayout();
             this.panel_summary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).BeginInit();
             this.output_panel.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -119,9 +120,8 @@
             this.panel4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -320,6 +320,10 @@
             this.service_name.TabIndex = 0;
             this.service_name.Text = "Service_Name";
             this.service_name.Visible = false;
+            // 
+            // servicesummaryBindingSource2
+            // 
+            this.servicesummaryBindingSource2.DataSource = typeof(Service_plan_form.Service_summary);
             // 
             // button1
             // 
@@ -839,49 +843,6 @@
             this.ID.ReadOnly = true;
             this.ID.Width = 43;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Coral;
-            this.label5.Font = new System.Drawing.Font("Varela", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Cornsilk;
-            this.label5.Location = new System.Drawing.Point(6, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(267, 41);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Selected Service";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(188)))), ((int)(((byte)(64)))));
-            this.button2.Image = global::Service_plan_form.Properties.Resources.settings_work_tool__2_;
-            this.button2.Location = new System.Drawing.Point(1516, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(37, 28);
-            this.button2.TabIndex = 12;
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // reloadBtn
-            // 
-            this.reloadBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(199)))), ((int)(((byte)(72)))));
-            this.reloadBtn.Image = global::Service_plan_form.Properties.Resources.refresh_page_option__1_;
-            this.reloadBtn.Location = new System.Drawing.Point(1559, 2);
-            this.reloadBtn.Name = "reloadBtn";
-            this.reloadBtn.Size = new System.Drawing.Size(42, 28);
-            this.reloadBtn.TabIndex = 11;
-            this.reloadBtn.UseVisualStyleBackColor = false;
-            this.reloadBtn.Click += new System.EventHandler(this.reloadBtn_Click);
-            // 
-            // stopStationBindingSource
-            // 
-            this.stopStationBindingSource.DataMember = "StopStation";
-            this.stopStationBindingSource.DataSource = this.servicesummaryBindingSource;
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.DefaultExt = "xlsx";
-            // 
             // servicenameDataGridViewTextBoxColumn
             // 
             this.servicenameDataGridViewTextBoxColumn.DataPropertyName = "Service_name";
@@ -914,9 +875,49 @@
             // 
             this.servicesummaryBindingSource.DataSource = typeof(Service_plan_form.Service_summary);
             // 
-            // servicesummaryBindingSource2
+            // label5
             // 
-            this.servicesummaryBindingSource2.DataSource = typeof(Service_plan_form.Service_summary);
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Coral;
+            this.label5.Font = new System.Drawing.Font("Varela", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Cornsilk;
+            this.label5.Location = new System.Drawing.Point(6, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(267, 41);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Selected Service";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "xlsx";
+            // 
+            // config_btn
+            // 
+            this.config_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(188)))), ((int)(((byte)(64)))));
+            this.config_btn.Image = global::Service_plan_form.Properties.Resources.settings_work_tool__2_;
+            this.config_btn.Location = new System.Drawing.Point(1516, 2);
+            this.config_btn.Name = "config_btn";
+            this.config_btn.Size = new System.Drawing.Size(37, 28);
+            this.config_btn.TabIndex = 12;
+            this.config_btn.UseVisualStyleBackColor = false;
+            this.config_btn.Click += new System.EventHandler(this.button2_Click_2);
+            // 
+            // reloadBtn
+            // 
+            this.reloadBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(199)))), ((int)(((byte)(72)))));
+            this.reloadBtn.Image = global::Service_plan_form.Properties.Resources.refresh_page_option__1_;
+            this.reloadBtn.Location = new System.Drawing.Point(1559, 2);
+            this.reloadBtn.Name = "reloadBtn";
+            this.reloadBtn.Size = new System.Drawing.Size(42, 28);
+            this.reloadBtn.TabIndex = 11;
+            this.reloadBtn.UseVisualStyleBackColor = false;
+            this.reloadBtn.Click += new System.EventHandler(this.reloadBtn_Click);
+            // 
+            // stopStationBindingSource
+            // 
+            this.stopStationBindingSource.DataMember = "StopStation";
+            this.stopStationBindingSource.DataSource = this.servicesummaryBindingSource;
             // 
             // servicesummaryBindingSource1
             // 
@@ -927,7 +928,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(30)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(1665, 918);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.config_btn);
             this.Controls.Add(this.reloadBtn);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -946,6 +947,7 @@
             Individual.ResumeLayout(false);
             this.panel_summary.ResumeLayout(false);
             this.panel_summary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).EndInit();
             this.output_panel.ResumeLayout(false);
             this.output_panel.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -963,9 +965,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Selected_service_dgv)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stopStationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesummaryBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
@@ -1035,7 +1036,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button save_service;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button config_btn;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TextBox save_path;

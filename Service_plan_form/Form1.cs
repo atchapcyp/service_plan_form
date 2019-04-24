@@ -924,5 +924,13 @@ namespace Service_plan_form
             }
             return -1;
         }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            {
+                Config_form config_form = new Config_form();
+                config_form.Show();
+            }
+        }
     }
 }

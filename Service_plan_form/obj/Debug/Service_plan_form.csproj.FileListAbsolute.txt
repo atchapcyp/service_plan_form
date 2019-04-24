@@ -58,3 +58,4 @@ C:\Users\atchapcyp\Repository\Privateworkspace\service_plan_form\service_plan_fo
 C:\Users\atchapcyp\Repository\Privateworkspace\service_plan_form\service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.csproj.CopyComplete
 C:\Users\atchapcyp\Repository\Privateworkspace\service_plan_form\service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.exe
 C:\Users\atchapcyp\Repository\Privateworkspace\service_plan_form\service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.pdb
+C:\Users\atchapcyp\Repository\Privateworkspace\service_plan_form\service_plan_form\Service_plan_form\obj\Debug\Service_plan_form.Config_form.resources
