@@ -47,6 +47,7 @@ namespace Service_plan_form
                 {
                     PhysicalData.Current_mode = 1;
                 }
+                
                 MessageBox.Show("          Configuration Saved            ");
                 this.Close();
             }

@@ -168,9 +168,7 @@ namespace Service_plan_form
         }  
 
         public static void update_remain_demand(TF_Demand demands, int timeframe, int fill_demand, int i, int j) {
-            Console.WriteLine("\n UPDATE _ REMAIN _ DEMAND");
-            Console.WriteLine("\n BEFORE UPDATE");
-            showarray(demands.demand[0]);
+           
             if (demands.carry_matrix[i, j] == -1) {
                 demands.demand[timeframe][i, j] -= fill_demand;
             }
@@ -186,8 +184,7 @@ namespace Service_plan_form
                     }
                 }
             }
-            Console.WriteLine("\n AFTER UPDATE");
-            showarray(demands.demand[0]);
+           
 
         }
 
@@ -567,7 +564,7 @@ namespace Service_plan_form
             int[,] carry_demand = init_carry_demand(tf_memo, stations);
             List<Service> services = new List<Service>();
             services = _services;
-
+            Console.WriteLine(PrettyPrintArrays(tf_memo));
             Console.WriteLine("____demand_of_this_service");
             showarray(carry_demand);
             var k = 0;
@@ -952,9 +949,7 @@ namespace Service_plan_form
         public static int[,] init_carry_demand(int[] memo,List<Station> stations)
         { int[,] result = new int[stations.Count, stations.Count];
             int counter = 0;
-            if (PhysicalData.Current_mode == 0)
-            {
-                foreach (Station a in stations)
+               foreach (Station a in stations)
                 {
                     for (int b = 0; b < stations.Count; b++)
                     {
@@ -963,11 +958,8 @@ namespace Service_plan_form
                     counter++;
                 }
                 return result;
-            }
-            else 
-            {
-                return result;
-            }
+            
+          
         }
 
         public static string PrettyPrintArrayOfArrays(int[][] arrayOfArrays)

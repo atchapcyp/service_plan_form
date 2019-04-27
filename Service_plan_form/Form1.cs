@@ -31,6 +31,7 @@ namespace Service_plan_form
             
         List<Service_summary>  selected_services = new List<Service_summary>();
         List<Demand_blueprint> dm = new List<Demand_blueprint>();
+        List<Demand_blueprint> dm_inbound = new List<Demand_blueprint>();
         DataNamesMapper<Demand_blueprint> mapper = new DataNamesMapper<Demand_blueprint>();
         public static List<Station> stations = new List<Station>();
         List<Service> service_list = new List<Service>();
@@ -44,47 +45,64 @@ namespace Service_plan_form
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var filePath = Path.Combine(project_path,xlsx_path);
+            change_input_for_inbound();
+
+        }
+
+        public void change_input_for_inbound() {
+            dm.Clear();
+            stations.Clear(); //clear and re-read demand
+            CheckedListBox temp_checklistbox = new CheckedListBox();
+            var filePath = Path.Combine(project_path, xlsx_path);
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
                     result = reader.AsDataSet();
-                    for (int i = 0; i < result.Tables.Count; i++) {
+                    for (int i = 0; i < result.Tables.Count; i++)
+                    {
                         dm.AddRange(mapper.Map(result.Tables[i]));
                     }
-                    
-                    for (int i = 0; i < result.Tables.Count; i++)
-                    { 
-                        stations.Add(new Station(dm, i, result.Tables.Count));
-                        checkedListBox_station.Items.Add(stations[i].station_name);
 
-                    }
-                    
-                    foreach (var demand in dm)
+                    if (PhysicalData.Current_mode == 1)
                     {
-                        
-                      Console.WriteLine("START : " + demand.StartTime + ", STOP: " + demand.EndTime.ToShortTimeString()+ ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3+", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
+                        for (int i = result.Tables.Count - 1; i >= 0; i--)
+                        {
+                            stations.Add(new Station(dm, i, result.Tables.Count));
+                            temp_checklistbox.Items.Add(stations[4 - i].station_name);
+                        }
+                    }else if(PhysicalData.Current_mode==0){
+                        for (int i = 0; i <result.Tables.Count; i++)
+                        {
+                            stations.Add(new Station(dm, i, result.Tables.Count));
+                            temp_checklistbox.Items.Add(stations[i].station_name);
+                        }
                     }
 
-               
-                } 
+                    foreach (var demand in dm_inbound)
+                    {
+
+                        Console.WriteLine("START : " + demand.StartTime + ", STOP: " + demand.EndTime.ToShortTimeString() + ", ST1: " + demand.Station1 + ", ST2: " + demand.Station2 + ", ST3: " + demand.Station3 + ", ST4: " + demand.Station4 + ", ST5: " + demand.Station5);
+                    }
+                }
             }
-            
-           
-            
+
+            checkedListBox_station = temp_checklistbox;
+
+            from_demand_box.Items.Clear();
+            to_demand_box.Items.Clear();
+
             from_demand_box.Items.Add("ALL station");
             to_demand_box.Items.Add("ALL station");
-           
+
             foreach (Station _S in stations)
             {
                 from_demand_box.Items.Add(_S.station_name);
                 to_demand_box.Items.Add(_S.station_name);
-               
             }
             from_demand_box.SelectedIndex = 0;
             to_demand_box.SelectedIndex = 0;
-            
+
 
         }
 
@@ -275,6 +293,7 @@ namespace Service_plan_form
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             if (from_demand_box.SelectedIndex < 0 || to_demand_box.SelectedIndex < 0)
             {
                 MessageBox.Show("please select station");
@@ -512,8 +531,6 @@ namespace Service_plan_form
 
                                
                             }
-                            
-                        
                     }
                 }
                         output_panel_graph.AutoScroll = true;
@@ -944,6 +961,11 @@ namespace Service_plan_form
                 Config_form config_form = new Config_form();
                 config_form.Show();
             }
+        }
+
+        private void reload_demand_Click(object sender, EventArgs e)
+        {
+            change_input_for_inbound();
         }
     }
 }

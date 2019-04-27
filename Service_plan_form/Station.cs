@@ -39,35 +39,66 @@ namespace Service_plan_form
         }
 
         public Station() { }
-        public Station(List<Demand_blueprint> dm,int formStation,int numberOfStation)
+        public Station(List<Demand_blueprint> dm,int fromStation,int numberOfStation)
         {
            // Console.WriteLine("dm.count " + dm.Count + "number of station " + numberOfStation);
             var tf_amount = (dm.Count / numberOfStation);
             tf_count = tf_amount-1; // -1 is to exclude table header of when reader
-            var offset = tf_amount * formStation;
-            for (int i =offset+1; i < tf_amount+offset; i++)
+            var offset = tf_amount * fromStation;
+
+            if (PhysicalData.Current_mode == 0)
             {
-                
-                demand_station.Add(dm[i].ToArray());
-                start_time.Add(dm[i].StartTime);
-                stop_time.Add(dm[i].EndTime);
+                for (int i = offset + 1; i < tf_amount + offset; i++)
+                {
+
+                    demand_station.Add(dm[i].ToArray_ob());
+                    start_time.Add(dm[i].StartTime);
+                    stop_time.Add(dm[i].EndTime);
+                }
+
+                demand_station[0].Clone();
+                var diff = dm[1].EndTime.Subtract(dm[1].StartTime);
+                this.tf_size_min = (int)diff.TotalMinutes;
+                fromStation += 1;
+                station_name = "Station" + fromStation;
+
+
+                for (int index = 0; index < demand_station.Count; index++)
+                {
+                    served_demand.Add(new double[numberOfStation]);
+                    remaining_demand.Add(new double[numberOfStation]);
+                }
+            }
+            if (PhysicalData.Current_mode == 1)
+            {
+                for (int i = offset + 1; i < tf_amount + offset; i++)
+                {
+
+                    demand_station.Add(dm[i].ToArray_ib());
+                    start_time.Add(dm[i].StartTime);
+                    stop_time.Add(dm[i].EndTime);
+                }
+
+                demand_station[0].Clone();
+                var diff = dm[1].EndTime.Subtract(dm[1].StartTime);
+                this.tf_size_min = (int)diff.TotalMinutes;
+                fromStation += 1;
+                station_name = "Station" + fromStation;
+
+
+                for (int index = 0; index < demand_station.Count; index++)
+                {
+                    served_demand.Add(new double[numberOfStation]);
+                    remaining_demand.Add(new double[numberOfStation]);
+                }
             }
 
-            demand_station[0].Clone();
-            var diff= dm[1].EndTime.Subtract(dm[1].StartTime);
-            this.tf_size_min =(int)diff.TotalMinutes;
-            formStation += 1;
-            station_name = "Station" + formStation;
-           
 
-           
-            for (int index = 0; index < demand_station.Count; index++)
-            {
-                served_demand.Add(new double[numberOfStation]);
-                remaining_demand.Add(new double[numberOfStation]);
-            }
 
         }
+
+
+
 
         public static int getDistan_Meter(int s,int d) {
             int distance_result = 0;

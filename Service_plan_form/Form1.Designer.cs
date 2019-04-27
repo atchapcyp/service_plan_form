@@ -103,6 +103,7 @@
             this.config_btn = new System.Windows.Forms.Button();
             this.reloadBtn = new System.Windows.Forms.Button();
             this.stopStationBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.reload_demand = new System.Windows.Forms.Button();
             Individual = new System.Windows.Forms.TabPage();
             Individual.SuspendLayout();
             this.panel_summary.SuspendLayout();
@@ -440,6 +441,7 @@
             // panel3
             // 
             this.panel3.AutoScroll = true;
+            this.panel3.Controls.Add(this.reload_demand);
             this.panel3.Controls.Add(this.save_service);
             this.panel3.Controls.Add(this.calculate_console);
             this.panel3.Controls.Add(this.panel2);
@@ -911,6 +913,18 @@
             this.stopStationBindingSource.DataMember = "StopStation";
             this.stopStationBindingSource.DataSource = this.servicesummaryBindingSource;
             // 
+            // reload_demand
+            // 
+            this.reload_demand.Font = new System.Drawing.Font("Varela", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reload_demand.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.reload_demand.Location = new System.Drawing.Point(208, 273);
+            this.reload_demand.Name = "reload_demand";
+            this.reload_demand.Size = new System.Drawing.Size(122, 30);
+            this.reload_demand.TabIndex = 14;
+            this.reload_demand.Text = "Recheck Mode";
+            this.reload_demand.UseVisualStyleBackColor = true;
+            this.reload_demand.Click += new System.EventHandler(this.reload_demand_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1028,6 +1042,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn profitabilityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn utilizationpercentDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn incomeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Button reload_demand;
     }
 }
 
