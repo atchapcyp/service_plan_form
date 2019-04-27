@@ -180,9 +180,18 @@ namespace Service_plan_form
             richTextBox1.Text += "Avarage Utilization of Plan : " + Math.Round(Convert.ToDecimal(average_utilize), 2)+" \n\n";
             richTextBox1.Text += "MAX Utilization of Plan : " + Math.Round(Convert.ToDecimal(max_util), 2) + " \n\n";
             richTextBox1.Text += "MIN Utilization of Plan : " + Math.Round(Convert.ToDecimal(min_util), 2) + " \n\n";
-
+            if (PhysicalData.Current_mode == 0)
+            {
+                richTextBox1.Text += "MODE : OUTBOUND\n\n";
+            }
+            if (PhysicalData.Current_mode == 1)
+            {
+                richTextBox1.Text += "MODE : INBOUND\n\n";
+            }
             Console.WriteLine("DGV DONE "+bs.Count);
         }
+
+
         public static double ConvertToDouble(string Value) {
             if (Value == null) {
                 return 0;
@@ -409,7 +418,7 @@ namespace Service_plan_form
                             {
                                 _chart.Series[0].Points.AddXY(stations[_o].start_time[i], stations[_o].demand_station[i][_d]);
                                 _chart.Series[1].Points.AddXY(stations[_o].start_time[i], stations[_o].served_demand[i][_d]);
-                                _chart.Series[0].Points[i].Color = Color.Orange;
+                               
                             }
 
                             _chart.Titles.Add("Demand From " + stations[_o].station_name + " to " + stations[_d].station_name);
@@ -422,7 +431,11 @@ namespace Service_plan_form
                             _chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
                             _chart.Series[0].IsValueShownAsLabel = true;
                             _chart.Series[1].IsValueShownAsLabel = true;
-                            _chart.Series[0].Color = Color.Orange;
+
+                            _chart.Series[0].Color = Color.FromArgb(245, 183, 177); 
+                                 _chart.Series[1].Color = Color.FromArgb(207, 234, 84);
+                            _chart.Series[0].LabelForeColor = Color.White;
+                            _chart.Series[1].LabelForeColor = Color.White;
                             chart_cnt++;
                         }
                     }

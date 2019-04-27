@@ -168,6 +168,9 @@ namespace Service_plan_form
         }  
 
         public static void update_remain_demand(TF_Demand demands, int timeframe, int fill_demand, int i, int j) {
+            Console.WriteLine("\n UPDATE _ REMAIN _ DEMAND");
+            Console.WriteLine("\n BEFORE UPDATE");
+            showarray(demands.demand[0]);
             if (demands.carry_matrix[i, j] == -1) {
                 demands.demand[timeframe][i, j] -= fill_demand;
             }
@@ -183,7 +186,11 @@ namespace Service_plan_form
                     }
                 }
             }
+            Console.WriteLine("\n AFTER UPDATE");
+            showarray(demands.demand[0]);
+
         }
+
         public static void clear_remain_demand(TF_Demand demands, int timeframe, int i, int j)
         {
             if (demands.carry_matrix[i, j] == -1)
@@ -783,7 +790,7 @@ namespace Service_plan_form
                     demand_at_station += demands.demand[0][i, k];
                   //  Console.WriteLine("Demand at station " + i + " to station " + k + " is " + demands.demand[0][i, k]);
                 }
-             //  Console.WriteLine("All of Demand at station " + i + " is " + demand_at_station);
+                //  Console.WriteLine("All of Demand at station " + i + " is " + demand_at_station);
                 if (demand_at_station < train.remain_cap)
                 {
                     for (j = i + 1; j < 5; j++)
@@ -791,7 +798,7 @@ namespace Service_plan_form
                         if (aService.StopStation[j] == 0) { continue; }
                         train.getOn(demands.demand[0][i, j], j);
                         actual_getoff[i, j] = demands.demand[0][i, j];
-                        actual_getoff_income[i,j] = demands.demand[0][i, j]; // set for income calculation
+                        actual_getoff_income[i, j] = demands.demand[0][i, j]; // set for income calculation
                         demands.demand[0][i, j] = 0;
                         clear_remain_demand(demands, timeframe, i, j);
                     }
@@ -803,7 +810,11 @@ namespace Service_plan_form
                 }
                 else
                 {
-                    double ratio = 1.0 * train.remain_cap / demand_at_station;
+                    if (demand_at_station == 0)
+                    {
+                        demand_at_station += 1;
+                    }
+                    double ratio =( 1.0 * train.remain_cap )/ demand_at_station;
                     demand_at_station = 0; //reset
                     fill_demand = 0; //reset
                     for (j = i + 1; j < 5; j++)
@@ -813,7 +824,7 @@ namespace Service_plan_form
                         demand_at_station += fill_demand;
                     }
                     int remain_cap = train.remain_cap;
-                   // Console.WriteLine("..............Debug demand at station  " + demand_at_station);
+                    // Console.WriteLine("..............Debug demand at station  " + demand_at_station);
                     remain_cap -= demand_at_station;
                     for (j = i + 1; j < 5; j++)
                     {
@@ -823,8 +834,9 @@ namespace Service_plan_form
                         //Console.WriteLine("..............Debug Demand at station      " + demands.demand[0][i, j]);
                         //Console.WriteLine("..............Debug ratio      " + ratio);
                         fill_demand = (int)(demands.demand[0][i, j] * ratio);
-                      //  Console.WriteLine("..............Debug fill_demand  " + fill_demand);
-                        
+                          Console.WriteLine("..............Debug fill_demand  " + fill_demand);
+               
+
                         if (remain_cap > 0 && demands.demand[0][i, j] > fill_demand)
                         {// ROUND UP IN CASE OF REMAINING a few demand
                     //        Console.WriteLine("ROUND UP AT : " + i+"_"+j);
@@ -843,7 +855,7 @@ namespace Service_plan_form
                         }
                         demand_at_station += fill_demand;
                     }
-                //    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
+                    Console.WriteLine("..............train remainning seat AFTER  " + train.remain_cap);
                 }
                 
             }
@@ -940,16 +952,22 @@ namespace Service_plan_form
         public static int[,] init_carry_demand(int[] memo,List<Station> stations)
         { int[,] result = new int[stations.Count, stations.Count];
             int counter = 0;
-            foreach (Station a in stations)
+            if (PhysicalData.Current_mode == 0)
             {
-                
-                for (int b = 0; b < stations.Count; b++)
+                foreach (Station a in stations)
                 {
-                    result[counter, b] = (int)a.demand_station[memo[b]][b];
+                    for (int b = 0; b < stations.Count; b++)
+                    {
+                        result[counter, b] = (int)a.demand_station[memo[b]][b];
+                    }
+                    counter++;
                 }
-                counter++;
+                return result;
             }
-            return result;
+            else 
+            {
+                return result;
+            }
         }
 
         public static string PrettyPrintArrayOfArrays(int[][] arrayOfArrays)

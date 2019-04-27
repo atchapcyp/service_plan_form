@@ -30,7 +30,8 @@ namespace Service_plan_form
         public static int utilize_percent = 50;
         public static int under_util_plus_min = 5;
         public static int TrainSize = 500;
-
+        public static int Current_mode = 0; // 0 = outbound , 1 = inbound
+ 
     }
 }
 
