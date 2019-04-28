@@ -52,7 +52,7 @@ namespace Service_plan_form
         public void change_input_for_inbound() {
             dm.Clear();
             stations.Clear(); //clear and re-read demand
-            CheckedListBox temp_checklistbox = new CheckedListBox();
+            checkedListBox_station.Items.Clear();
             var filePath = Path.Combine(project_path, xlsx_path);
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -69,13 +69,13 @@ namespace Service_plan_form
                         for (int i = result.Tables.Count - 1; i >= 0; i--)
                         {
                             stations.Add(new Station(dm, i, result.Tables.Count));
-                            temp_checklistbox.Items.Add(stations[4 - i].station_name);
+                            checkedListBox_station.Items.Add(stations[4 - i].station_name);
                         }
                     }else if(PhysicalData.Current_mode==0){
                         for (int i = 0; i <result.Tables.Count; i++)
                         {
                             stations.Add(new Station(dm, i, result.Tables.Count));
-                            temp_checklistbox.Items.Add(stations[i].station_name);
+                            checkedListBox_station.Items.Add(stations[i].station_name);
                         }
                     }
 
@@ -87,7 +87,7 @@ namespace Service_plan_form
                 }
             }
 
-            checkedListBox_station = temp_checklistbox;
+         
 
             from_demand_box.Items.Clear();
             to_demand_box.Items.Clear();
@@ -99,6 +99,7 @@ namespace Service_plan_form
             {
                 from_demand_box.Items.Add(_S.station_name);
                 to_demand_box.Items.Add(_S.station_name);
+              
             }
             from_demand_box.SelectedIndex = 0;
             to_demand_box.SelectedIndex = 0;

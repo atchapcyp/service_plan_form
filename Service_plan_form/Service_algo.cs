@@ -656,6 +656,7 @@ namespace Service_plan_form
             }
 
             update_remaining_demand(summaries, stations);
+
             return (summaries,sum_waiting_time);
         }
 
@@ -673,6 +674,7 @@ namespace Service_plan_form
                             for (int i = 0; i < temp.Length; i++)
                             {
                                 station.served_demand[n][i] += temp[i];
+                               
                             }
                             break;
                         }
