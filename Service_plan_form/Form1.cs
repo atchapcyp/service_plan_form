@@ -429,7 +429,7 @@ namespace Service_plan_form
                             _chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
                             _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
 
-                            _chart.Series.Add("demand");
+                            _chart.Series.Add("Demand");
                             _chart.Series[0].ChartType = SeriesChartType.Column;
                             _chart.Series.Add("Over-Demand Service");
                             _chart.Series[1].ChartType = SeriesChartType.Column;
@@ -502,9 +502,9 @@ namespace Service_plan_form
                                 _chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
                                 _chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
                         
-                                _chart.Series.Add("demand");
+                                _chart.Series.Add("Demand");
                                 _chart.Series[0].ChartType = SeriesChartType.Column;
-                                _chart.Series.Add("Served Demand");
+                                _chart.Series.Add("Service");
                         _chart.Series[1].ChartType = SeriesChartType.Column;
                                 for (int i = 0; i < stations.Count; i++)
                                 {

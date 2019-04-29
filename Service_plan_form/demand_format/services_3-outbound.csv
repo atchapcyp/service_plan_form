@@ -2,5 +2,5 @@
 all_station,OUTBOUND,1,1,1,1,1
 1_to_5,OUTBOUND,1,0,0,0,1
 1_3_5,OUTBOUND,1,0,1,0,1
-start_at_2_to_4,OUTBOUND,0,1,1,1,0
+start_at_2_to_5,OUTBOUND,0,1,1,1,1
 2_to_4,OUTBOUND,0,1,1,1,0
